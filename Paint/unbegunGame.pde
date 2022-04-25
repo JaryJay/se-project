@@ -1,6 +1,6 @@
 class UnbegunGame
 {
-  String category = "food";
+  //String[] category = loadStrings("category.txt");
   ArrayList<String> playersSoFar;
   int numberRounds;
   
