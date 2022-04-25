@@ -76,6 +76,19 @@ public class ServerMessenger {
       break;
     }
   }
+  
+  void removePlayer(String player) {
+    try {
+      nameToReader.get(player).close();
+      nameToWriter.get(player).close();
+      nameToSocket.get(player).close();
+      nameToReader.remove(player);
+      nameToWriter.remove(player);
+      nameToSocket.remove(player);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   List<Message> readMessages() {
     List<Message> messages = new ArrayList<Message>();

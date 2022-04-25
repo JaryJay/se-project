@@ -12,7 +12,7 @@ class ClientMessager {
   BufferedReader reader;
   PrintWriter writer;
 
-  private void init() {
+  void init() {
     try {
       socket = new Socket("99.250.93.242", 45000);
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -43,7 +43,7 @@ class ClientMessager {
     }
   }
 
-  List<String> readMessages() {
+  private List<String> readMessages() {
     List<String> messages = new ArrayList<String>();
     String message;
     try {
@@ -56,7 +56,7 @@ class ClientMessager {
     return messages;
   }
 
-  void writeMessage(String message) {
+  private void writeMessage(String message) {
     writer.write(message);
   }
 
