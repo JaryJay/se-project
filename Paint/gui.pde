@@ -16,19 +16,17 @@
 
 public void joinButtonClick(GButton source, GEvent event) { //_CODE_:joinButton:625211:
   state = "join";
-  hostButton.setVisible(false);
-  instructionButton.setVisible(false);
-  joinButton.setVisible(false);
-  
-  
+  hideMainMenuButtons();
 } //_CODE_:joinButton:625211:
 
 public void hostButtonClick(GButton source, GEvent event) { //_CODE_:hostButton:728375:
   state = "host";
+  hideMainMenuButtons();
 } //_CODE_:hostButton:728375:
 
 public void instructionButtonClick(GButton source, GEvent event) { //_CODE_:instructionButton:373816:
-  state = "instruction";
+  state = "instructions";
+  hideMainMenuButtons();
 } //_CODE_:instructionButton:373816:
 
 
