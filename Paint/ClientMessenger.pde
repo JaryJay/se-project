@@ -12,7 +12,7 @@ class ClientMessenger {
   BufferedReader reader;
   PrintWriter writer;
   
-  List<String> fakeMessages = new ArrayList<>();
+  List<String> fakeMessages = new ArrayList<String>();
 
   void init() {
     try {
