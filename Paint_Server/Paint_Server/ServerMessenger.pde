@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Sends and receives messages through TCP connections.
 public class ServerMessenger {
 
   ServerSocket serverSocket;
@@ -17,6 +18,7 @@ public class ServerMessenger {
   Map<String, BufferedReader> nameToReader = new HashMap<String, BufferedReader>();
   Map<String, PrintWriter> nameToWriter = new HashMap<String, PrintWriter>();
 
+  // Initializes the server socket.
   void init() {
     try {
       serverSocket = new ServerSocket(45000);
@@ -29,13 +31,9 @@ public class ServerMessenger {
 
   void update() {
     receiveNewPlayersIfAny();
-
-    List<Message> messages = readMessages();
-    for (Message message : messages) {
-      handleMessage(message);
-    }
   }
 
+  // Accepts any new socket connections.
   private void receiveNewPlayersIfAny() {
     try {
       Socket newClient = serverSocket.accept();
@@ -54,29 +52,7 @@ public class ServerMessenger {
     }
   }
 
-  private void handleMessage(Message message) {
-    String[] split = message.body.split(" ");
-    String messageType = split[0];
-    switch (messageType) {
-    case "host":
-      println(message.playerName + " tried to host a game");
-      break;
-    case "join":
-      println(message.playerName + " tried to join a game");
-      try {
-        int id = Integer.parseInt(split[1]);
-        println(message.playerName + " tried to join game " + id);
-      } 
-      catch (NumberFormatException e) {
-        System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
-      }
-      break;
-    default:
-      println("Received message " + message);
-      break;
-    }
-  }
-  
+
   void removePlayer(String player) {
     try {
       nameToReader.get(player).close();
@@ -85,7 +61,8 @@ public class ServerMessenger {
       nameToReader.remove(player);
       nameToWriter.remove(player);
       nameToSocket.remove(player);
-    } catch (IOException e) {
+    } 
+    catch (IOException e) {
       e.printStackTrace();
     }
   }
@@ -94,8 +71,10 @@ public class ServerMessenger {
     List<Message> messages = new ArrayList<Message>();
     String messageBody;
     try {
+      // Get messages from all connected clients
       for (String name : nameToReader.keySet()) {
         BufferedReader reader = nameToReader.get(name);
+        // Read messages until there are none left
         while ((messageBody = reader.readLine()) != null) {
           messages.add(new Message(name, messageBody));
         }

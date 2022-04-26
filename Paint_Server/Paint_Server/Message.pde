@@ -1,3 +1,4 @@
+// A message with a player source and a 
 class Message {
 
   String playerName;
