@@ -35,7 +35,7 @@ class MainMenuState extends State {
 class JoinState extends State {
   
   JoinState() {
-    guis = new GAbstractControl[]{  };
+    guis = new GAbstractControl[]{ nameTextField };
   }
   
   void update() {
@@ -49,7 +49,7 @@ class JoinState extends State {
 class HostState extends State {
   
   HostState() {
-    guis = new GAbstractControl[]{  };
+    guis = new GAbstractControl[]{ nameTextField };
   }
   
   void update() {

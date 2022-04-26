@@ -9,7 +9,13 @@ void setup() {
   createGUI();
   PFont f1 = createFont("Cambria", 60);
   textFont( f1 );
+  
+  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField};
+  for (GAbstractControl gui : allGuis) {
+    gui.setVisible(false);
+  }
   state = new MainMenuState();
+  state.showGuis();
 }
 
 void draw() {
@@ -18,7 +24,7 @@ void draw() {
 
 void transitionState(State newState) {
   // Hide previous state
-  state.hideButtons();
+  state.hideGuis();
   state = newState;
-  newState.showButtons();
+  newState.showGuis();
 }
