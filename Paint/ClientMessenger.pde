@@ -11,6 +11,8 @@ class ClientMessenger {
   Socket socket;
   BufferedReader reader;
   PrintWriter writer;
+  
+  List<String> fakeMessages = new ArrayList<>();
 
   void init() {
     try {
@@ -44,7 +46,8 @@ class ClientMessenger {
   }
 
   private List<String> readMessages() {
-    List<String> messages = new ArrayList<String>();
+    List<String> messages = new ArrayList<String>(fakeMessages);
+    fakeMessages.clear();
     if (reader == null) {
       println("No new messages. The server isn't running!");
       return messages;
