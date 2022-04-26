@@ -22,6 +22,9 @@ private void handleMessage(Message message) {
   switch (messageType) {
   case "host":
     println(message.playerName + " tried to host a game");
+    int gameID = generateID();
+    messenger.writeMessage(message.playerName, "host " + gameID);
+    // Create new Game
     break;
   case "join":
     println(message.playerName + " tried to join a game");

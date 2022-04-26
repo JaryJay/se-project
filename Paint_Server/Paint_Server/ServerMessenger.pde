@@ -41,9 +41,14 @@ public class ServerMessenger {
       PrintWriter writer = new PrintWriter(newClient.getOutputStream());
       println("Waiting for client name.");
       String clientName = reader.readLine();
-      nameToSocket.put(clientName, newClient);
-      nameToReader.put(clientName, reader);
-      nameToWriter.put(clientName, writer);
+      // Don't allow multiple people with the same name
+      if (nameToSocket.get(clientName) != null) {
+        writer.write("fail");
+      } else {
+        nameToSocket.put(clientName, newClient);
+        nameToReader.put(clientName, reader);
+        nameToWriter.put(clientName, writer);
+      }
     }     
     catch (SocketTimeoutException e) {
     } 
