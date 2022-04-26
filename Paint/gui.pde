@@ -30,6 +30,14 @@ public void nameTextField_change(GTextField source, GEvent event) { //_CODE_:nam
   println("nameTextField - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:nameTextField:264905:
 
+public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGameButton:427819:
+  println("joinGameButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:joinGameButton:427819:
+
+public void idTextfield_change(GTextField source, GEvent event) { //_CODE_:idTextField:408355:
+  println("idTextField - GTextField >> GEvent." + event + " @ " + millis());
+} //_CODE_:idTextField:408355:
+
 
 
 // Create all the GUI controls. 
@@ -45,7 +53,7 @@ public void createGUI(){
   hostButton = new GButton(this, 313, 207, 165, 57);
   hostButton.setText("HOST");
   hostButton.addEventHandler(this, "hostButtonClick");
-  instructionsButton = new GButton(this, 315, 281, 163, 62);
+  instructionsButton = new GButton(this, 315, 280, 163, 62);
   instructionsButton.setText("INSTRUCTIONS");
   instructionsButton.addEventHandler(this, "instructionsButtonClick");
   nameTextField = new GTextField(this, 297, 354, 200, 30, G4P.SCROLLBARS_NONE);
@@ -53,6 +61,14 @@ public void createGUI(){
   nameTextField.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   nameTextField.setOpaque(true);
   nameTextField.addEventHandler(this, "nameTextField_change");
+  joinGameButton = new GButton(this, 315, 465, 163, 32);
+  joinGameButton.setText("Join");
+  joinGameButton.addEventHandler(this, "joinGameButton_click");
+  idTextField = new GTextField(this, 297, 403, 200, 30, G4P.SCROLLBARS_NONE);
+  idTextField.setPromptText("Game ID - Ask the host!");
+  idTextField.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+  idTextField.setOpaque(true);
+  idTextField.addEventHandler(this, "idTextfield_change");
 }
 
 // Variable declarations 
@@ -61,3 +77,5 @@ GButton joinButton;
 GButton hostButton; 
 GButton instructionsButton; 
 GTextField nameTextField; 
+GButton joinGameButton; 
+GTextField idTextField; 

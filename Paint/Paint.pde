@@ -9,8 +9,9 @@ void setup() {
   createGUI();
   PFont f1 = createFont("Cambria", 60);
   textFont( f1 );
+  textAlign(CENTER);
   
-  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField};
+  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField, idTextField, joinGameButton};
   for (GAbstractControl gui : allGuis) {
     gui.setVisible(false);
   }
