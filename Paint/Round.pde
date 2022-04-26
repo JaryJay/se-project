@@ -5,8 +5,7 @@ class Round
   //Player painter;
 
 
-  Round(String cw) //Player p)
-  {
+  Round(String cw) {
     this.currentWord = cw;
     timeLimit = 500; //500 seconds 
     //this.painter = p;
