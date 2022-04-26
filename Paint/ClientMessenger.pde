@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-class ClientMessager {
+class ClientMessenger {
 
   Socket socket;
   BufferedReader reader;
@@ -45,6 +45,10 @@ class ClientMessager {
 
   private List<String> readMessages() {
     List<String> messages = new ArrayList<String>();
+    if (reader == null) {
+      println("No new messages. The server isn't running!");
+      return messages;
+    }
     String message;
     try {
       while ((message = reader.readLine()) != null) {
@@ -57,7 +61,11 @@ class ClientMessager {
   }
 
   private void writeMessage(String message) {
-    writer.write(message);
+    if (writer != null) {
+      writer.write(message);
+    } else {
+      println("Pretended to write message '" + message + "' because the server isn't running.");
+    }
   }
 
 }
