@@ -4,6 +4,12 @@ abstract class State {
   
   abstract void update();
   
+  void showButtons() {
+    for (GButton button : buttons) {
+      button.setVisible(true);
+    }
+  }
+  
   void hideButtons() {
     for (GButton button : buttons) {
       button.setVisible(false);

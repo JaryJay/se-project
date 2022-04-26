@@ -15,3 +15,10 @@ void setup() {
 void draw() {
   state.update();
 }
+
+void transitionState(State newState) {
+  // Hide previous state
+  state.hideButtons();
+  state = newState;
+  newState.showButtons();
+}

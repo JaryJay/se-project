@@ -15,18 +15,15 @@
  */
 
 public void joinButtonClick(GButton source, GEvent event) { //_CODE_:joinButton:625211:
-  state.hideButtons();
-  state = new JoinState();
+  transitionState(new JoinState());
 } //_CODE_:joinButton:625211:
 
 public void hostButtonClick(GButton source, GEvent event) { //_CODE_:hostButton:728375:
-  state.hideButtons();
-  state = new HostState();
+  transitionState(new HostState());
 } //_CODE_:hostButton:728375:
 
 public void instructionsButtonClick(GButton source, GEvent event) { //_CODE_:instructionButton:373816:
-  state.hideButtons();
-  state = new InstructionsState();
+  transitionState(new InstructionsState());
 } //_CODE_:instructionButton:373816:
 
 
