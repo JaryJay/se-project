@@ -3,7 +3,7 @@ import g4p_controls.*;
 void setup() {
   size(800,800);
   background(255); 
-  //createGUI();
+  createGUI();
 }
 
 void draw() {
@@ -13,5 +13,5 @@ void draw() {
   
   fill(0, 140, 255);
   textFont( f1 );
-  text( title, 400, 100 );
+  text( title, 320, 100 );
 }
