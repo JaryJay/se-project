@@ -39,13 +39,13 @@ public class ServerMessenger {
       Socket newClient = serverSocket.accept();
       BufferedReader reader = new BufferedReader(new InputStreamReader(newClient.getInputStream()));
       PrintWriter writer = new PrintWriter(newClient.getOutputStream());
+      println("Waiting for client name.");
       String clientName = reader.readLine();
       nameToSocket.put(clientName, newClient);
       nameToReader.put(clientName, reader);
       nameToWriter.put(clientName, writer);
-    } 
+    }     
     catch (SocketTimeoutException e) {
-      println("No new players");
     } 
     catch (IOException e) {
       e.printStackTrace();

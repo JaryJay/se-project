@@ -1,5 +1,6 @@
 import g4p_controls.*;
 
+ClientMessenger messenger;
 State state;
 
 void setup() {
@@ -8,7 +9,6 @@ void setup() {
   createGUI();
   PFont f1 = createFont("Cambria", 60);
   textFont( f1 );
-
   state = new MainMenuState();
 }
 

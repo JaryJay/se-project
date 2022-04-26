@@ -1,18 +1,18 @@
 abstract class State { 
   
-  GButton[] buttons;
+  GAbstractControl[] guis;
   
   abstract void update();
   
-  void showButtons() {
-    for (GButton button : buttons) {
-      button.setVisible(true);
+  void showGuis() {
+    for (GAbstractControl gui : guis) {
+      gui.setVisible(true);
     }
   }
   
-  void hideButtons() {
-    for (GButton button : buttons) {
-      button.setVisible(false);
+  void hideGuis() {
+    for (GAbstractControl gui : guis) {
+      gui.setVisible(false);
     }
   }
   
@@ -21,7 +21,7 @@ abstract class State {
 class MainMenuState extends State {
   
   MainMenuState() {
-    buttons = new GButton[]{ joinButton, hostButton, instructionsButton };
+    guis = new GAbstractControl[]{ joinButton, hostButton, instructionsButton };
   }
   
   void update() {
@@ -35,7 +35,7 @@ class MainMenuState extends State {
 class JoinState extends State {
   
   JoinState() {
-    buttons = new GButton[]{  };
+    guis = new GAbstractControl[]{  };
   }
   
   void update() {
@@ -49,7 +49,7 @@ class JoinState extends State {
 class HostState extends State {
   
   HostState() {
-    buttons = new GButton[]{  };
+    guis = new GAbstractControl[]{  };
   }
   
   void update() {
@@ -64,7 +64,7 @@ class HostState extends State {
 class InstructionsState extends State {
   
   InstructionsState() {
-    buttons = new GButton[]{  };
+    guis = new GAbstractControl[]{  };
   }
   
   void update() {

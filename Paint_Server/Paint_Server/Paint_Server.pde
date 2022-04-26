@@ -3,6 +3,7 @@ ServerMessenger messenger = new ServerMessenger();
 void setup() {
   size(400, 400);
   messenger.init();
+  frameRate(3);
 }
 
 void draw() {
