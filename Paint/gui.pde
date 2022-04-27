@@ -81,6 +81,26 @@ public void startGameButton_click(GButton source, GEvent event) { //_CODE_:start
   println("startGameButton - GButton >> GEvent." + event + " @ " + millis());
 } //_CODE_:startGameButton:767185:
 
+public void hostGameButton_click(GButton source, GEvent event) { //_CODE_:hostGameButton:884544:
+  println("hostGameButton - GButton >> GEvent." + event + " @ " + millis());
+  // Name has to be at least 1 character
+  if (nameTextField.getText().length() != 0) {
+    if (connectToServer(nameTextField.getText())) {
+      // Ask to join game with the gameID
+      messenger.writeMessage("host");
+      String received = messenger.readOneMessage();
+      println(received);
+      // Game ID is the second word in the message
+      int gameID = int(received.split(" ")[1]);
+      println("Hosting game with ID = " + gameID + ". Woohoo!");
+      // Go to lobby state (with ability to change settings)
+      println("Transition to lobby state (not yet implemented)");
+    }
+  } else {
+    println("You have to fill in a name!");
+  }
+} //_CODE_:hostGameButton:884544:
+
 
 
 // Create all the GUI controls. 
@@ -123,6 +143,9 @@ public void createGUI(){
   startGameButton = new GButton(this, 338, 246, 127, 59);
   startGameButton.setText("START!");
   startGameButton.addEventHandler(this, "startGameButton_click");
+  hostGameButton = new GButton(this, 315, 465, 163, 32);
+  hostGameButton.setText("Host!");
+  hostGameButton.addEventHandler(this, "hostGameButton_click");
 }
 
 // Variable declarations 
@@ -136,3 +159,4 @@ GTextField idTextField;
 GTextField roundTextField; 
 GTextArea playerListArea; 
 GButton startGameButton; 
+GButton hostGameButton; 
