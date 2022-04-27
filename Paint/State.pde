@@ -73,21 +73,27 @@ class LobbyState extends State {
 
   //Show number of rounds, show players, show category 
   LobbyState() {
-    guis = new GAbstractControl []{roundTextField, playerListArea, startGameButton};
+    guis = new GAbstractControl []{startGameButton};
   }
 
   void update() {
     background(255);
-    PFont f2 = createFont("Cambria",30);
     fill(0, 140, 255);
+    textAlign(CENTER);
+    textSize(60);
     text( "Lobby!", width/2, 68 );
-    textFont(f2);
-    text(lobby.category, 569, 419);
-    text(lobby.numberRounds, 489, 199);
+    textAlign(LEFT);
+    textSize(32);
+    text("Game ID:", 32, 150);
+    text(lobby.id, 314, 150);
+    text("Category:", 32, 200);
+    text(lobby.category, 314, 200);
+    text("Number of rounds:", 32, 250);
+    text(lobby.numberRounds, 314, 250);
+    text("Players so far", 32, 350);
     fill(0,255,32);
-    text(lobby.id, 544, 535);
-    int x = 352;
-    int y = 300;
+    int x = 86;
+    int y = 400;
     for (int i = 0; i < lobby.playersSoFar.size(); i++) {
       String tel = lobby.playersSoFar.get(i);
       text(tel, x, y);

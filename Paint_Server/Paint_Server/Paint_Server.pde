@@ -51,6 +51,23 @@ private void handleMessage(Message messageReceived) {
       System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
     }
     break;
+  case "start":
+    try {
+      int id = Integer.parseInt(split[1]);
+      if (idToGame.get(id) == null) {
+        messenger.writeMessage(messageReceived.playerName, "invalidID");
+      } else {
+        Game game = idToGame.get(id);
+        for (String player : game.players) {
+          messenger.writeMessage(player, "starting");
+        }
+        // TODO generate word, choose painter
+        messenger.writeMessage(messageReceived.playerName, "startSuccess");
+      }
+    }catch (NumberFormatException e) {
+      System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
+    }
+    println(messageReceived.playerName + " has started the game");
   default:
     println("Received message " + messageReceived);
     break;

@@ -11,7 +11,7 @@ void setup() {
   textFont( f1 );
   textAlign(CENTER);
 
-  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField, idTextField, joinGameButton, hostGameButton,roundTextField, playerListArea, startGameButton};
+  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField, idTextField, joinGameButton, hostGameButton, startGameButton};
   for (GAbstractControl gui : allGuis) {
     gui.setVisible(false);
   }
@@ -27,6 +27,7 @@ void transitionState(State newState) {
   // Hide previous state
   state.hideGuis();
   state = newState;
+  // Show new state
   newState.showGuis();
 }
 
