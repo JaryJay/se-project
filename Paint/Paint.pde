@@ -10,7 +10,7 @@ void setup() {
   PFont f1 = createFont("Cambria", 60);
   textFont( f1 );
   textAlign(CENTER);
-  
+
   GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField, idTextField, joinGameButton};
   for (GAbstractControl gui : allGuis) {
     gui.setVisible(false);
@@ -28,4 +28,22 @@ void transitionState(State newState) {
   state.hideGuis();
   state = newState;
   newState.showGuis();
+}
+
+// Tries to initialize a network connection with the server.
+// Returns true if connected successfully, false otherwise
+boolean connectToServer(String name) {
+  messenger = new ClientMessenger();
+  messenger.init();
+  messenger.writeMessage(name);
+  String m = messenger.readOneMessage();
+  if (!m.equals("success")) {
+    println("Failed to connect to server because " + m);
+    messenger.close();
+    messenger = null;
+    return false;
+  } else {
+    println("Connected to server.");
+    return true;
+  }
 }

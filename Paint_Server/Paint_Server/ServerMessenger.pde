@@ -45,7 +45,7 @@ public class ServerMessenger {
       // Don't allow multiple people with the same name
       if (nameToSocket.get(clientName) != null) {
         println("Player already exists!");
-        writer.println("fail");
+        writer.println("duplicateName");
         writer.flush();
         writer.close();
         reader.close();
@@ -55,6 +55,7 @@ public class ServerMessenger {
         nameToReader.put(clientName, reader);
         nameToWriter.put(clientName, writer);
         println("Player joined: " + clientName);
+        writeMessage(clientName, "success");
       }
     }     
     catch (SocketTimeoutException e) {

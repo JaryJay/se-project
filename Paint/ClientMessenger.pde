@@ -19,7 +19,7 @@ class ClientMessenger {
       socket = new Socket("99.250.93.242", 45000);
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       writer = new PrintWriter(socket.getOutputStream(), true);
-      println(reader);
+      println("Client messenger initialized.");
     } catch (IOException e) {
       throw new RuntimeException("Could not initialize client messenger.");
     }
@@ -80,6 +80,16 @@ class ClientMessenger {
       println("Wrote message: " + message);
     } else {
       println("Pretended to write message '" + message + "' because the server isn't running.");
+    }
+  }
+  
+  void close() {
+    try {
+      reader.close();
+      writer.close();
+      socket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 

@@ -32,6 +32,33 @@ public void nameTextField_change(GTextField source, GEvent event) { //_CODE_:nam
 
 public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGameButton:427819:
   println("joinGameButton - GButton >> GEvent." + event + " @ " + millis());
+  // Name has to be at least 1 character
+  if (nameTextField.getText().length() != 0) {
+    // Game ID has to be a number, and the text field cannot be empty
+    if (idTextField.getText().length() != 0) {
+      int gameID;
+      // Check that the ID is a proper number (and not other characters)
+      try {
+         gameID = int(idTextField.getText());
+      } catch (Exception e) {
+        println("Invalid game ID!");
+        return;
+      }
+      if (connectToServer(nameTextField.getText())) {
+        // Ask to join game with the gameID
+        messenger.writeMessage("join " + gameID);
+        // Receive a message and just print it
+        println(messenger.readOneMessage());
+        // Should check whether that message is a success message or not
+        // If success, go to lobby state
+        println("Transition to lobby state (not yet implemented)");
+      }
+    } else {
+      println("Ask your host for the game ID!");
+    }
+  } else {
+    println("You have to fill in a name!");
+  }
 } //_CODE_:joinGameButton:427819:
 
 public void idTextfield_change(GTextField source, GEvent event) { //_CODE_:idTextField:408355:
