@@ -9,9 +9,9 @@ class Game {
 
   Round round;
 
-  Game(String host, String category) {
+  Game(String host) {
     this.host = host;
-    this.category = category;
+    this.category = "Food";
     players.add(host);
   }
   

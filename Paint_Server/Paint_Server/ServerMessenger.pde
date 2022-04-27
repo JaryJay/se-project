@@ -23,6 +23,7 @@ public class ServerMessenger {
     try {
       serverSocket = new ServerSocket(45000);
       serverSocket.setSoTimeout(200);
+      println("Server initialized.");
     } 
     catch (IOException e) {
       throw new RuntimeException("Could not initialize server socket.");
@@ -43,14 +44,21 @@ public class ServerMessenger {
       String clientName = reader.readLine();
       // Don't allow multiple people with the same name
       if (nameToSocket.get(clientName) != null) {
-        writer.write("fail");
+        println("Player already exists!");
+        writer.println("fail");
+        writer.flush();
+        writer.close();
+        reader.close();
+        newClient.close();
       } else {
         nameToSocket.put(clientName, newClient);
         nameToReader.put(clientName, reader);
         nameToWriter.put(clientName, writer);
+        println("Player joined: " + clientName);
       }
     }     
     catch (SocketTimeoutException e) {
+      println("no new players");
     } 
     catch (IOException e) {
       e.printStackTrace();
@@ -73,32 +81,35 @@ public class ServerMessenger {
   }
 
   List<Message> readMessages() {
+    println("Reading messages");
     List<Message> messages = new ArrayList<Message>();
     String messageBody;
-    try {
-      // Get messages from all connected clients
-      for (String name : nameToReader.keySet()) {
-        BufferedReader reader = nameToReader.get(name);
-        // Read messages until there are none left
-        while ((messageBody = reader.readLine()) != null) {
+    // Get messages from all connected clients
+    for (String name : nameToReader.keySet()) {
+      BufferedReader reader = nameToReader.get(name);
+      // Read messages until there are none left
+      try {
+        while (reader.ready() && (messageBody = reader.readLine()) != null) {
           messages.add(new Message(name, messageBody));
         }
       }
+      catch (IOException e) {
+        e.printStackTrace();
+        println(name + " has been kicked");
+        removePlayer(name);
+      }
     } 
-    catch (IOException e) {
-      e.printStackTrace();
-    }
     return messages;
   }
 
   void writeMessage(String playerName, String message) {
     PrintWriter writer = nameToWriter.get(playerName);
-    writer.write(message);
+    writer.println(message);
   }
 
   void writeMessageToAllPlayers(String message) {
     for (PrintWriter writer : nameToWriter.values()) {
-      writer.write(message);
+      writer.println(message);
     }
   }
 }

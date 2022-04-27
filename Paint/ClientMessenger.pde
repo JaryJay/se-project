@@ -19,6 +19,7 @@ class ClientMessenger {
       socket = new Socket("99.250.93.242", 45000);
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       writer = new PrintWriter(socket.getOutputStream(), true);
+      println(reader);
     } catch (IOException e) {
       throw new RuntimeException("Could not initialize client messenger.");
     }
@@ -54,7 +55,7 @@ class ClientMessenger {
     }
     String message;
     try {
-      while ((message = reader.readLine()) != null) {
+      while (reader.ready() && (message = reader.readLine()) != null) {
         messages.add(message);
       }
     } catch (IOException e) {
@@ -65,7 +66,9 @@ class ClientMessenger {
 
   private void writeMessage(String message) {
     if (writer != null) {
-      writer.write(message);
+      writer.println(message);
+      writer.flush();
+      println("Wrote message: " + message);
     } else {
       println("Pretended to write message '" + message + "' because the server isn't running.");
     }
