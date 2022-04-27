@@ -8,9 +8,9 @@ import java.util.List;
 
 class ClientMessenger {
 
-  Socket socket;
-  BufferedReader reader;
-  PrintWriter writer;
+  private Socket socket;
+  private BufferedReader reader;
+  private PrintWriter writer;
   
   List<String> fakeMessages = new ArrayList<String>();
 
@@ -44,6 +44,15 @@ class ClientMessenger {
         println("Received message " + message);
         break;
     }
+  }
+  
+  String readOneMessage() {
+    try {
+      return reader.readLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   private List<String> readMessages() {

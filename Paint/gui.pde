@@ -32,12 +32,6 @@ public void nameTextField_change(GTextField source, GEvent event) { //_CODE_:nam
 
 public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGameButton:427819:
   println("joinGameButton - GButton >> GEvent." + event + " @ " + millis());
-  ClientMessenger m = new ClientMessenger();
-  m.init();
-  m.writeMessage("joe");
-  m.writeMessage("host");
-  delay(200);
-  println("read: " + m.readMessages());
 } //_CODE_:joinGameButton:427819:
 
 public void idTextfield_change(GTextField source, GEvent event) { //_CODE_:idTextField:408355:

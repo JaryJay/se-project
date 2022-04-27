@@ -105,11 +105,13 @@ public class ServerMessenger {
   void writeMessage(String playerName, String message) {
     PrintWriter writer = nameToWriter.get(playerName);
     writer.println(message);
+    writer.flush();
   }
 
   void writeMessageToAllPlayers(String message) {
     for (PrintWriter writer : nameToWriter.values()) {
       writer.println(message);
+      writer.flush();
     }
   }
 }
