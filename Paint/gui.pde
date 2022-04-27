@@ -52,9 +52,8 @@ public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGa
         println(messenger.readOneMessage());
         // Should check whether that message is a success message or not
         // If success, go to lobby state
-        if(messenger.readOneMessage() != "InvalidID")
+        if(messenger.readOneMessage().startsWith("joinSuccess"))
          {
-          println("Transition to lobby state (not yet implemented)");
           transitionState(new LobbyState());
          }
       }
@@ -94,7 +93,7 @@ public void hostGameButton_click(GButton source, GEvent event) { //_CODE_:hostGa
       int gameID = int(received.split(" ")[1]);
       println("Hosting game with ID = " + gameID + ". Woohoo!");
       // Go to lobby state (with ability to change settings)
-      println("Transition to lobby state (not yet implemented)");
+      transitionState(new LobbyState());
     }
   } else {
     println("You have to fill in a name!");
