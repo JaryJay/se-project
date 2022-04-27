@@ -78,7 +78,7 @@ public void roundTextField_change(GTextField source, GEvent event) { //_CODE_:ro
 } //_CODE_:roundTextField:875643:
 
 public void playerListArea_change(GTextArea source, GEvent event) { //_CODE_:playerListArea:812414:
-  println("playerListArea - GTextArea >> GEvent." + event + " @ " + millis());
+  
 } //_CODE_:playerListArea:812414:
 
 public void startGameButton_click(GButton source, GEvent event) { //_CODE_:startGameButton:767185:
@@ -98,7 +98,9 @@ public void hostGameButton_click(GButton source, GEvent event) { //_CODE_:hostGa
       int gameID = int(received.split(" ")[1]);
       println("Hosting game with ID = " + gameID + ". Woohoo!");
       // Go to lobby state (with ability to change settings)
-      transitionState(new LobbyState());
+      LobbyState state = new LobbyState();
+      state.lobby.id = gameID;
+      transitionState(state);
     }
   } else {
     println("You have to fill in a name!");

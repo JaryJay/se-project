@@ -68,16 +68,15 @@ class InstructionsState extends State {
     text( "Instructions!", width/2, 100 );
   }
 }
-  class LobbyState extends State {
+class LobbyState extends State {
     Lobby lobby = new Lobby();
+    
     //Show number of rounds, show players, show category 
-    LobbyState()
-    {
+    LobbyState(){
       guis = new GAbstractControl []{roundTextField, playerListArea, startGameButton};
     }
 
-    void update()
-    {
+    void update(){
       background(255);
       fill(0, 140, 255);
       text( "Lobby!", width/2, 100 );
