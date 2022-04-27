@@ -15,6 +15,12 @@ abstract class State {
       gui.setVisible(false);
     }
   }
+
+  void mousePressed() {
+  }
+
+  void mouseDragged() {
+  }
 }
 
 class MainMenuState extends State {
@@ -118,5 +124,18 @@ class LobbyState extends State {
       println("Received message " + message);
       break;
     }
+  }
+  
+  void mousePressed() {
+    fill(0);
+    strokeWeight(20);
+    line(mouseX, mouseY, pmouseX, pmouseY);
+  }
+
+
+  void mouseDragged() {
+    fill(0);
+    strokeWeight(50);
+    line(mouseX, mouseY, pmouseX, pmouseY);
   }
 }

@@ -23,6 +23,14 @@ void draw() {
   state.update();
 }
 
+void mousePressed() {
+  state.mousePressed();
+}
+
+void mouseDragged() {
+  state.mouseDragged();
+}
+
 void transitionState(State newState) {
   // Hide previous state
   state.hideGuis();
