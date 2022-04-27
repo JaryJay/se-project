@@ -17,30 +17,34 @@ void draw() {
 }
 
 
-private void handleMessage(Message messageRecieved) {
-  String[] split = messageRecieved.body.split(" ");
+private void handleMessage(Message messageReceived) {
+  String[] split = messageReceived.body.split(" ");
   String messageType = split[0];
   switch (messageType) {
   case "host":
-    println(messageRecieved.playerName + " tried to host a game");
+    println(messageReceived.playerName + " tried to host a game");
     int gameID = generateID();
-    messenger.writeMessage(messageRecieved.playerName, "host " + gameID);
+    messenger.writeMessage(messageReceived.playerName, "host " + gameID);
     // Create new Game
-    idToGame.put(gameID, new Game(messageRecieved.playerName));
+    idToGame.put(gameID, new Game(messageReceived.playerName));
     break;
   case "join":
-    println(messageRecieved.playerName + " tried to join a game");
+    println(messageReceived.playerName + " tried to join a game");
     try {
       int id = Integer.parseInt(split[1]);
       if (idToGame.get(id) == null) {
-        messenger.writeMessage(messageRecieved.playerName, "invalidID");
+        messenger.writeMessage(messageReceived.playerName, "invalidID");
       } else {
         Game game = idToGame.get(id);
         for (String player : game.players) {
-          messenger.writeMessage(player, "joining " + messageRecieved.playerName);
+          messenger.writeMessage(player, "joining " + messageReceived.playerName);
         }
-        game.players.add(messageRecieved.playerName);
-        messenger.writeMessage(messageRecieved.playerName, "joinSuccess " + game.category + " " + game.players);
+        game.players.add(messageReceived.playerName);
+        String playersString = "";
+        for (String player : game.players) {
+          playersString += " " + player;
+        }
+        messenger.writeMessage(messageReceived.playerName, "joinSuccess " + game.category + playersString);
       }
     } 
     catch (NumberFormatException e) {
@@ -48,7 +52,7 @@ private void handleMessage(Message messageRecieved) {
     }
     break;
   default:
-    println("Received message " + messageRecieved);
+    println("Received message " + messageReceived);
     break;
   }
 }
