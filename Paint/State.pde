@@ -46,7 +46,7 @@ class JoinState extends State {
 class HostState extends State {
 
   HostState() {
-    guis = new GAbstractControl[]{ nameTextField };
+    guis = new GAbstractControl[]{ nameTextField, hostGameButton };
   }
 
   void update() {
