@@ -33,17 +33,7 @@ class ClientMessenger {
   }
 
   private void handleMessage(String message) {
-    String[] split = message.split(" ");
-    String messageType = split[0];
-    switch (messageType) {
-      case "host":
-        break;
-      case "join":
-        break;
-      default:
-        println("Received message " + message);
-        break;
-    }
+    
   }
   
   String readOneMessage() {

@@ -27,11 +27,9 @@ public void instructionsButtonClick(GButton source, GEvent event) { //_CODE_:ins
 } //_CODE_:instructionsButton:373816:
 
 public void nameTextField_change(GTextField source, GEvent event) { //_CODE_:nameTextField:264905:
-  println("nameTextField - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:nameTextField:264905:
 
 public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGameButton:427819:
-  println("joinGameButton - GButton >> GEvent." + event + " @ " + millis());
   // Name has to be at least 1 character
   if (nameTextField.getText().length() != 0) {
     // Game ID has to be a number, and the text field cannot be empty

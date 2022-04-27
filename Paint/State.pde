@@ -74,10 +74,10 @@ class LobbyState extends State {
   //Show number of rounds, show players, show category 
   LobbyState() {
     guis = new GAbstractControl []{startGameButton};
+    background(255);
   }
 
   void update() {
-    background(255);
     fill(0, 140, 255);
     textAlign(CENTER);
     textSize(60);
@@ -91,13 +91,32 @@ class LobbyState extends State {
     text("Number of rounds:", 32, 250);
     text(lobby.numberRounds, 314, 250);
     text("Players so far", 32, 350);
-    fill(0,255,32);
+    fill(0, 255, 32);
     int x = 86;
     int y = 400;
     for (int i = 0; i < lobby.playersSoFar.size(); i++) {
       String tel = lobby.playersSoFar.get(i);
       text(tel, x, y);
       y+= 50;
+    }
+    List<String> messages = messenger.readMessages();
+    for (String message : messages) {
+      handleMessage(message);
+    }
+  }
+
+  private void handleMessage(String message) {
+    String[] split = message.split(" ");
+    String messageType = split[0];
+    switch (messageType) {
+    case "joining":
+      String joiningPlayer = split[1];
+      println(joiningPlayer + " has joined the lobby");
+      lobby.playersSoFar.add(joiningPlayer);
+      break;
+    default:
+      println("Received message " + message);
+      break;
     }
   }
 }
