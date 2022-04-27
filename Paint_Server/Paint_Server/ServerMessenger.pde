@@ -59,7 +59,6 @@ public class ServerMessenger {
       }
     }     
     catch (SocketTimeoutException e) {
-      println("no new players");
     } 
     catch (IOException e) {
       e.printStackTrace();
@@ -82,7 +81,6 @@ public class ServerMessenger {
   }
 
   List<Message> readMessages() {
-    println("Reading messages");
     List<Message> messages = new ArrayList<Message>();
     String messageBody;
     // Get messages from all connected clients
