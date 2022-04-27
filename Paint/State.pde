@@ -83,5 +83,13 @@ class InstructionsState extends State {
       text( "Lobby!", width/2, 100 );
       text(lobby.category,500,300);
       text(lobby.numberRounds,500,300);
+      int x = 500;
+      int y = 500;
+      for (int i = 0; i < lobby.playersSoFar.size(); i++){
+        String tel = lobby.playersSoFar.get(i);
+        text(tel, x, y);
+        y+= 50;
+      }
+      
     }
 }
