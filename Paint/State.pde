@@ -69,6 +69,7 @@ class InstructionsState extends State {
   }
 }
   class LobbyState extends State {
+    Lobby lobby = new Lobby();
     //Show number of rounds, show players, show category 
     LobbyState()
     {
@@ -80,5 +81,7 @@ class InstructionsState extends State {
       background(255);
       fill(0, 140, 255);
       text( "Lobby!", width/2, 100 );
+      text(lobby.category,500,300);
+      text(lobby.numberRounds,500,300);
     }
 }
