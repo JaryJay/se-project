@@ -17,30 +17,30 @@ void draw() {
 }
 
 
-private void handleMessage(Message message) {
-  String[] split = message.body.split(" ");
+private void handleMessage(Message messageRecieved) {
+  String[] split = messageRecieved.body.split(" ");
   String messageType = split[0];
   switch (messageType) {
   case "host":
-    println(message.playerName + " tried to host a game");
+    println(messageRecieved.playerName + " tried to host a game");
     int gameID = generateID();
-    messenger.writeMessage(message.playerName, "host " + gameID);
+    messenger.writeMessage(messageRecieved.playerName, "host " + gameID);
     // Create new Game
-    idToGame.put(gameID, new Game(message.playerName));
+    idToGame.put(gameID, new Game(messageRecieved.playerName));
     break;
   case "join":
-    println(message.playerName + " tried to join a game");
+    println(messageRecieved.playerName + " tried to join a game");
     try {
       int id = Integer.parseInt(split[1]);
       if (idToGame.get(id) == null) {
-        messenger.writeMessage(message.playerName, "invalidID");
+        messenger.writeMessage(messageRecieved.playerName, "invalidID");
       } else {
         Game game = idToGame.get(id);
         for (String player : game.players) {
-          messenger.writeMessage(player, "joining " + message.playerName);
+          messenger.writeMessage(player, "joining " + messageRecieved.playerName);
         }
-        game.players.add(message.playerName);
-        messenger.writeMessage(message.playerName, "joinSuccess " + game.category + " " + game.players);
+        game.players.add(messageRecieved.playerName);
+        messenger.writeMessage(messageRecieved.playerName, "joinSuccess " + game.category + " " + game.players);
       }
     } 
     catch (NumberFormatException e) {
@@ -48,7 +48,7 @@ private void handleMessage(Message message) {
     }
     break;
   default:
-    println("Received message " + message);
+    println("Received message " + messageRecieved);
     break;
   }
 }
