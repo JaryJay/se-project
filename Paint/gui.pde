@@ -58,14 +58,17 @@ public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGa
           // Get player names from received message
           // Create a lobby state
           // Add the player names to the lobby.playersSoFar
-          
           String [] split = receivedMessage.split(" ");
           String category = split[1];
+          
           for (int i = 2; i < split.length; i++) {
-          String playerName = split[i];
-          lobbyState.lobby.playersSoFar.add(playerName);
-           transitionState(lobbyState);
-        }
+            String playerName = split[i];
+            lobbyState.lobby.playersSoFar.add(playerName);
+          }
+          lobbyState.lobby.category = category;
+          lobbyState.lobby.id = gameID;
+          
+          transitionState(lobbyState);
         } else {
           println("Couldn't join game because " + receivedMessage);
         }
