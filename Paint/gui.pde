@@ -129,6 +129,46 @@ public void startGameButton_click(GButton source, GEvent event) { //_CODE_:start
   }
 } //_CODE_:startGameButton:473074:
 
+public void redButtonClick(GButton source, GEvent event) { //_CODE_:redColourButton:831488:
+  println("redColourButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:redColourButton:831488:
+
+public void blueButtonClick(GButton source, GEvent event) { //_CODE_:blueColourButton:313958:
+  println("blueColourButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:blueColourButton:313958:
+
+public void greenButtonClick(GButton source, GEvent event) { //_CODE_:greenColourButton:860283:
+  println("greenColourButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:greenColourButton:860283:
+
+public void brushSizeButtonClick(GCustomSlider source, GEvent event) { //_CODE_:BrushSize:266565:
+  println("BrushSize - GCustomSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:BrushSize:266565:
+
+public void yellowButtonClick(GButton source, GEvent event) { //_CODE_:yellowColourButton:363535:
+  println("yellowColourButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:yellowColourButton:363535:
+
+public void orangeButtonClick(GButton source, GEvent event) { //_CODE_:orangeColourButton:859722:
+  println("orangeColourButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:orangeColourButton:859722:
+
+public void purpleButtonClick(GButton source, GEvent event) { //_CODE_:purpleColourButton:749936:
+  println("purpleColourButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:purpleColourButton:749936:
+
+public void cyanButtonClick(GButton source, GEvent event) { //_CODE_:cyanColourButton:517638:
+  println("cyanColourButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:cyanColourButton:517638:
+
+public void eraserButtonClick(GButton source, GEvent event) { //_CODE_:eraserButton:740076:
+  println("eraserButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:eraserButton:740076:
+
+public void clearButtonClick(GButton source, GEvent event) { //_CODE_:clearAllButton:474814:
+  println("clearAllButton - GButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:clearAllButton:474814:
+
 
 
 // Create all the GUI controls. 
@@ -166,6 +206,46 @@ public void createGUI(){
   startGameButton = new GButton(this, 500, 385, 180, 60);
   startGameButton.setText("Start Game!");
   startGameButton.addEventHandler(this, "startGameButton_click");
+  redColourButton = new GButton(this, 12, 29, 49, 30);
+  redColourButton.setText("Red");
+  redColourButton.setLocalColorScheme(GCScheme.RED_SCHEME);
+  redColourButton.addEventHandler(this, "redButtonClick");
+  blueColourButton = new GButton(this, 11, 76, 51, 30);
+  blueColourButton.setText("Blue");
+  blueColourButton.addEventHandler(this, "blueButtonClick");
+  greenColourButton = new GButton(this, 11, 123, 51, 30);
+  greenColourButton.setText("Green");
+  greenColourButton.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  greenColourButton.addEventHandler(this, "greenButtonClick");
+  BrushSize = new GCustomSlider(this, 102, 29, 161, 34, "grey_blue");
+  BrushSize.setLimits(0.5, 0.0, 1.0);
+  BrushSize.setNumberFormat(G4P.DECIMAL, 2);
+  BrushSize.setOpaque(false);
+  BrushSize.addEventHandler(this, "brushSizeButtonClick");
+  yellowColourButton = new GButton(this, 12, 170, 49, 30);
+  yellowColourButton.setText("Yellow");
+  yellowColourButton.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+  yellowColourButton.addEventHandler(this, "yellowButtonClick");
+  orangeColourButton = new GButton(this, 12, 217, 51, 30);
+  orangeColourButton.setText("Orange");
+  orangeColourButton.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
+  orangeColourButton.addEventHandler(this, "orangeButtonClick");
+  purpleColourButton = new GButton(this, 13, 262, 52, 30);
+  purpleColourButton.setText("Purple");
+  purpleColourButton.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
+  purpleColourButton.addEventHandler(this, "purpleButtonClick");
+  cyanColourButton = new GButton(this, 13, 309, 53, 30);
+  cyanColourButton.setText("Cyan");
+  cyanColourButton.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+  cyanColourButton.addEventHandler(this, "cyanButtonClick");
+  eraserButton = new GButton(this, 192, 78, 70, 30);
+  eraserButton.setText("Eraser");
+  eraserButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  eraserButton.addEventHandler(this, "eraserButtonClick");
+  clearAllButton = new GButton(this, 103, 78, 70, 30);
+  clearAllButton.setText("Clear All");
+  clearAllButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  clearAllButton.addEventHandler(this, "clearButtonClick");
 }
 
 // Variable declarations 
@@ -178,3 +258,13 @@ GButton joinGameButton;
 GTextField idTextField; 
 GButton hostGameButton; 
 GButton startGameButton; 
+GButton redColourButton; 
+GButton blueColourButton; 
+GButton greenColourButton; 
+GCustomSlider BrushSize; 
+GButton yellowColourButton; 
+GButton orangeColourButton; 
+GButton purpleColourButton; 
+GButton cyanColourButton; 
+GButton eraserButton; 
+GButton clearAllButton; 

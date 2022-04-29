@@ -11,7 +11,7 @@ void setup() {
   textFont( f1 );
   textAlign(CENTER);
 
-  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField, idTextField, joinGameButton, hostGameButton, startGameButton};
+  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField, idTextField, joinGameButton, hostGameButton, startGameButton, redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, BrushSize, clearAllButton, eraserButton };
   for (GAbstractControl gui : allGuis) {
     gui.setVisible(false);
   }
