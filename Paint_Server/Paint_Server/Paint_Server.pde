@@ -75,19 +75,41 @@ private void handleMessage(Message messageReceived) {
       System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
     }
     println(messageReceived.playerName + " has started the game");
+    break;
   case "paint":
+    try {
+      int id = int(split[1]);
+      if (idToGame.get(id) == null) {
+        messenger.writeMessage(messageReceived.playerName, "invalidID");
+        break;
+      }
+      Game game = idToGame.get(id);
+      for (String player : game.players) {
+        if (!player.equals(messageReceived.playerName)) {
+          messenger.writeMessage(player, messageReceived.body);
+        }
+      }
+    }
+    catch (NumberFormatException e) {
+      System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
+    }
+    break;
+  case "guess":
     int id = int(split[1]);
     if (idToGame.get(id) == null) {
       messenger.writeMessage(messageReceived.playerName, "invalidID");
       break;
     }
     Game game = idToGame.get(id);
+    // if (split[2].equals(game.round.word) ) {...}
+    boolean correct = split[2].equalsIgnoreCase("baguette");
     for (String player : game.players) {
-      if (!player.equals(messageReceived.playerName)) {
-        messenger.writeMessage(player, messageReceived.body);
-      }
+      messenger.writeMessage(player, "guess " + messageReceived.playerName + " " + split[2] + " " + correct);
     }
-    break;
+    if (correct) {
+      game.generateWord();
+      // Send to everyone
+    }
   default:
     println("Received message " + messageReceived);
     break;
