@@ -27,6 +27,8 @@ void setup() {
   state.showGuis();
 }
 
+// draw(), mousePressed(), mouseDragged(), and keyPressed() delegate to the state
+
 void draw() {
   state.update();
 }
@@ -43,6 +45,7 @@ void keyPressed() {
   state.keyPressed();
 }
 
+// Changes the state to a new one
 void transitionState(State newState) {
   // Hide previous state
   state.hideGuis();

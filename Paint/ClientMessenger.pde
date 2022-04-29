@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+// Used to communicate with the server
 class ClientMessenger {
 
   private Socket socket;
@@ -14,6 +15,7 @@ class ClientMessenger {
   
   List<String> fakeMessages = new ArrayList<String>();
 
+  // Initializes the socket, reader, and writer
   void init() {
     try {
       socket = new Socket("99.250.93.242", 45000);
@@ -24,18 +26,8 @@ class ClientMessenger {
       throw new RuntimeException("Could not initialize client messenger.");
     }
   }
-
-  void update() {
-    List<String> messages = readMessages();
-    for (String message : messages) {
-      handleMessage(message);
-    }
-  }
-
-  private void handleMessage(String message) {
-    
-  }
   
+  // Blocks until a message is ready and reads it
   String readOneMessage() {
     try {
       return reader.readLine();
@@ -45,6 +37,7 @@ class ClientMessenger {
     return null;
   }
 
+  // Returns a list of received messages. If the server hasn't responded yet, then this list will be empty.
   private List<String> readMessages() {
     List<String> messages = new ArrayList<String>(fakeMessages);
     fakeMessages.clear();
@@ -63,6 +56,7 @@ class ClientMessenger {
     return messages;
   }
 
+  // Writes a message to the server.
   private void writeMessage(String message) {
     if (writer != null) {
       writer.println(message);
@@ -73,6 +67,7 @@ class ClientMessenger {
     }
   }
   
+  // Ends the client messenger. Call this when the user is exiting the program
   void close() {
     try {
       reader.close();
