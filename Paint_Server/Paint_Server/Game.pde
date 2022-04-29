@@ -5,6 +5,7 @@ class Game {
 
   String host;
   List<String> players = new ArrayList<String>();
+  int nextPainterIndex = 0;
   String category;
 
   Round round;
@@ -25,5 +26,19 @@ class Game {
   
   void startNewRound() {
     
+  }
+  
+  String choosePainter() {
+    String painter = players.get(nextPainterIndex);
+    nextPainterIndex = (nextPainterIndex + 1) % players.size();
+    return painter;
+  }
+  
+  String generateWord() {
+    // TODO generate from a list of words
+    if (category.equals("Food")) {
+      return "Baguette";
+    }
+    return "Water bottle";
   }
 }
