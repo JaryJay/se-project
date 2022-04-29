@@ -144,32 +144,12 @@ class GameState extends State {
 
   //Show number of rounds, show players, show category 
   GameState() {
-    guis = new GAbstractControl []{startGameButton};
+    guis = new GAbstractControl []{};
     background(255);
   }
 
   void update() {
-    fill(0, 140, 255);
-    textAlign(CENTER);
-    textSize(60);
-    text( "Lobby!", width/2, 68 );
-    textAlign(LEFT);
-    textSize(32);
-    text("Game ID:", 32, 150);
-    text(lobby.id, 314, 150);
-    text("Category:", 32, 200);
-    text(lobby.category, 314, 200);
-    text("Number of rounds:", 32, 250);
-    text(lobby.numberRounds, 314, 250);
-    text("Players so far", 32, 350);
-    fill(0, 255, 32);
-    int x = 86;
-    int y = 400;
-    for (int i = 0; i < lobby.playersSoFar.size(); i++) {
-      String tel = lobby.playersSoFar.get(i);
-      text(tel, x, y);
-      y+= 50;
-    }
+   
     List<String> messages = messenger.readMessages();
     for (String message : messages) {
       handleMessage(message);
