@@ -108,6 +108,25 @@ public void startGameButton_click(GButton source, GEvent event) { //_CODE_:start
   int id = ((LobbyState)state).lobby.id;
   messenger.writeMessage("start "+ id);
   
+  String receivedMessage = messenger.readOneMessage();
+  String[] split = receivedMessage.split(" ");
+  if(receivedMessage.startsWith("painter"))
+  {
+    GameState gameState = new GameState();
+    gameState.painter = "asdf";
+    transitionState(gameState);
+    
+  }
+  else if(receivedMessage.startsWith("starting"))
+  {
+    GameState gameState = new GameState();
+    gameState.painter = split[1];
+    transitionState(new GameState());
+  }
+  else
+  {
+    println(receivedMessage);
+  }
 } //_CODE_:startGameButton:473074:
 
 

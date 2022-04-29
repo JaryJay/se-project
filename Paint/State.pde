@@ -141,6 +141,7 @@ class LobbyState extends State {
 }
 class GameState extends State {
   Lobby lobby = new Lobby();
+  String painter;
 
   //Show number of rounds, show players, show category 
   GameState() {
@@ -149,7 +150,7 @@ class GameState extends State {
   }
 
   void update() {
-   
+    
     List<String> messages = messenger.readMessages();
     for (String message : messages) {
       handleMessage(message);
