@@ -105,7 +105,9 @@ public void hostGameButton_click(GButton source, GEvent event) { //_CODE_:hostGa
 } //_CODE_:hostGameButton:769528:
 
 public void startGameButton_click(GButton source, GEvent event) { //_CODE_:startGameButton:473074:
-  println("button1 - GButton >> GEvent." + event + " @ " + millis());
+  int id = ((LobbyState)state).lobby.id;
+  messenger.writeMessage("start "+ id);
+  
 } //_CODE_:startGameButton:473074:
 
 
