@@ -67,8 +67,6 @@ private void handleMessage(Message messageReceived) {
             messenger.writeMessage(player, "starting " + painter);
           }
         }
-        // TODO generate word, choose painter
-        messenger.writeMessage(messageReceived.playerName, "startSuccess");
       }
     }
     catch (NumberFormatException e) {
