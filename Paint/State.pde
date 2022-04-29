@@ -21,6 +21,9 @@ abstract class State {
 
   void mouseDragged() {
   }
+  
+  void keyPressed() {
+  }
 }
 
 class MainMenuState extends State {
