@@ -75,6 +75,19 @@ private void handleMessage(Message messageReceived) {
       System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
     }
     println(messageReceived.playerName + " has started the game");
+  case "paint":
+    int id = int(split[1]);
+    if (idToGame.get(id) == null) {
+      messenger.writeMessage(messageReceived.playerName, "invalidID");
+      break;
+    }
+    Game game = idToGame.get(id);
+    for (String player : game.players) {
+      if (!player.equals(messageReceived.playerName)) {
+        messenger.writeMessage(player, messageReceived.body);
+      }
+    }
+    break;
   default:
     println("Received message " + messageReceived);
     break;
