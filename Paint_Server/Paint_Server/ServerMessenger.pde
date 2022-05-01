@@ -113,4 +113,15 @@ public class ServerMessenger {
       writer.flush();
     }
   }
+  
+  void close() {
+    for (String player : nameToSocket.keySet()) {
+      removePlayer(player);
+    }
+    try {
+      serverSocket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

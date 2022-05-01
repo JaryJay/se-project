@@ -62,9 +62,9 @@ private void handleMessage(Message messageReceived) {
         String word = game.generateWord();
         for (String player : game.players) {
           if (player.equals(painter)) {
-            messenger.writeMessage(player, "painter " + word);
+            messenger.writeMessage(player, "startRoundAsPainter " + word);
           } else {
-            messenger.writeMessage(player, "starting " + painter);
+            messenger.writeMessage(player, "startRound " + painter);
           }
         }
       }
@@ -111,5 +111,15 @@ private void handleMessage(Message messageReceived) {
   default:
     println("Received message " + messageReceived);
     break;
+  }
+}
+
+void keyPressed() {
+  if (key == 'r') {
+    // Restart the messenger and all the games
+    messenger.close();
+    messenger = new ServerMessenger();
+    messenger.init();
+    idToGame = new HashMap<Integer, Game>();
   }
 }

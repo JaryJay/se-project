@@ -5,9 +5,12 @@ ClientMessenger messenger;
 // The current state
 State state;
 
+String clientName;
+
 void setup() {
   size(800, 800);
   background(255);
+  frameRate(30);
   createGUI();
   // Use a font
   PFont f1 = createFont("Cambria", 60);
@@ -71,6 +74,8 @@ boolean connectToServer(String name) {
     return false;
   } else {
     println("Connected to server.");
+    // Store the client's name
+    clientName = name;
     return true;
   }
 }

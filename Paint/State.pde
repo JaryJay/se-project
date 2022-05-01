@@ -79,10 +79,16 @@ class InstructionsState extends State {
 }
 class LobbyState extends State {
   Lobby lobby = new Lobby();
+  boolean isHost;
 
   //Show number of rounds, show players, show category 
-  LobbyState() {
-    guis = new GAbstractControl []{startGameButton};
+  LobbyState(boolean isHost) {
+    this.isHost = isHost;
+    if (isHost) {
+      guis = new GAbstractControl[] {startGameButton};
+    } else {
+      guis = new GAbstractControl[] {};
+    }
     background(255);
   }
 
@@ -93,6 +99,9 @@ class LobbyState extends State {
     text( "Lobby!", width/2, 68 );
     textAlign(LEFT);
     textSize(32);
+    if (!isHost) {
+      text("Waiting for the host\nto start the game...", 500, 385);
+    }
     text("Game ID:", 32, 150);
     text(lobby.id, 314, 150);
     text("Category:", 32, 200);
@@ -123,6 +132,20 @@ class LobbyState extends State {
       println(joiningPlayer + " has joined the lobby");
       lobby.playersSoFar.add(joiningPlayer);
       break;
+    case "startRound":
+      {
+        GameState gameState = new GameState();
+        gameState.painter = split[1];
+        transitionState(gameState);
+      }
+      break;
+    case "startRoundAsPainter":
+      {
+        GameState gameState = new GameState();
+        gameState.painter = clientName;
+        transitionState(gameState);
+      }
+      break;
     default:
       println("Received message " + message);
       break;
@@ -143,7 +166,6 @@ class LobbyState extends State {
   }
 }
 class GameState extends State {
-  Lobby lobby = new Lobby();
   String painter;
 
   //Show number of rounds, show players, show category 
@@ -164,10 +186,7 @@ class GameState extends State {
     String[] split = message.split(" ");
     String messageType = split[0];
     switch (messageType) {
-    case "joining":
-      String joiningPlayer = split[1];
-      println(joiningPlayer + " has joined the lobby");
-      lobby.playersSoFar.add(joiningPlayer);
+    case "paint":
       break;
     default:
       println("Received message " + message);

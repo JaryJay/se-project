@@ -52,7 +52,7 @@ public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGa
 
         if (receivedMessage.startsWith("joinSuccess"))
         {
-          LobbyState lobbyState = new LobbyState();
+          LobbyState lobbyState = new LobbyState(false);
           // Get player names from received message
           // Create a lobby state
           // Add the player names to the lobby.playersSoFar
@@ -94,7 +94,7 @@ public void hostGameButton_click(GButton source, GEvent event) { //_CODE_:hostGa
       int gameID = int(received.split(" ")[1]);
       println("Hosting game with ID = " + gameID + ". Woohoo!");
       // Go to lobby state (with ability to change settings)
-      LobbyState state = new LobbyState();
+      LobbyState state = new LobbyState(true);
       state.lobby.id = gameID;
       state.lobby.playersSoFar.add(nameTextField.getText());
       transitionState(state);
@@ -107,26 +107,6 @@ public void hostGameButton_click(GButton source, GEvent event) { //_CODE_:hostGa
 public void startGameButton_click(GButton source, GEvent event) { //_CODE_:startGameButton:473074:
   int id = ((LobbyState)state).lobby.id;
   messenger.writeMessage("start "+ id);
-  
-  String receivedMessage = messenger.readOneMessage();
-  String[] split = receivedMessage.split(" ");
-  if(receivedMessage.startsWith("painter"))
-  {
-    GameState gameState = new GameState();
-    gameState.painter = "asdf";
-    transitionState(gameState);
-    
-  }
-  else if(receivedMessage.startsWith("starting"))
-  {
-    GameState gameState = new GameState();
-    gameState.painter = split[1];
-    transitionState(new GameState());
-  }
-  else
-  {
-    println(receivedMessage);
-  }
 } //_CODE_:startGameButton:473074:
 
 public void redButtonClick(GButton source, GEvent event) { //_CODE_:redColourButton:831488:
