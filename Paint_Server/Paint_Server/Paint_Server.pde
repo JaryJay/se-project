@@ -19,6 +19,10 @@ void draw() {
 
 private void handleMessage(Message messageReceived) {
   String[] split = messageReceived.body.split(" ");
+  if (split.length == 0) {
+    messenger.writeMessage(messageReceived.playerName, "Error: server received an empty message");
+    return;
+  }
   String messageType = split[0];
   switch (messageType) {
   case "host":
@@ -84,7 +88,9 @@ private void handleMessage(Message messageReceived) {
       Game game = idToGame.get(id);
       for (String player : game.players) {
         if (!player.equals(messageReceived.playerName)) {
-          messenger.writeMessage(player, messageReceived.body);
+          String m = "paint " + split[2] + " " + split[3] + " " + split[4] + " " + split[5] + " " + split[6] + " " + split[7];
+          println("Sending " + m);
+          messenger.writeMessage(player, m);
         }
       }
     }

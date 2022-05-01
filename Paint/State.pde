@@ -186,6 +186,7 @@ class PreRoundState extends State {
       handleMessage(message);
     }
     if (painter.equals(clientName)) {
+      fill(0, 140, 255);
       text("You are the painter!", 200, 200);
       text("Your word is " + word + "!", 200, 300);
     }
@@ -218,6 +219,7 @@ class RoundState extends State {
   // The frame number at which this state started.
   // Used to determine when to transition to the next PreRoundState
   int startTime;
+  color strokeColor = color(0, 0, 0);
 
   //Show number of rounds, show players, show category 
   RoundState(String painter) {
@@ -245,6 +247,15 @@ class RoundState extends State {
     String messageType = split[0];
     switch (messageType) {
     case "paint":
+      int x1 = int(split[1]);
+      int y1 = int(split[2]);
+      int x2 = int(split[3]);
+      int y2 = int(split[4]);
+      color c = color(int(split[5]));
+      int brushSize = int(split[6]);
+      fill(c);
+      strokeWeight(brushSize);
+      line(x1, y1, x2, y2);
       break;
     default:
       println("Received message " + message);
@@ -253,15 +264,22 @@ class RoundState extends State {
   }
 
   void mousePressed() {
-    fill(0);
-    strokeWeight(40);
-    line(mouseX, mouseY, pmouseX, pmouseY);
+    paint();
   }
 
 
   void mouseDragged() {
-    fill(0);
-    strokeWeight(40);
-    line(mouseX, mouseY, pmouseX, pmouseY);
+    paint();
+  }
+
+  void paint() {
+    if (painter.equals(clientName)) {
+      fill(strokeColor);
+      int brushSize = brushSizeSlider.getValueI();
+      strokeWeight(brushSize);
+      line(mouseX, mouseY, pmouseX, pmouseY);
+      // paint <gameID> <x1> <y1> <x2> <y2> <color> <brushSize>
+      messenger.writeMessage("paint " + gameID + " " + mouseX + " " + mouseY + " " + pmouseX + " " + pmouseY + " " + strokeColor + " " + brushSize);
+    }
   }
 }

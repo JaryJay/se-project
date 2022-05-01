@@ -6,6 +6,7 @@ ClientMessenger messenger;
 State state;
 
 String clientName;
+int gameID;
 
 void setup() {
   size(800, 800);

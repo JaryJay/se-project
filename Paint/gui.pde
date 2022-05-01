@@ -34,7 +34,6 @@ public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGa
   if (nameTextField.getText().length() != 0) {
     // Game ID has to be a number, and the text field cannot be empty
     if (idTextField.getText().length() != 0) {
-      int gameID;
       // Check that the ID is a proper number (and not other characters)
       try {
         gameID = int(idTextField.getText());
@@ -91,7 +90,7 @@ public void hostGameButton_click(GButton source, GEvent event) { //_CODE_:hostGa
       String received = messenger.readOneMessage();
       println(received);
       // Game ID is the second word in the message
-      int gameID = int(received.split(" ")[1]);
+      gameID = int(received.split(" ")[1]);
       println("Hosting game with ID = " + gameID + ". Woohoo!");
       // Go to lobby state (with ability to change settings)
       LobbyState state = new LobbyState(true);
