@@ -19,7 +19,7 @@ void setup() {
 
 
   // Hide all of the guis at the start
-  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField, idTextField, joinGameButton, hostGameButton, startGameButton, redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, blackColourButton, BrushSize, clearAllButton, eraserButton };
+  GAbstractControl[] allGuis = {joinButton, hostButton, instructionsButton, nameTextField, idTextField, joinGameButton, hostGameButton, startGameButton, redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, blackColourButton, brushSizeSlider, clearAllButton, eraserButton, guessTextBox };
   for (GAbstractControl gui : allGuis) {
     gui.setVisible(false);
   }

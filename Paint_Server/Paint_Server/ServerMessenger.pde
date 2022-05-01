@@ -7,8 +7,10 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 // Sends and receives messages through TCP connections.
 public class ServerMessenger {
@@ -115,6 +117,7 @@ public class ServerMessenger {
   }
   
   void close() {
+    Set<String> players = new HashSet<String>(nameToSocket.keySet());
     for (String player : nameToSocket.keySet()) {
       removePlayer(player);
     }

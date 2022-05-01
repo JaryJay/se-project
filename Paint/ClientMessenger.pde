@@ -11,7 +11,7 @@ class ClientMessenger {
   private Socket socket;
   private BufferedReader reader;
   private PrintWriter writer;
-  
+
   List<String> fakeMessages = new ArrayList<String>();
 
   // Initializes the socket, reader, and writer
@@ -21,16 +21,18 @@ class ClientMessenger {
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       writer = new PrintWriter(socket.getOutputStream(), true);
       println("Client messenger initialized.");
-    } catch (IOException e) {
+    } 
+    catch (IOException e) {
       throw new RuntimeException("Could not initialize client messenger.");
     }
   }
-  
+
   // Blocks until a message is ready and reads it
   String readOneMessage() {
     try {
       return reader.readLine();
-    } catch (IOException e) {
+    } 
+    catch (IOException e) {
       e.printStackTrace();
     }
     return null;
@@ -49,7 +51,8 @@ class ClientMessenger {
       while (reader.ready() && (message = reader.readLine()) != null) {
         messages.add(message);
       }
-    } catch (IOException e) {
+    } 
+    catch (IOException e) {
       e.printStackTrace();
     }
     return messages;
@@ -65,16 +68,16 @@ class ClientMessenger {
       println("Pretended to write message '" + message + "' because the server isn't running.");
     }
   }
-  
+
   // Ends the client messenger. Call this when the user is exiting the program
   void close() {
     try {
       reader.close();
       writer.close();
       socket.close();
-    } catch (IOException e) {
+    } 
+    catch (IOException e) {
       e.printStackTrace();
     }
   }
-
 }

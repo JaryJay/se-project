@@ -121,9 +121,9 @@ public void greenButtonClick(GButton source, GEvent event) { //_CODE_:greenColou
   println("greenColourButton - GButton >> GEvent." + event + " @ " + millis());
 } //_CODE_:greenColourButton:860283:
 
-public void brushSizeButtonClick(GCustomSlider source, GEvent event) { //_CODE_:BrushSize:266565:
+public void brushSizeSlider_change(GCustomSlider source, GEvent event) { //_CODE_:brushSizeSlider:266565:
   println("BrushSize - GCustomSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:BrushSize:266565:
+} //_CODE_:brushSizeSlider:266565:
 
 public void yellowButtonClick(GButton source, GEvent event) { //_CODE_:yellowColourButton:363535:
   println("yellowColourButton - GButton >> GEvent." + event + " @ " + millis());
@@ -152,6 +152,10 @@ public void clearButtonClick(GButton source, GEvent event) { //_CODE_:clearAllBu
 public void blackButtonClick(GButton source, GEvent event) { //_CODE_:blackColourButton:553256:
   println("blackColourButton - GButton >> GEvent." + event + " @ " + millis());
 } //_CODE_:blackColourButton:553256:
+
+public void guessTextBox_change(GTextField source, GEvent event) { //_CODE_:guessTextBox:812170:
+  println("guessTextBox - GTextField >> GEvent." + event + " @ " + millis());
+} //_CODE_:guessTextBox:812170:
 
 
 
@@ -201,11 +205,15 @@ public void createGUI(){
   greenColourButton.setText("Green");
   greenColourButton.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   greenColourButton.addEventHandler(this, "greenButtonClick");
-  BrushSize = new GCustomSlider(this, 102, 29, 161, 34, "grey_blue");
-  BrushSize.setLimits(0.5, 0.0, 1.0);
-  BrushSize.setNumberFormat(G4P.DECIMAL, 2);
-  BrushSize.setOpaque(false);
-  BrushSize.addEventHandler(this, "brushSizeButtonClick");
+  brushSizeSlider = new GCustomSlider(this, 102, 29, 161, 34, "grey_blue");
+  brushSizeSlider.setShowValue(true);
+  brushSizeSlider.setLimits(40, 1, 100);
+  brushSizeSlider.setNbrTicks(100);
+  brushSizeSlider.setStickToTicks(true);
+  brushSizeSlider.setShowTicks(true);
+  brushSizeSlider.setNumberFormat(G4P.INTEGER, 0);
+  brushSizeSlider.setOpaque(false);
+  brushSizeSlider.addEventHandler(this, "brushSizeSlider_change");
   yellowColourButton = new GButton(this, 12, 170, 49, 30);
   yellowColourButton.setText("Yellow");
   yellowColourButton.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
@@ -234,6 +242,10 @@ public void createGUI(){
   blackColourButton.setText("Black");
   blackColourButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   blackColourButton.addEventHandler(this, "blackButtonClick");
+  guessTextBox = new GTextField(this, 631, 753, 150, 30, G4P.SCROLLBARS_NONE);
+  guessTextBox.setPromptText("Guess!");
+  guessTextBox.setOpaque(true);
+  guessTextBox.addEventHandler(this, "guessTextBox_change");
 }
 
 // Variable declarations 
@@ -249,7 +261,7 @@ GButton startGameButton;
 GButton redColourButton; 
 GButton blueColourButton; 
 GButton greenColourButton; 
-GCustomSlider BrushSize; 
+GCustomSlider brushSizeSlider; 
 GButton yellowColourButton; 
 GButton orangeColourButton; 
 GButton purpleColourButton; 
@@ -257,3 +269,4 @@ GButton cyanColourButton;
 GButton eraserButton; 
 GButton clearAllButton; 
 GButton blackColourButton; 
+GTextField guessTextBox; 

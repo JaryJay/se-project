@@ -1,4 +1,4 @@
-abstract class State { 
+abstract class State {
 
   GAbstractControl[] guis;
 
@@ -21,7 +21,7 @@ abstract class State {
 
   void mouseDragged() {
   }
-  
+
   void keyPressed() {
   }
 }
@@ -77,6 +77,7 @@ class InstructionsState extends State {
     text( "Instructions!", width/2, 100 );
   }
 }
+
 class LobbyState extends State {
   Lobby lobby = new Lobby();
   boolean isHost;
@@ -132,18 +133,16 @@ class LobbyState extends State {
       println(joiningPlayer + " has joined the lobby");
       lobby.playersSoFar.add(joiningPlayer);
       break;
-    case "startRound":
+    case "startPreRound":
       {
-        GameState gameState = new GameState();
-        gameState.painter = split[1];
-        transitionState(gameState);
+        transitionState(new PreRoundState(split[1]));
       }
       break;
-    case "startRoundAsPainter":
+    case "startPreRoundAsPainter":
       {
-        GameState gameState = new GameState();
-        gameState.painter = clientName;
-        transitionState(gameState);
+        PreRoundState preRoundState = new PreRoundState(clientName);
+        preRoundState.word = split[1];
+        transitionState(preRoundState);
       }
       break;
     default:
@@ -151,31 +150,90 @@ class LobbyState extends State {
       break;
     }
   }
-  
+
   void mousePressed() {
     fill(0);
-    strokeWeight(20);
+    strokeWeight(40);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 
 
   void mouseDragged() {
     fill(0);
-    strokeWeight(50);
+    strokeWeight(40);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 }
-class GameState extends State {
+
+class PreRoundState extends State {
   String painter;
+  String word;
+  // The frame number at which this state started.
+  // Used to determine when to transition to the RoundState
+  int startTime;
 
   //Show number of rounds, show players, show category 
-  GameState() {
+  PreRoundState(String painter) {
+    this.painter = painter;
     guis = new GAbstractControl []{};
     background(255);
+    startTime = millis();
   }
 
   void update() {
-    
+    List<String> messages = messenger.readMessages();
+    for (String message : messages) {
+      handleMessage(message);
+    }
+    if (painter.equals(clientName)) {
+      text("You are the painter!", 200, 200);
+      text("Your word is " + word + "!", 200, 300);
+    }
+    // Transition to round state after 5 seconds
+    if (millis() - startTime >= 5000) {
+      transitionState(new RoundState(painter));
+    }
+  }
+
+  private void handleMessage(String message) {
+    println("Received message " + message);
+  }
+
+  void mousePressed() {
+    fill(0);
+    strokeWeight(40);
+    line(mouseX, mouseY, pmouseX, pmouseY);
+  }
+
+
+  void mouseDragged() {
+    fill(0);
+    strokeWeight(40);
+    line(mouseX, mouseY, pmouseX, pmouseY);
+  }
+}
+
+class RoundState extends State {
+  String painter;
+  // The frame number at which this state started.
+  // Used to determine when to transition to the next PreRoundState
+  int startTime;
+
+  //Show number of rounds, show players, show category 
+  RoundState(String painter) {
+    this.painter = painter;
+    // If client is painting, then show painting tools
+    // Otherwise show guessing textbox
+    if (painter.equals(clientName)) {
+      guis = new GAbstractControl []{redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, eraserButton, clearAllButton, blackColourButton};
+    } else {
+      guis = new GAbstractControl []{guessTextBox};
+    }
+    background(255);
+    startTime = millis();
+  }
+
+  void update() {
     List<String> messages = messenger.readMessages();
     for (String message : messages) {
       handleMessage(message);
@@ -193,17 +251,17 @@ class GameState extends State {
       break;
     }
   }
-  
+
   void mousePressed() {
     fill(0);
-    strokeWeight(20);
+    strokeWeight(40);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 
 
   void mouseDragged() {
     fill(0);
-    strokeWeight(50);
+    strokeWeight(40);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 }

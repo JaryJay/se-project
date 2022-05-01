@@ -10,7 +10,4 @@ class Lobby {
   Lobby() {
   }
 
-  Round beginRound() {
-    return null;
-  }
 }

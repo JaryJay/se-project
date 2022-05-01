@@ -62,9 +62,9 @@ private void handleMessage(Message messageReceived) {
         String word = game.generateWord();
         for (String player : game.players) {
           if (player.equals(painter)) {
-            messenger.writeMessage(player, "startRoundAsPainter " + word);
+            messenger.writeMessage(player, "startPreRoundAsPainter " + word);
           } else {
-            messenger.writeMessage(player, "startRound " + painter);
+            messenger.writeMessage(player, "startPreRound " + painter);
           }
         }
       }
