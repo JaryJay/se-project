@@ -59,6 +59,7 @@ void transitionState(State newState) {
 boolean connectToServer(String name) {
   messenger = new ClientMessenger();
   messenger.init();
+  name = name.replaceAll(" ", "_");
   // Write the user's name
   messenger.writeMessage(name);
   // Wait for response
