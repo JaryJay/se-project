@@ -1,0 +1,1 @@
+int points = 0;
