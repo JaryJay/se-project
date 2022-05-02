@@ -6,8 +6,4 @@ class Lobby {
   String category = possibleCategories[0];
   List<String> playersSoFar = new ArrayList<String>();
   int numberRounds = 10;
-
-  Lobby() {
-  }
-
 }

@@ -15,18 +15,10 @@ class Game {
     this.category = "Food";
     players.add(host);
   }
-  
+
   String choosePainter() {
     String painter = players.get(nextPainterIndex);
     nextPainterIndex = (nextPainterIndex + 1) % players.size();
     return painter;
-  }
-  
-  String generateWord() {
-    // TODO generate from a list of words
-    if (category.equals("Food")) {
-      return "Baguette";
-    }
-    return "Water bottle";
   }
 }

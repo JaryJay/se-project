@@ -1,0 +1,5 @@
+Food:cheese,bread,yogurt,baguette
+Animals:dog,cat
+Household Objects:spoon,sofa,piano
+Musical Instruments:saxophone
+Icons:paramedic,biohazardous

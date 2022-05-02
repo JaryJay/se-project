@@ -63,11 +63,10 @@ private void handleMessage(Message messageReceived) {
       } else {
         Game game = idToGame.get(id);
         String painter = game.choosePainter();
-        String word = game.generateWord();
-        game.currentWord = word;
+        game.currentWord = generateWordFrom(game.category);
         for (String player : game.players) {
           if (player.equals(painter)) {
-            messenger.writeMessage(player, "startPreRoundAsPainter " + word);
+            messenger.writeMessage(player, "startPreRoundAsPainter " + game.currentWord);
           } else {
             messenger.writeMessage(player, "startPreRound " + painter);
           }
@@ -112,7 +111,7 @@ private void handleMessage(Message messageReceived) {
       messenger.writeMessage(player, "guess " + messageReceived.playerName + " " + split[2] + " " + correct);
     }
     if (correct) {
-      game.currentWord = game.generateWord();
+      game.currentWord = generateWordFrom(game.category);
       String nextPainter = game.choosePainter();
       for (String player : game.players) {
         if (player.equals(nextPainter)) {
