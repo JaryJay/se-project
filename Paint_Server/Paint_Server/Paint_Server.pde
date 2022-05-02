@@ -8,6 +8,10 @@ void setup() {
 }
 
 void draw() {
+  if (millis() >= 4000) {
+    restart();
+    return;
+  }
   messenger.update();
 
   List<Message> messages = messenger.readMessages();
@@ -136,17 +140,17 @@ void keyPressed() {
   }
 }
 
+// Pulls new code from GitHub (if any) and restarts the server
 void restart() {
   println("Preparing to restart server");
   println("Closing messenger");
   messenger.close();
   println("Exiting processing program");
   exit();
-  exec("cd C:/Users/Jay/Documents/GitHub/se-project");
   println("Discarding changes");
-  exec("git reset -hard");
+  exec("git", "reset", "-hard");
   println("Pulling changes from GitHub");
-  exec("git pull");
+  exec("git", "pull");
   println("Executing Paint_Server");
-  exec("C:/processing-3.5.4/processing-java.exe", "--sketch=C:/Users/Jay/Documents/GitHub/se-project/Paint_Server/Paint_Server", "--run");
+  exec("C:/processing-3.5.4/processing-java.exe", "--sketch=" + sketchPath(), "--run");
 }

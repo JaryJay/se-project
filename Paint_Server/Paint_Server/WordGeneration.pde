@@ -1,4 +1,4 @@
-Map<String, List<String>> categoryToWords = new HashMap<>();
+Map<String, List<String>> categoryToWords = new HashMap<String, List<String>>();
 
 void initWordGeneration() {
   String[] categoryInfoLines = loadStrings("category.txt");
