@@ -122,6 +122,7 @@ class LobbyState extends State {
     for (String message : messages) {
       handleMessage(message);
     }
+    messenger.writeMessage("test");
   }
 
   private void handleMessage(String message) {

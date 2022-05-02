@@ -20,6 +20,7 @@ void draw() {
 
 private void handleMessage(Message messageReceived) {
   String[] split = messageReceived.body.split(" ");
+  println("Received message " + messageReceived.body);
   if (split.length == 0) {
     messenger.writeMessage(messageReceived.playerName, "Error: server received an empty message");
     return;
@@ -94,6 +95,7 @@ private void handleMessage(Message messageReceived) {
           messenger.writeMessage(player, m);
         }
       }
+      messenger.writeMessage(messageReceived.playerName, "paintSuccess");
     }
     catch (NumberFormatException e) {
       System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
@@ -148,8 +150,8 @@ void restart() {
   messenger.close();
   println("Exiting processing program");
   exit();
-  println("Discarding changes");
-  exec("git", "reset", "-hard");
+  //println("Discarding changes");
+  //exec("git", "reset", "-hard");
   println("Pulling changes from GitHub");
   exec("git", "pull");
   println("Executing Paint_Server");

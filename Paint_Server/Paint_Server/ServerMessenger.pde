@@ -41,6 +41,7 @@ public class ServerMessenger {
   private void receiveNewPlayersIfAny() {
     try {
       Socket newClient = serverSocket.accept();
+      println("Client joining");
       BufferedReader reader = new BufferedReader(new InputStreamReader(newClient.getInputStream()));
       PrintWriter writer = new PrintWriter(newClient.getOutputStream());
       println("Waiting for client name.");
@@ -70,6 +71,7 @@ public class ServerMessenger {
 
 
   void removePlayer(String player) {
+    println("Removing " + player);
     try {
       nameToReader.get(player).close();
       nameToWriter.get(player).close();
@@ -107,8 +109,13 @@ public class ServerMessenger {
 
   void writeMessage(String playerName, String message) {
     PrintWriter writer = nameToWriter.get(playerName);
-    writer.println(message);
-    writer.flush();
+    try {
+      writer.println(message);
+      writer.flush();
+    } 
+    catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   void writeMessageToAllPlayers(String message) {
@@ -117,7 +124,7 @@ public class ServerMessenger {
       writer.flush();
     }
   }
-  
+
   void close() {
     Set<String> players = new HashSet<String>(nameToSocket.keySet());
     for (String player : players) {
@@ -125,7 +132,8 @@ public class ServerMessenger {
     }
     try {
       serverSocket.close();
-    } catch (IOException e) {
+    } 
+    catch (IOException e) {
       e.printStackTrace();
     }
   }
