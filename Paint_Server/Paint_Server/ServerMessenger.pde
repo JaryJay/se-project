@@ -97,6 +97,7 @@ public class ServerMessenger {
       catch (IOException e) {
         e.printStackTrace();
         println(name + " has been kicked");
+        writeMessage(name, "kicked! " + e.getMessage());
         removePlayer(name);
       }
     } 
@@ -118,7 +119,7 @@ public class ServerMessenger {
   
   void close() {
     Set<String> players = new HashSet<String>(nameToSocket.keySet());
-    for (String player : nameToSocket.keySet()) {
+    for (String player : players) {
       removePlayer(player);
     }
     try {

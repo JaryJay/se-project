@@ -253,7 +253,7 @@ class RoundState extends State {
       int y2 = int(split[4]);
       color c = color(int(split[5]));
       int brushSize = int(split[6]);
-      fill(c);
+      stroke(strokeColor);
       strokeWeight(brushSize);
       line(x1, y1, x2, y2);
       println("Received message " + message + c);
@@ -282,9 +282,9 @@ class RoundState extends State {
 
   void paint() {
     if (painter.equals(clientName)) {
-      fill(strokeColor);
       int brushSize = brushSizeSlider.getValueI();
       strokeWeight(brushSize);
+      stroke(strokeColor);
       line(mouseX, mouseY, pmouseX, pmouseY);
       // paint <gameID> <x1> <y1> <x2> <y2> <color> <brushSize>
       messenger.writeMessage("paint " + gameID + " " + mouseX + " " + mouseY + " " + pmouseX + " " + pmouseY + " " + strokeColor + " " + brushSize);
