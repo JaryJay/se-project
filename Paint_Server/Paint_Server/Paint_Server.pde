@@ -5,13 +5,10 @@ void setup() {
   size(400, 400);
   messenger.init();
   frameRate(3);
+  initWordGeneration();
 }
 
 void draw() {
-  if (millis() >= 4000) {
-    restart();
-    return;
-  }
   messenger.update();
 
   List<Message> messages = messenger.readMessages();
