@@ -256,17 +256,25 @@ class RoundState extends State {
       fill(c);
       strokeWeight(brushSize);
       line(x1, y1, x2, y2);
+      println("Received message " + message + c);
       break;
     default:
       println("Received message " + message);
       break;
     }
   }
+  
+  void keyPressed() {
+    if (guessTextBox.isVisible() && guessTextBox.getText().length() != 0) {
+      guessTextBox.setFocus(false);
+      guessTextBox.setText("");
+      guessTextBox.setFocus(true);
+    }
+  }
 
   void mousePressed() {
     paint();
   }
-
 
   void mouseDragged() {
     paint();

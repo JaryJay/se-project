@@ -109,51 +109,49 @@ public void startGameButton_click(GButton source, GEvent event) { //_CODE_:start
 } //_CODE_:startGameButton:473074:
 
 public void redButtonClick(GButton source, GEvent event) { //_CODE_:redColourButton:831488:
-  println("redColourButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(255, 0, 0);
 } //_CODE_:redColourButton:831488:
 
 public void blueButtonClick(GButton source, GEvent event) { //_CODE_:blueColourButton:313958:
-  println("blueColourButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(255, 0, 0);
 } //_CODE_:blueColourButton:313958:
 
 public void greenButtonClick(GButton source, GEvent event) { //_CODE_:greenColourButton:860283:
-  println("greenColourButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(255, 0, 0);
 } //_CODE_:greenColourButton:860283:
 
 public void brushSizeSlider_change(GCustomSlider source, GEvent event) { //_CODE_:brushSizeSlider:266565:
-  println("BrushSize - GCustomSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:brushSizeSlider:266565:
 
 public void yellowButtonClick(GButton source, GEvent event) { //_CODE_:yellowColourButton:363535:
-  println("yellowColourButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(255, 0, 0);
 } //_CODE_:yellowColourButton:363535:
 
 public void orangeButtonClick(GButton source, GEvent event) { //_CODE_:orangeColourButton:859722:
-  println("orangeColourButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(255, 0, 0);
 } //_CODE_:orangeColourButton:859722:
 
 public void purpleButtonClick(GButton source, GEvent event) { //_CODE_:purpleColourButton:749936:
-  println("purpleColourButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(255, 0, 0);
 } //_CODE_:purpleColourButton:749936:
 
 public void cyanButtonClick(GButton source, GEvent event) { //_CODE_:cyanColourButton:517638:
-  println("cyanColourButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(255, 0, 0);
 } //_CODE_:cyanColourButton:517638:
 
 public void eraserButtonClick(GButton source, GEvent event) { //_CODE_:eraserButton:740076:
-  println("eraserButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(255, 255, 255);
 } //_CODE_:eraserButton:740076:
 
 public void clearButtonClick(GButton source, GEvent event) { //_CODE_:clearAllButton:474814:
-  println("clearAllButton - GButton >> GEvent." + event + " @ " + millis());
+  background(255, 255, 255);
 } //_CODE_:clearAllButton:474814:
 
 public void blackButtonClick(GButton source, GEvent event) { //_CODE_:blackColourButton:553256:
-  println("blackColourButton - GButton >> GEvent." + event + " @ " + millis());
+  ((RoundState) state).strokeColor = color(0, 0, 0);
 } //_CODE_:blackColourButton:553256:
 
 public void guessTextBox_change(GTextField source, GEvent event) { //_CODE_:guessTextBox:812170:
-  println("guessTextBox - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:guessTextBox:812170:
 
 
