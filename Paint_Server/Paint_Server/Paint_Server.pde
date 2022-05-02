@@ -121,6 +121,9 @@ private void handleMessage(Message messageReceived) {
         }
       }
     }
+  case "restart":
+    restart();
+    break;
   default:
     println("Received message " + messageReceived);
     break;
@@ -129,10 +132,21 @@ private void handleMessage(Message messageReceived) {
 
 void keyPressed() {
   if (key == 'r') {
-    // Restart the messenger and all the games
-    messenger.close();
-    messenger = new ServerMessenger();
-    messenger.init();
-    idToGame = new HashMap<Integer, Game>();
+    restart();
   }
+}
+
+void restart() {
+  println("Preparing to restart server");
+  println("Closing messenger");
+  messenger.close();
+  println("Exiting processing program");
+  exit();
+  exec("cd C:/Users/Jay/Documents/GitHub/se-project");
+  println("Discarding changes");
+  exec("git reset -hard");
+  println("Pulling changes from GitHub");
+  exec("git pull");
+  println("Executing Paint_Server");
+  exec("C:/processing-3.5.4/processing-java.exe", "--sketch=C:/Users/Jay/Documents/GitHub/se-project/Paint_Server/Paint_Server", "--run");
 }
