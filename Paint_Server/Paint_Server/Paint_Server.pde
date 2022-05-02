@@ -125,6 +125,10 @@ private void handleMessage(Message messageReceived) {
   case "restart":
     restart();
     break;
+  case "quit":
+    messenger.removePlayer(messageReceived.playerName);
+    println("Kicked " + messageReceived.playerName); 
+    break;
   default:
     println("Received message " + messageReceived);
     break;

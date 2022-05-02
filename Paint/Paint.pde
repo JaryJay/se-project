@@ -80,3 +80,12 @@ boolean connectToServer(String name) {
     return true;
   }
 }
+
+void exit() {
+  if (messenger != null) {
+    println("Closing messenger");
+    messenger.writeMessage("quit");
+    messenger.close();
+  }
+  super.exit();
+}
