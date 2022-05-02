@@ -64,6 +64,7 @@ private void handleMessage(Message messageReceived) {
         Game game = idToGame.get(id);
         String painter = game.choosePainter();
         String word = game.generateWord();
+        game.currentWord = word;
         for (String player : game.players) {
           if (player.equals(painter)) {
             messenger.writeMessage(player, "startPreRoundAsPainter " + word);
@@ -111,8 +112,15 @@ private void handleMessage(Message messageReceived) {
       messenger.writeMessage(player, "guess " + messageReceived.playerName + " " + split[2] + " " + correct);
     }
     if (correct) {
-      game.generateWord();
-      // Send to everyone
+      game.currentWord = game.generateWord();
+      String nextPainter = game.choosePainter();
+      for (String player : game.players) {
+        if (player.equals(nextPainter)) {
+          messenger.writeMessage(player, "startPreRoundAsPainter " + game.currentWord);
+        } else {
+          messenger.writeMessage(player, "startPreRound " + nextPainter);
+        }
+      }
     }
   default:
     println("Received message " + messageReceived);

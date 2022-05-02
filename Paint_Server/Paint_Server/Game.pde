@@ -8,24 +8,12 @@ class Game {
   int nextPainterIndex = 0;
   String category;
 
-  Round round;
+  String currentWord;
 
   Game(String host) {
     this.host = host;
     this.category = "Food";
     players.add(host);
-  }
-  
-  void start() {
-    started = true;
-    for (String player : players) {
-      messenger.writeMessage(player, "begin");
-    }
-    startNewRound();
-  }
-  
-  void startNewRound() {
-    
   }
   
   String choosePainter() {

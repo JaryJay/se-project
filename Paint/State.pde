@@ -258,17 +258,52 @@ class RoundState extends State {
       line(x1, y1, x2, y2);
       println("Received message " + message + c);
       break;
+    case "guess":
+      String player = split[1];
+      String word = split[2];
+      boolean correct = boolean(split[3]);
+
+      // Add guess to the chat
+      if (correct) {
+        if (player.equals(clientName)) {
+          // Increase points
+        } else {
+          // Say something in the chat
+        }
+        // Transition to the next round's PreRoundState
+        transitionToNextPreRound();
+      }
     default:
       println("Received message " + message);
       break;
     }
   }
-  
+
+  void transitionToNextPreRound() {
+    String message = messenger.readOneMessage();
+    String[] split = message.split(" ");
+    switch(split[0]) {
+    case "startPreRound":
+      transitionState(new PreRoundState(split[1]));
+      break;
+    case "startPreRoundAsPainter":
+      PreRoundState preRoundState = new PreRoundState(clientName);
+      preRoundState.word = split[1];
+      transitionState(preRoundState);
+      break;
+    default:
+      println("Received message " + message);
+      break;
+    }
+  }
+
   void keyPressed() {
     if (guessTextBox.isVisible() && guessTextBox.getText().length() != 0) {
+      String guess = guessTextBox.getText();
       guessTextBox.setFocus(false);
       guessTextBox.setText("");
       guessTextBox.setFocus(true);
+      messenger.writeMessage("guess " + gameID + " " + guess.replaceAll(" ", "_"));
     }
   }
 
