@@ -33,6 +33,7 @@ class Game {
   }
 
   void startNextPreRound() {
+    started = true;
     preRoundStartTime = millis();
     currentWord = generateWordFrom(category);
     String nextPainter = choosePainter();

@@ -13,11 +13,13 @@ void draw() {
 
   List<Message> messages = messenger.readMessages();
   for (Message message : messages) {
-    handleMessage(message); //<>//
+    handleMessage(message);
   }
 
   for (Game game : idToGame.values()) {
-    game.update();
+    if (game.started) {
+      game.update();
+    }
   }
 }
 
