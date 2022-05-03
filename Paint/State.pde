@@ -154,6 +154,7 @@ class LobbyState extends State {
   private void handleMessage(String message) {
     String[] split = message.split(" ");
     String messageType = split[0];
+    println("Received message: " + message);
     // Do different things based on the first word in the message
     switch (messageType) {
     case "joining":

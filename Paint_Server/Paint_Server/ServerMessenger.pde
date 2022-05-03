@@ -20,6 +20,13 @@ public class ServerMessenger {
   Map<String, Socket> nameToSocket = new HashMap<String, Socket>();
   Map<String, BufferedReader> nameToReader = new HashMap<String, BufferedReader>();
   Map<String, PrintWriter> nameToWriter = new HashMap<String, PrintWriter>();
+  
+  
+  // Each time a message is written, it is first written to this buffer.
+  // Then, every once in a while, the entire buffer is sent to the server
+  // and the buffer is cleared.
+  String messageBuffer = "";
+  long lastBufferPush = millis();
 
   // Initializes the server socket.
   void init() {
