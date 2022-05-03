@@ -215,17 +215,19 @@ class PreRoundState extends State {
     for (String message : messages) {
       handleMessage(message);
     }
-    // If you are the painter...
     textAlign(CENTER);
+    textSize(60);
+    // If you are the painter...
     fill(0, 140, 255);
     if (painter.equals(clientName)) {
-      text("You are the painter!", 200, 200);
-      text("Your word is " + word + "!", 200, 300);
+      text("You are the painter!", width/2, 200);
+      text("Your word is " + word + "!", width/2, 300);
     } else {
-      text(painter + " is the painter!", 200, 200);
-      text("Try to guess what " + painter + " is painting!", 200, 300);
+      text(painter + " is the painter!", width/2, 200);
+      text("Try to guess what " + painter + " is painting!", width/2, 300);
     }
     textAlign(LEFT);
+    textSize(32);
     fill(240, 205, 29);
     text("Points: ", 100, 700);
     fill(29, 134, 240);
@@ -330,6 +332,8 @@ class RoundState extends State {
         }
         transitionToNextPreRound();
       }
+    case "roundEnd":
+      transitionToNextPreRound();
     default:
       println("Received message " + message);
       break;

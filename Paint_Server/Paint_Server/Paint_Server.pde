@@ -1,4 +1,4 @@
-ServerMessenger messenger = new ServerMessenger();
+ServerMessenger messenger = new ServerMessenger(); //<>//
 Map<Integer, Game> idToGame = new HashMap<Integer, Game>();
 
 void setup() {
@@ -9,17 +9,33 @@ void setup() {
 }
 
 void draw() {
+  // If the server runs into any errors, continue the server without
+  // terminating it (but still print the error message)
+  try {
+    tryToDraw();
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+
+void tryToDraw() {
   messenger.update();
 
   List<Message> messages = messenger.readMessages();
   for (Message message : messages) {
     handleMessage(message);
   }
-
+  
+  List<Integer> gamesToRemove = new ArrayList<Integer>();
   for (Game game : idToGame.values()) {
-    if (game.started) {
+    if (messenger.nameToSocket.get(game.host) == null) {
+      gamesToRemove.add(game.id);
+    } else if (game.started) {
       game.update();
     }
+  }
+  for (Integer gameID : gamesToRemove) {
+    idToGame.remove(gameID);
   }
 }
 
@@ -37,7 +53,7 @@ private void handleMessage(Message messageReceived) {
     int gameID = generateID();
     messenger.writeMessage(messageReceived.playerName, "host " + gameID);
     // Create new Game
-    idToGame.put(gameID, new Game(messageReceived.playerName));
+    idToGame.put(gameID, new Game(messageReceived.playerName, gameID));
     break;
   case "join":
     println(messageReceived.playerName + " tried to join a game");
