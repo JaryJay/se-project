@@ -153,6 +153,10 @@ public void blackButtonClick(GButton source, GEvent event) { //_CODE_:blackColou
   ((RoundState) state).strokeColor = color(0, 0, 0);
 } //_CODE_:blackColourButton:553256:
 
+public void guessTextBox_change(GTextField source, GEvent event) { //_CODE_:guessTextBox:812170:
+  println("guessTextBox - GTextField >> GEvent." + event + " @ " + millis());
+} //_CODE_:guessTextBox:812170:
+
 public void guessTextBox_change1(GTextField source, GEvent event) { //_CODE_:TextHere:471031:
 } //_CODE_:TextHere:471031:
 
@@ -204,7 +208,7 @@ public void createGUI(){
   greenColourButton.setText("Green");
   greenColourButton.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   greenColourButton.addEventHandler(this, "greenButtonClick");
-  brushSizeSlider = new GCustomSlider(this, 102, 29, 161, 34, "grey_blue");
+  brushSizeSlider = new GCustomSlider(this, 102, 29, 191, 51, "blue18px");
   brushSizeSlider.setShowValue(true);
   brushSizeSlider.setLimits(40, 1, 100);
   brushSizeSlider.setNbrTicks(100);
@@ -230,11 +234,11 @@ public void createGUI(){
   cyanColourButton.setText("Cyan");
   cyanColourButton.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   cyanColourButton.addEventHandler(this, "cyanButtonClick");
-  eraserButton = new GButton(this, 192, 78, 70, 30);
+  eraserButton = new GButton(this, 193, 99, 70, 30);
   eraserButton.setText("Eraser");
   eraserButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   eraserButton.addEventHandler(this, "eraserButtonClick");
-  clearAllButton = new GButton(this, 103, 78, 70, 30);
+  clearAllButton = new GButton(this, 104, 99, 70, 30);
   clearAllButton.setText("Clear All");
   clearAllButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   clearAllButton.addEventHandler(this, "clearButtonClick");
