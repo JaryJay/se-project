@@ -5,11 +5,19 @@ abstract class State {
 
   // The guis owned by this state
   GAbstractControl[] guis;
+  long lastBufferPush = millis();
 
   // Called every frame
   // Since this method is abstract, it must be overridden by
   // all subclasses of State
   abstract void update();
+
+  void pushMessageBufferIfNeeded() {
+    if (millis() - lastBufferPush >= 333) {
+      messenger.pushMessageBuffer();
+      lastBufferPush = millis();
+    }
+  }
 
   void showGuis() {
     if (guis == null) {

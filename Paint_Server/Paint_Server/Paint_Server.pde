@@ -20,7 +20,7 @@ void draw() {
 
 private void handleMessage(Message messageReceived) {
   String[] split = messageReceived.body.split(" ");
-  println("Received message " + messageReceived.body);
+  println("Received message from " + messageReceived.playerName + " " + messageReceived.body + millis());
   if (split.length == 0) {
     messenger.writeMessage(messageReceived.playerName, "Error: server received an empty message");
     return;
@@ -132,7 +132,7 @@ private void handleMessage(Message messageReceived) {
     println("Kicked " + messageReceived.playerName); 
     break;
   default:
-    println("Received message " + messageReceived);
+    //println("Received message " + messageReceived);
     break;
   }
 }

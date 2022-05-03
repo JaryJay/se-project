@@ -12,6 +12,7 @@ class ClientMessenger {
   private BufferedReader reader;
   private PrintWriter writer;
 
+  String messageBuffer = "";
   List<String> fakeMessages = new ArrayList<String>();
 
   // Initializes the socket, reader, and writer
@@ -77,6 +78,10 @@ class ClientMessenger {
     } else {
       println("Pretended to write message '" + message + "' because the server isn't running.");
     }
+  }
+
+  void pushMessageBuffer() {
+    // TODO
   }
 
   // Ends the client messenger. Call this when the user is exiting the program
