@@ -22,7 +22,7 @@ void draw() {
 }
 
 private void handleMessage(Message messageReceived) {
-  String[] split = messageReceived.body.split(" "); //<>//
+  String[] split = messageReceived.body.split(" ");
   println("Received message from " + messageReceived.playerName + " " + messageReceived.body + millis());
   if (split.length == 0) {
     messenger.writeMessage(messageReceived.playerName, "Error: server received an empty message");
