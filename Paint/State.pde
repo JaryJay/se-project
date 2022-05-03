@@ -311,7 +311,7 @@ class RoundState extends State {
       int y2 = int(split[4]);
       color c = color(int(split[5]));
       int brushSize = int(split[6]);
-      stroke(strokeColor);
+      stroke(c);
       strokeWeight(brushSize);
       line(x1, y1, x2, y2);
       println("Received message " + message + c);
