@@ -1,10 +1,21 @@
+// Used to organize the separate game screens into different
+// subclasses of State. Transition between different states
+// with transitionState(new TheNewState());
 abstract class State {
 
+  // The guis owned by this state
   GAbstractControl[] guis;
 
+  // Called every frame
+  // Since this method is abstract, it must be overridden by
+  // all subclasses of State
   abstract void update();
 
   void showGuis() {
+    if (guis == null) {
+      throw new RuntimeException("Guis not set. Use guis = new GAbstractControl[]{...}; in the constructor of "
+        + getClass().getSimpleName() + " to indicate the guis that are belong to it.");
+    }
     for (GAbstractControl gui : guis) {
       gui.setVisible(true);
     }
@@ -15,7 +26,7 @@ abstract class State {
       gui.setVisible(false);
     }
   }
-
+  // Default implementations: do nothing
   void mousePressed() {
   }
 
@@ -25,6 +36,8 @@ abstract class State {
   void keyPressed() {
   }
 }
+
+// Below are the subclasses of State.
 
 class MainMenuState extends State {
 
@@ -52,6 +65,7 @@ class JoinState extends State {
   }
 }
 
+// The state where the host enters their name
 class HostState extends State {
 
   HostState() {
@@ -78,6 +92,7 @@ class InstructionsState extends State {
   }
 }
 
+// The state where players lounge in before the game actually starts
 class LobbyState extends State {
   Lobby lobby = new Lobby();
   boolean isHost;
@@ -86,6 +101,7 @@ class LobbyState extends State {
   LobbyState(boolean isHost) {
     this.isHost = isHost;
     if (isHost) {
+      // Add # of rounds, and category drop down
       guis = new GAbstractControl[] {startGameButton};
     } else {
       guis = new GAbstractControl[] {};
@@ -111,6 +127,7 @@ class LobbyState extends State {
     text(lobby.numberRounds, 314, 250);
     text("Players so far", 32, 350);
     fill(0, 255, 32);
+    // Display players in lobby
     int x = 86;
     int y = 400;
     for (int i = 0; i < lobby.playersSoFar.size(); i++) {
@@ -122,12 +139,15 @@ class LobbyState extends State {
     for (String message : messages) {
       handleMessage(message);
     }
+    // Delete me (soon)
     messenger.writeMessage("test");
   }
 
+  // Called in update(), handles a message from the server
   private void handleMessage(String message) {
     String[] split = message.split(" ");
     String messageType = split[0];
+    // Do different things based on the first word in the message
     switch (messageType) {
     case "joining":
       String joiningPlayer = split[1];
@@ -135,16 +155,14 @@ class LobbyState extends State {
       lobby.playersSoFar.add(joiningPlayer);
       break;
     case "startPreRound":
-      {
-        transitionState(new PreRoundState(split[1]));
-      }
+      // You are a guesser
+      transitionState(new PreRoundState(split[1]));
       break;
     case "startPreRoundAsPainter":
-      {
-        PreRoundState preRoundState = new PreRoundState(clientName);
-        preRoundState.word = split[1];
-        transitionState(preRoundState);
-      }
+      // You are the painter
+      PreRoundState preRoundState = new PreRoundState(clientName);
+      preRoundState.word = split[1];
+      transitionState(preRoundState);
       break;
     default:
       println("Received message " + message);
@@ -152,6 +170,7 @@ class LobbyState extends State {
     }
   }
 
+  // You get to draw in the lobby
   void mousePressed() {
     fill(0);
     strokeWeight(40);
@@ -166,19 +185,24 @@ class LobbyState extends State {
   }
 }
 
+// The state before a round starts. It lasts 5 seconds and tells
+// the player about who the painter is
 class PreRoundState extends State {
+  // The painter
   String painter;
+  // The secret word, or null if you are not the painter
   String word;
   // The frame number at which this state started.
   // Used to determine when to transition to the RoundState
-  int startTime;
+  int startTime = millis();
 
   //Show number of rounds, show players, show category 
   PreRoundState(String painter) {
     this.painter = painter;
+    // Owns no guis
     guis = new GAbstractControl []{};
+    // Clear the PreRoundState's drawings
     background(255);
-    startTime = millis();
   }
 
   void update() {
@@ -186,21 +210,25 @@ class PreRoundState extends State {
     for (String message : messages) {
       handleMessage(message);
     }
+    // If you are the painter...
     if (painter.equals(clientName)) {
       fill(0, 140, 255);
       text("You are the painter!", 200, 200);
       text("Your word is " + word + "!", 200, 300);
     }
-    // Transition to round state after 5 seconds
+    // Transition to round state if 5 seconds have passed
     if (millis() - startTime >= 5000) {
       transitionState(new RoundState(painter));
     }
   }
-
+  
+  // You shouldn't be receiving any messages here, but we just print
+  // them if you do
   private void handleMessage(String message) {
     println("Received message " + message);
   }
 
+  // You get to draw in the PreRoundState
   void mousePressed() {
     fill(0);
     strokeWeight(40);
@@ -215,11 +243,17 @@ class PreRoundState extends State {
   }
 }
 
+// Finally, the RoundState! The painter paints, the guessers guess, you get to have fun.
+// Whenever the painters paint, a message is sent to the server containing info about the
+// line that you painted. Whenever a guesser guesses, their guess is sent to the server
+// and the server replies whether or not they guessed correctly. The server also relays
+// this information to other players so that they can also see.
 class RoundState extends State {
   String painter;
   // The frame number at which this state started.
   // Used to determine when to transition to the next PreRoundState
-  int startTime;
+  int startTime = millis();
+  // The current stroke color for the brush
   color strokeColor = color(0, 0, 0);
 
   //Show number of rounds, show players, show category 
@@ -232,22 +266,26 @@ class RoundState extends State {
     } else {
       guis = new GAbstractControl []{guessTextBox};
     }
+    // Clean up the paint left over from the PreRoundState 
     background(255);
-    startTime = millis();
   }
 
   void update() {
+    // You've seen this enough times to know what this does, right?
+    // Handles all messages (if any)
     List<String> messages = messenger.readMessages();
     for (String message : messages) {
       handleMessage(message);
     }
   }
-
+  
+  // Handles a message
   private void handleMessage(String message) {
     String[] split = message.split(" ");
     String messageType = split[0];
     switch (messageType) {
     case "paint":
+      // Paint onto the screen using info from the message
       int x1 = int(split[1]);
       int y1 = int(split[2]);
       int x2 = int(split[3]);
@@ -260,6 +298,7 @@ class RoundState extends State {
       println("Received message " + message + c);
       break;
     case "guess":
+      // Store a guess that another player has made
       String player = split[1];
       String word = split[2];
       boolean correct = boolean(split[3]);
@@ -280,6 +319,10 @@ class RoundState extends State {
     }
   }
 
+  // Called when
+  // a) Someone guesses correctly
+  // b) No one guesses correctly and the round reaches its time limit
+  // Next, it checks whether or not you are the painter in this next round
   void transitionToNextPreRound() {
     String message = messenger.readOneMessage();
     String[] split = message.split(" ");
@@ -297,9 +340,10 @@ class RoundState extends State {
       break;
     }
   }
-
+  
+  // When you press enter, this method sends your guess from the guessTextBox to the server
   void keyPressed() {
-    if (guessTextBox.isVisible() && guessTextBox.getText().length() != 0) {
+    if (key == ENTER && guessTextBox.isVisible() && guessTextBox.getText().length() != 0) {
       String guess = guessTextBox.getText();
       guessTextBox.setFocus(false);
       guessTextBox.setText("");
@@ -307,7 +351,7 @@ class RoundState extends State {
       messenger.writeMessage("guess " + gameID + " " + guess.replaceAll(" ", "_"));
     }
   }
-
+  
   void mousePressed() {
     paint();
   }
@@ -315,7 +359,9 @@ class RoundState extends State {
   void mouseDragged() {
     paint();
   }
-
+  
+  // If you are the painter, draw a line from your mouse pos to the mouse pos last frame
+  // Then, send that info to the server. It will then be sent to all other clients
   void paint() {
     if (painter.equals(clientName)) {
       int brushSize = brushSizeSlider.getValueI();

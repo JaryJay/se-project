@@ -31,7 +31,7 @@ void setup() {
   state.showGuis();
 }
 
-// draw(), mousePressed(), mouseDragged(), and keyPressed() delegate to the state
+// draw(), mousePressed(), mouseDragged(), and keyPressed() delegated to the state
 
 void draw() {
   state.update();
@@ -81,11 +81,13 @@ boolean connectToServer(String name) {
   }
 }
 
+// Override the exit() method to also close the messenger
 void exit() {
   if (messenger != null) {
     println("Closing messenger");
     messenger.writeMessage("quit");
     messenger.close();
   }
+  // Call the normal exit functionality
   super.exit();
 }

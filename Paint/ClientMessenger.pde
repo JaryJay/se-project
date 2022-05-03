@@ -17,13 +17,23 @@ class ClientMessenger {
   // Initializes the socket, reader, and writer
   void init() {
     try {
+      // WARNING
+      // If you try to use another computer as the server, you MUST set up port forwarding
+      // See https://portforward.com/ for more details
+
+      // Connect to the IP of Jay's personal computer at port 45000
       socket = new Socket("99.250.93.242", 45000);
+      // Create a BufferedReader around the socket's input stream
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      // Create a PrintWriter around the socket's output stream
       writer = new PrintWriter(socket.getOutputStream(), true);
+
       println("Client messenger initialized.");
     } 
     catch (IOException e) {
-      throw new RuntimeException("Could not initialize client messenger.");
+      println("Could not initialize client messenger.");
+      // Terminate program (you can't play this game unless you connect to the server)
+      throw new RuntimeException(e);
     }
   }
 
