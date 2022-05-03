@@ -32,6 +32,10 @@ void tryToDraw() {
       gamesToRemove.add(game.id);
     } else if (game.started) {
       game.update();
+    } else {
+      for (String p : game.players) {
+        messenger.writeMessage(p, "this is a testtrttttttttttttttttttttttttttttttttttttttttttttttttttttpaint 11111 516 184 511 184 -16777216 4071776");
+      }
     }
   }
   for (Integer gameID : gamesToRemove) {

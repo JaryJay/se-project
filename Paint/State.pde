@@ -175,7 +175,7 @@ class LobbyState extends State {
       transitionState(preRoundState);
       break;
     default:
-      println("Received message " + message);
+      // println("Received message " + message);
       break;
     }
   }
