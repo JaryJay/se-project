@@ -1,14 +1,13 @@
+import java.util.*;
+
 class Chat {  
+  Scanner sc = new Scanner(System.in);
   ArrayList <String> text = new ArrayList <String>();
   
-  String texts;
-  
-  Chat (String t) {
-   this.texts = t; 
+  while (true) {
+   text.add(sc.nextLine());
   }
   
-  void draw() {
-    background(255);
     
   }
     
