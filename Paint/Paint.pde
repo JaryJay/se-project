@@ -96,6 +96,7 @@ void exit() {
   if (messenger != null) {
     println("Closing messenger");
     messenger.writeMessage("quit");
+    messenger.pushMessageBuffer();
     messenger.close();
   }
   // Call the normal exit functionality
