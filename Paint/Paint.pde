@@ -35,6 +35,10 @@ void setup() {
 
 void draw() {
   state.update();
+  // Push buffer if needed
+  if (messenger != null) {
+    messenger.pushMessageBufferIfNeeded();
+  }
 }
 
 void mousePressed() {

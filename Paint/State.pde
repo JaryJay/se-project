@@ -14,13 +14,6 @@ abstract class State {
   // all subclasses of State
   abstract void update();
 
-  void pushMessageBufferIfNeeded() {
-    if (millis() - lastBufferPush >= 333) {
-      messenger.pushMessageBuffer();
-      lastBufferPush = millis();
-    }
-  }
-
   void showGuis() {
     if (guis == null) {
       throw new RuntimeException("Guis not set. Use guis = new GAbstractControl[]{...}; in the constructor of "

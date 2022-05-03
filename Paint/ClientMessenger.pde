@@ -8,7 +8,7 @@ import java.util.List;
 // Used to communicate with the server through a TCP connection.
 // For more info, see https://www.baeldung.com/a-guide-to-java-sockets
 class ClientMessenger {
-  
+
   // The socket used to connect to the server (see init())
   private Socket socket;
   // Used to read messages from the server
@@ -20,6 +20,7 @@ class ClientMessenger {
   // Then, every once in a while, the entire buffer is sent to the server
   // and the buffer is cleared.
   String messageBuffer = "";
+  long lastBufferPush = millis();
   List<String> fakeMessages = new ArrayList<String>();
 
   // Initializes the socket, reader, and writer
@@ -78,17 +79,27 @@ class ClientMessenger {
 
   // Writes a message to the server.
   private void writeMessage(String message) {
-    if (writer != null) {
-      writer.println(message);
-      writer.flush();
-      println("Wrote message: " + message);
-    } else {
-      println("Pretended to write message '" + message + "' because the server isn't running.");
-    }
+    messageBuffer += message + "\n";
+    println("Wrote message: " + message);
   }
 
-  void pushMessageBuffer() {
-    // TODO
+  // Pushes the message buffer if it has been at least 333 milliseconds
+  // since the last push
+  void pushMessageBufferIfNeeded() {
+    if (messageBuffer.length() > 0 && millis() - lastBufferPush >= 333) {
+      pushMessageBuffer();
+      lastBufferPush = millis();
+    }
+  }
+    
+  // Actually pushes the message buffer. See pushMessageBufferIfNeeded()
+  private void pushMessageBuffer() {
+    if (writer != null) {
+      writer.print(messageBuffer);
+      writer.flush();
+    } else {
+      println("Pretended to write message '" + messageBuffer + "' because the server isn't running.");
+    }
   }
 
   // Ends the client messenger. Call this when the user is exiting the program
