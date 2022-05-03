@@ -12,7 +12,7 @@ int gameID;
 void setup() {
   size(1000, 600);
   background(255);
-  frameRate(30);
+  frameRate(5);
   createGUI();
   // Use a font
   PFont f1 = createFont("Cambria", 60);
@@ -66,7 +66,7 @@ void transitionState(State newState) {
 // Tries to initialize a network connection with the server.
 // Returns true if connected successfully, false otherwise
 boolean connectToServer(String name) {
-  println("Creating messenger"); //<>//
+  println("Creating messenger"); //<>// //<>//
   messenger = new ClientMessenger();
   messenger.init();
   // Write the user's name
