@@ -153,8 +153,8 @@ public void blackButtonClick(GButton source, GEvent event) { //_CODE_:blackColou
   ((RoundState) state).strokeColor = color(0, 0, 0);
 } //_CODE_:blackColourButton:553256:
 
-public void guessTextBox_change(GTextField source, GEvent event) { //_CODE_:guessTextBox:812170:
-} //_CODE_:guessTextBox:812170:
+public void guessTextBox_change1(GTextField source, GEvent event) { //_CODE_:TextHere:471031:
+} //_CODE_:TextHere:471031:
 
 
 
@@ -246,6 +246,9 @@ public void createGUI(){
   guessTextBox.setPromptText("Guess!");
   guessTextBox.setOpaque(true);
   guessTextBox.addEventHandler(this, "guessTextBox_change");
+  TextHere = new GTextField(this, 764, 548, 213, 30, G4P.SCROLLBARS_NONE);
+  TextHere.setOpaque(true);
+  TextHere.addEventHandler(this, "guessTextBox_change1");
 }
 
 // Variable declarations 
@@ -270,3 +273,4 @@ GButton eraserButton;
 GButton clearAllButton; 
 GButton blackColourButton; 
 GTextField guessTextBox; 
+GTextField TextHere; 
