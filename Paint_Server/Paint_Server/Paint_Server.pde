@@ -113,6 +113,7 @@ private void handleMessage(Message messageReceived) {
     if (correct) {
       game.startNextPreRound();
     }
+    break;
   case "restart":
     restart();
     break;
