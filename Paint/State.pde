@@ -92,6 +92,9 @@ class InstructionsState extends State {
     background(255);
     fill(0, 140, 255);
     text( "Instructions!", width/2, 100 );
+    fill(0);
+    PImage img = loadImage("Rules.png");
+    image(img,249,125, img.width/3,img.height/3);
   }
 }
 
