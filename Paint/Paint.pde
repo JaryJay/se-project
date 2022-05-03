@@ -4,6 +4,7 @@ import g4p_controls.*;
 ClientMessenger messenger;
 // The current state
 State state;
+Chat chat;
 
 String clientName;
 int gameID;

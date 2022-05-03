@@ -159,10 +159,12 @@ class LobbyState extends State {
       break;
     case "startPreRound":
       // You are a guesser
+      chat = new Chat();
       transitionState(new PreRoundState(split[1]));
       break;
     case "startPreRoundAsPainter":
       // You are the painter
+      chat = new Chat();
       PreRoundState preRoundState = new PreRoundState(clientName);
       preRoundState.word = split[1];
       transitionState(preRoundState);
@@ -214,11 +216,22 @@ class PreRoundState extends State {
       handleMessage(message);
     }
     // If you are the painter...
+    textAlign(CENTER);
+    fill(0, 140, 255);
     if (painter.equals(clientName)) {
-      fill(0, 140, 255);
       text("You are the painter!", 200, 200);
       text("Your word is " + word + "!", 200, 300);
+    } else {
+      text(painter + " is the painter!", 200, 200);
+      text("Try to guess what " + painter + " is painting!", 200, 300);
     }
+    textAlign(LEFT);
+    fill(240, 205, 29);
+    text("Points: ", 100, 700);
+    fill(29, 134, 240);
+    text(points, 200, 700);
+
+    chat.display();
     // Transition to round state if 5 seconds have passed
     if (millis() - startTime >= 5000) {
       transitionState(new RoundState(painter));
@@ -280,6 +293,7 @@ class RoundState extends State {
     for (String message : messages) {
       handleMessage(message);
     }
+    chat.display();
   }
   
   // Handles a message
@@ -306,14 +320,14 @@ class RoundState extends State {
       String word = split[2];
       boolean correct = boolean(split[3]);
 
-      // Add guess to the chat
+      chat.addMessage(player + ":  " + word.replaceAll("_", " "));
       if (correct) {
         if (player.equals(clientName)) {
-          // Increase points
+          chat.addMessage("Correct! +100 points!");
+          points += 100;
         } else {
-          // Say something in the chat
+          chat.addMessage(player + " is correct!");
         }
-        // Transition to the next round's PreRoundState
         transitionToNextPreRound();
       }
     default:
