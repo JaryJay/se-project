@@ -45,6 +45,7 @@ public void joinGameButton_click(GButton source, GEvent event) { //_CODE_:joinGa
       if (connectToServer(nameTextField.getText())) {
         // Ask to join game with the gameID
         messenger.writeMessage("join " + gameID);
+        messenger.pushMessageBuffer();
         String receivedMessage = messenger.readOneMessage();
         // Should check whether that message is a success message or not
         // If success, go to lobby state
@@ -87,8 +88,9 @@ public void hostGameButton_click(GButton source, GEvent event) { //_CODE_:hostGa
     if (connectToServer(nameTextField.getText())) {
       // Ask to join game with the gameID
       messenger.writeMessage("host");
+      messenger.pushMessageBuffer();
       String received = messenger.readOneMessage();
-      println(received);
+      println("After host button was pressed: received " + received);
       // Game ID is the second word in the message
       gameID = int(received.split(" ")[1]);
       println("Hosting game with ID = " + gameID + ". Woohoo!");

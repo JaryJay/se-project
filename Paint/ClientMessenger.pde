@@ -1,4 +1,4 @@
-import java.io.BufferedReader;
+import java.io.BufferedReader; //<>// //<>//
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -31,7 +31,7 @@ class ClientMessenger {
       // See https://portforward.com/ for more details
 
       // Connect to the IP of Jay's personal computer at port 45000
-      socket = new Socket("99.250.93.242", 45000);
+      socket = new Socket("172.26.141.131", 45000);
       // Create a BufferedReader around the socket's input stream
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       // Create a PrintWriter around the socket's output stream
@@ -48,7 +48,7 @@ class ClientMessenger {
 
   // Blocks until a message is ready and reads it
   String readOneMessage() {
-    try { //<>//
+    try {
       return reader.readLine();
     } 
     catch (IOException e) {
@@ -86,20 +86,21 @@ class ClientMessenger {
   // Pushes the message buffer if it has been at least 333 milliseconds
   // since the last push
   void pushMessageBufferIfNeeded() {
-    if (messageBuffer.length() > 0 && millis() - lastBufferPush >= 333) {
+    if (millis() - lastBufferPush >= 333) {
       pushMessageBuffer();
       lastBufferPush = millis();
     }
   }
-    
+
   // Actually pushes the message buffer. See pushMessageBufferIfNeeded()
   private void pushMessageBuffer() {
-    if (writer != null) { //<>//
-      println("Pushed message buffer");
-      writer.println("Jay");
-      writer.println(messageBuffer);
-      writer.flush();
-      messageBuffer = "";
+    if (writer != null) {
+      if (messageBuffer.length() > 0) {
+        println("Pushed message buffer");
+        writer.println(messageBuffer.trim());
+        writer.flush();
+        messageBuffer = "";
+      }
     } else {
       println("Pretended to write message '" + messageBuffer + "' because the server isn't running.");
     }

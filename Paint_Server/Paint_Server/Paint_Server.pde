@@ -13,13 +13,16 @@ void draw() {
 
   List<Message> messages = messenger.readMessages();
   for (Message message : messages) {
-    handleMessage(message);
+    handleMessage(message); //<>//
+  }
+
+  for (Game game : idToGame.values()) {
+    game.update();
   }
 }
 
-
 private void handleMessage(Message messageReceived) {
-  String[] split = messageReceived.body.split(" ");
+  String[] split = messageReceived.body.split(" "); //<>//
   println("Received message from " + messageReceived.playerName + " " + messageReceived.body + millis());
   if (split.length == 0) {
     messenger.writeMessage(messageReceived.playerName, "Error: server received an empty message");
@@ -64,15 +67,7 @@ private void handleMessage(Message messageReceived) {
         messenger.writeMessage(messageReceived.playerName, "invalidID");
       } else {
         Game game = idToGame.get(id);
-        String painter = game.choosePainter();
-        game.currentWord = generateWordFrom(game.category);
-        for (String player : game.players) {
-          if (player.equals(painter)) {
-            messenger.writeMessage(player, "startPreRoundAsPainter " + game.currentWord);
-          } else {
-            messenger.writeMessage(player, "startPreRound " + painter);
-          }
-        }
+        game.startNextPreRound();
       }
     }
     catch (NumberFormatException e) {
@@ -114,15 +109,7 @@ private void handleMessage(Message messageReceived) {
       messenger.writeMessage(player, "guess " + messageReceived.playerName + " " + split[2] + " " + correct);
     }
     if (correct) {
-      game.currentWord = generateWordFrom(game.category);
-      String nextPainter = game.choosePainter();
-      for (String player : game.players) {
-        if (player.equals(nextPainter)) {
-          messenger.writeMessage(player, "startPreRoundAsPainter " + game.currentWord);
-        } else {
-          messenger.writeMessage(player, "startPreRound " + nextPainter);
-        }
-      }
+      game.startNextPreRound();
     }
   case "restart":
     restart();

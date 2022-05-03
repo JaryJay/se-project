@@ -341,6 +341,7 @@ class RoundState extends State {
   // b) No one guesses correctly and the round reaches its time limit
   // Next, it checks whether or not you are the painter in this next round
   void transitionToNextPreRound() {
+    messenger.pushMessageBuffer();
     String message = messenger.readOneMessage();
     String[] split = message.split(" ");
     switch(split[0]) {
