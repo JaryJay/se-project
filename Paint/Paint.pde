@@ -10,7 +10,7 @@ String clientName;
 int gameID;
 
 void setup() {
-  size(800, 800);
+  size(1000, 600);
   background(255);
   frameRate(30);
   createGUI();
