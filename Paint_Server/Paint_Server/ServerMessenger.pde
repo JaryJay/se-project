@@ -119,6 +119,7 @@ public class ServerMessenger {
     try {
       writer.println(message);
       writer.flush();
+      println("Wrote message '" + message + "' to " + playerName);
     } 
     catch (Exception e) {
       e.printStackTrace();

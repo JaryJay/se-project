@@ -41,11 +41,10 @@ class Game {
     currentWord = generateWordFrom(category);
     String nextPainter = choosePainter();
     for (String player : players) {
-      messenger.writeMessage(player, "roundEnd");
       if (player.equals(nextPainter)) {
-        messenger.writeMessage(player, "startPreRoundAsPainter " + currentWord);
+        messenger.writeMessage(player, "roundEnd\n"+"startPreRoundAsPainter " + currentWord);
       } else {
-        messenger.writeMessage(player, "startPreRound " + nextPainter);
+        messenger.writeMessage(player, "roundEnd\n"+"startPreRound " + nextPainter);
       }
     }
   }

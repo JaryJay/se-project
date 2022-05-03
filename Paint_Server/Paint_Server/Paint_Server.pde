@@ -32,10 +32,6 @@ void tryToDraw() {
       gamesToRemove.add(game.id);
     } else if (game.started) {
       game.update();
-    } else {
-      for (String p : game.players) {
-        messenger.writeMessage(p, "this is a testtrttttttttttttttttttttttttttttttttttttttttttttttttttttpaint 11111 516 184 511 184 -16777216 4071776");
-      }
     }
   }
   for (Integer gameID : gamesToRemove) {
@@ -53,14 +49,13 @@ private void handleMessage(Message messageReceived) {
   String messageType = split[0];
   switch (messageType) {
   case "host":
-    println(messageReceived.playerName + " tried to host a game");
     int gameID = generateID();
     messenger.writeMessage(messageReceived.playerName, "host " + gameID);
     // Create new Game
     idToGame.put(gameID, new Game(messageReceived.playerName, gameID));
+    println(messageReceived.playerName + " hosted a game with ID " + gameID);
     break;
   case "join":
-    println(messageReceived.playerName + " tried to join a game");
     try {
       int id = Integer.parseInt(split[1]);
       if (idToGame.get(id) == null) {
@@ -76,6 +71,7 @@ private void handleMessage(Message messageReceived) {
           playersString += " " + player;
         }
         messenger.writeMessage(messageReceived.playerName, "joinSuccess " + game.category + playersString);
+        println(messageReceived.playerName + " joined game ID=" + id);
       }
     } 
     catch (NumberFormatException e) {
@@ -108,7 +104,6 @@ private void handleMessage(Message messageReceived) {
       for (String player : game.players) {
         if (!player.equals(messageReceived.playerName)) {
           String m = "paint " + split[2] + " " + split[3] + " " + split[4] + " " + split[5] + " " + split[6] + " " + split[7];
-          println("Sending " + m);
           messenger.writeMessage(player, m);
         }
       }
