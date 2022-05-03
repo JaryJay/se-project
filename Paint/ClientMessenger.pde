@@ -36,7 +36,6 @@ class ClientMessenger {
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       // Create a PrintWriter around the socket's output stream
       writer = new PrintWriter(socket.getOutputStream(), true);
-      println( "Reader+writer: " + reader + " " + writer);
       println("Client messenger initialized.");
     } 
     catch (IOException e) {

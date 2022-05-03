@@ -351,6 +351,7 @@ class RoundState extends State {
     messenger.pushMessageBuffer();
     String message = messenger.readOneMessage();
     String[] split = message.split(" ");
+    println("Received message: " + message);
     switch(split[0]) {
     case "startPreRound":
       transitionState(new PreRoundState(split[1]));
