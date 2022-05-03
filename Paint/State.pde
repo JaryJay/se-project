@@ -285,7 +285,7 @@ class RoundState extends State {
     // If client is painting, then show painting tools
     // Otherwise show guessing textbox
     if (painter.equals(clientName)) {
-      guis = new GAbstractControl []{redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, eraserButton, clearAllButton, blackColourButton};
+      guis = new GAbstractControl []{redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, eraserButton, clearAllButton, blackColourButton, brushSizeSlider};
     } else {
       guis = new GAbstractControl []{guessTextBox};
     }
@@ -307,6 +307,7 @@ class RoundState extends State {
   private void handleMessage(String message) {
     String[] split = message.split(" ");
     String messageType = split[0];
+    println("In round state. Received message " + message);
     switch (messageType) {
     case "paint":
       // Paint onto the screen using info from the message
@@ -340,7 +341,7 @@ class RoundState extends State {
     case "roundEnd":
       transitionToNextPreRound();
     default:
-      println("Received message " + message);
+      //println("Received message " + message);
       break;
     }
   }
