@@ -36,7 +36,7 @@ class ClientMessenger {
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       // Create a PrintWriter around the socket's output stream
       writer = new PrintWriter(socket.getOutputStream(), true);
-
+      println( "Reader+writer: " + reader + " " + writer);
       println("Client messenger initialized.");
     } 
     catch (IOException e) {
@@ -48,7 +48,7 @@ class ClientMessenger {
 
   // Blocks until a message is ready and reads it
   String readOneMessage() {
-    try {
+    try { //<>//
       return reader.readLine();
     } 
     catch (IOException e) {
@@ -94,9 +94,12 @@ class ClientMessenger {
     
   // Actually pushes the message buffer. See pushMessageBufferIfNeeded()
   private void pushMessageBuffer() {
-    if (writer != null) {
-      writer.print(messageBuffer);
+    if (writer != null) { //<>//
+      println("Pushed message buffer");
+      writer.println("Jay");
+      writer.println(messageBuffer);
       writer.flush();
+      messageBuffer = "";
     } else {
       println("Pretended to write message '" + messageBuffer + "' because the server isn't running.");
     }

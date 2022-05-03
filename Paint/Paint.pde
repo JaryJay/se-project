@@ -65,12 +65,17 @@ void transitionState(State newState) {
 // Tries to initialize a network connection with the server.
 // Returns true if connected successfully, false otherwise
 boolean connectToServer(String name) {
+  println("Creating messenger"); //<>//
   messenger = new ClientMessenger();
+  println("Initializing messenger");
   messenger.init();
   name = name.replaceAll(" ", "_");
   // Write the user's name
+  println("Sending name");
   messenger.writeMessage(name);
+  messenger.pushMessageBuffer();
   // Wait for response
+  println("Waiting for response");
   String m = messenger.readOneMessage();
   if (!m.equals("success")) {
     println("Failed to connect to server because " + m);

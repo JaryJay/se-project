@@ -143,7 +143,7 @@ class LobbyState extends State {
       handleMessage(message);
     }
     // Delete me (soon)
-    messenger.writeMessage("test");
+    //messenger.writeMessage("test");
   }
 
   // Called in update(), handles a message from the server
