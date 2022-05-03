@@ -5,13 +5,20 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 
-// Used to communicate with the server
+// Used to communicate with the server through a TCP connection.
+// For more info, see https://www.baeldung.com/a-guide-to-java-sockets
 class ClientMessenger {
-
+  
+  // The socket used to connect to the server (see init())
   private Socket socket;
+  // Used to read messages from the server
   private BufferedReader reader;
+  // Used to write messages from the server
   private PrintWriter writer;
 
+  // Each time a message is written, it is first written to this buffer.
+  // Then, every once in a while, the entire buffer is sent to the server
+  // and the buffer is cleared.
   String messageBuffer = "";
   List<String> fakeMessages = new ArrayList<String>();
 

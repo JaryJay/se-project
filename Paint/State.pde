@@ -5,6 +5,8 @@ abstract class State {
 
   // The guis owned by this state
   GAbstractControl[] guis;
+  // The most recent time at which the message buffer
+  // was pushed/sent to the server
   long lastBufferPush = millis();
 
   // Called every frame
