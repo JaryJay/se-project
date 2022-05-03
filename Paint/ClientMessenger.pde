@@ -1,4 +1,4 @@
-import java.io.BufferedReader; //<>// //<>//
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -31,7 +31,7 @@ class ClientMessenger {
       // See https://portforward.com/ for more details
 
       // Connect to the IP of Jay's personal computer at port 45000
-      socket = new Socket("172.26.141.131", 45000);
+      socket = new Socket("99.250.93.242", 45000);
       // Create a BufferedReader around the socket's input stream
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       // Create a PrintWriter around the socket's output stream
