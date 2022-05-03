@@ -33,9 +33,3 @@ class Chat {
     offset = max(offset * 0.9, 1);
   }
 }
-
-
-//void draw() {
-//  textAlign(RIGHT);
-//  text(text, width/2, height/2); 
-//}

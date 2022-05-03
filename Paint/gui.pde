@@ -115,30 +115,30 @@ public void redButtonClick(GButton source, GEvent event) { //_CODE_:redColourBut
 } //_CODE_:redColourButton:831488:
 
 public void blueButtonClick(GButton source, GEvent event) { //_CODE_:blueColourButton:313958:
-  ((RoundState) state).strokeColor = color(255, 0, 0);
+  ((RoundState) state).strokeColor = color(0, 0, 255);
 } //_CODE_:blueColourButton:313958:
 
 public void greenButtonClick(GButton source, GEvent event) { //_CODE_:greenColourButton:860283:
-  ((RoundState) state).strokeColor = color(255, 0, 0);
+  ((RoundState) state).strokeColor = color(0, 128, 0);
 } //_CODE_:greenColourButton:860283:
 
 public void brushSizeSlider_change(GCustomSlider source, GEvent event) { //_CODE_:brushSizeSlider:266565:
 } //_CODE_:brushSizeSlider:266565:
 
 public void yellowButtonClick(GButton source, GEvent event) { //_CODE_:yellowColourButton:363535:
-  ((RoundState) state).strokeColor = color(255, 0, 0);
+  ((RoundState) state).strokeColor = color(255, 191, 0);
 } //_CODE_:yellowColourButton:363535:
 
 public void orangeButtonClick(GButton source, GEvent event) { //_CODE_:orangeColourButton:859722:
-  ((RoundState) state).strokeColor = color(255, 0, 0);
+  ((RoundState) state).strokeColor = color(255, 165, 0);
 } //_CODE_:orangeColourButton:859722:
 
 public void purpleButtonClick(GButton source, GEvent event) { //_CODE_:purpleColourButton:749936:
-  ((RoundState) state).strokeColor = color(255, 0, 0);
+  ((RoundState) state).strokeColor = color(138,43,226);
 } //_CODE_:purpleColourButton:749936:
 
 public void cyanButtonClick(GButton source, GEvent event) { //_CODE_:cyanColourButton:517638:
-  ((RoundState) state).strokeColor = color(255, 0, 0);
+  ((RoundState) state).strokeColor = color(0,150,152);
 } //_CODE_:cyanColourButton:517638:
 
 public void eraserButtonClick(GButton source, GEvent event) { //_CODE_:eraserButton:740076:
