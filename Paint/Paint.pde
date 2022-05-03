@@ -61,6 +61,7 @@ void transitionState(State newState) {
   state = newState;
   // Show new state
   newState.showGuis();
+  println("Transitioned to state " + newState.getClass().getSimpleName());
 }
 
 // Tries to initialize a network connection with the server.
