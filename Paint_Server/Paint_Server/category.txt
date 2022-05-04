@@ -1,6 +1,6 @@
-Food:cheese,bread,yogurt,baguette,apple,banana,pineapple,avacado,noodles,bagels,bacon,buritto,broccoli,cake,chicken,fries,cookies,cupcakes,curry,donuts,ice cream,milk,meatballs,pizza,pancakes,waffles 
+Food:cheese,bread,yogurt,baguette,apple,banana,pineapple,avacado,noodle,bagel,bacon,buritto,broccoli,cake,chicken,fries,cookie,cupcake,curry,donut,ice cream,milk,meatball,pizza,pancake,waffle 
 Animals:dog,cat,whale,eagle,bat,bear,lion,bunny,horse,rat,raccoon,ostrich,penguin,tiger,wolf,giraffe,owl,snake,hippopotamus,crocodile,fox,ant,cockroach,elephant,rhinoceros,cheetah,cow,T-Rex,kangaroo
-Household Objects:spoon,sofa,TV,ps5,PC,pillows,table,chairs,trash can,bed,paintings,fridge,oven,bookcase,shelves,mirror,stool,coatrack,lamp,kettle,fan,speaker,coffee maker,rice cooker,toaster,dishwasher
+Household Objects:spoon,sofa,TV,ps5,PC,pillows,table,chairs,trash can,bed,painting,fridge,oven,bookcase,shelf,mirror,stool,coatrack,lamp,kettle,fan,speaker,coffee maker,rice cooker,toaster,dishwasher
 Musical Instruments:saxophone,piano,cello,drums,recorder,ukulele,guitar,clarinet,violin,xylophone,harp,double bass,tuba,trumpet,organ,maracas,accordion,harmonica,banjo,chimes,flute
-Logos:mcdonalds,nike,apple logo,kfc,spotify,dominos,starbucks,instagram,twitter,gmail,tesla,youtube
+Logos:mcdonald,nike,apple logo,kfc,spotify,dominos,starbucks,instagram,twitter,gmail,tesla,youtube
 Math:x^3,y= mx + b,x^2,|x|,logx,b^x,1/x,tanx,sinx,cosx,x^2+y^2,e^x,lnx, y = 1, y = undefined
