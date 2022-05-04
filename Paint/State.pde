@@ -283,9 +283,6 @@ class PreRoundState extends State {
       handleMessage(message);
     }
   }
-
-  // You shouldn't be receiving any messages here, but we just print
-  // them if you do
   private void handleMessage(String message) {
     String[] split = message.split(" ");
     String messageType = split[0];
@@ -293,6 +290,7 @@ class PreRoundState extends State {
     switch (messageType) {
     case "penalty":
       points -= 10;
+      chat.addMessage("-10 points :(");
       break;
     }
   }
@@ -407,6 +405,7 @@ class RoundState extends State {
       break;
     case "penalty":
       points -= 10;
+      chat.addMessage("-10 points :(");
       break;
     case "endGame":
       chat.addMessage("Game has ended!");
@@ -497,10 +496,18 @@ class EndedGameState extends State {
     }
   }
 
-  // You shouldn't be receiving any messages here, but we just print
-  // them if you do
+  // You shouldn't be receiving any messages here, but we handle the penalty
+  // message just in case
   private void handleMessage(String message) {
-    println("Received message " + message);
+    String[] split = message.split(" ");
+    String messageType = split[0];
+    println("In preround state. Received message " + message);
+    switch (messageType) {
+    case "penalty":
+      points -= 10;
+      chat.addMessage("-10 points :(");
+      break;
+    }
   }
 
   void keyPressed() {
