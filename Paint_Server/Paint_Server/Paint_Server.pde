@@ -136,6 +136,9 @@ private void handleMessage(Message messageReceived) {
     messenger.removePlayer(messageReceived.playerName);
     println("Kicked " + messageReceived.playerName); 
     break;
+  case "ping":
+    messenger.writeMessage(messageReceived.playerName, "pingResponse");
+    break;
   default:
     //println("Received message " + messageReceived);
     break;

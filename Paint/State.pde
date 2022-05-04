@@ -37,6 +37,9 @@ abstract class State {
   }
 
   void keyPressed() {
+    if (messenger != null && key == '\\') {
+      messenger.writeMessage("ping");
+    }
   }
 }
 
@@ -384,6 +387,7 @@ class RoundState extends State {
       guessTextBox.setFocus(true);
       messenger.writeMessage("guess " + gameID + " " + guess.replaceAll(" ", "_"));
     }
+    super.keyPressed();
   }
   
   void mousePressed() {
