@@ -30,6 +30,7 @@ class Game {
     // If the current round's time limit is reached, end the round
     if (millis() - preRoundStartTime >= roundLengthInMillis + preRoundLengthInMillis) {
       messenger.writeMessage(players.get(currentPainterIndex), "penalty");
+      points.set(currentPainterIndex, points.get(currentPainterIndex) - 10);
       endRound();
     }
   }

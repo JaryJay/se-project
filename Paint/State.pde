@@ -52,6 +52,7 @@ class MainMenuState extends State {
   void update() {
     String title = "Paint!";
     fill(0, 140, 255);
+    textSize(60);
     text( title, width/2, 100 );
   }
 }
@@ -65,6 +66,7 @@ class JoinState extends State {
   void update() {
     background(255);
     fill(0, 140, 255);
+    textSize(60);
     text( "Join!", width/2, 100 );
   }
 
@@ -94,6 +96,7 @@ class HostState extends State {
   void update() {
     background(255);
     fill(0, 140, 255);
+    textSize(60);
     text( "Host!", width/2, 100 );
   }
 
@@ -120,6 +123,7 @@ class InstructionsState extends State {
   void update() {
     background(255);
     fill(0, 140, 255);
+    textSize(60);
     text( "Instructions!", width/2, 100 );
     fill(0);
     image(img, 91, 125, img.width/2.4, img.height/2.4);
