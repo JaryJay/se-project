@@ -1,4 +1,4 @@
-ServerMessenger messenger = new ServerMessenger(); //<>//
+ServerMessenger messenger = new ServerMessenger();
 Map<Integer, Game> idToGame = new HashMap<Integer, Game>();
 
 void setup() {
@@ -12,34 +12,36 @@ void draw() {
   // If the server runs into any errors, continue the server without
   // terminating it (but still print the error message)
   try {
-    tryToDraw();
-  } catch (Exception e) {
+    messenger.update();
+    // Handle all messages
+    List<Message> messages = messenger.readMessages();
+    for (Message message : messages) {
+      handleMessage(message);
+    }
+    
+    // Remove games if their host has been kicked
+    List<Integer> gamesToRemove = new ArrayList<Integer>();
+    for (Game game : idToGame.values()) {
+      if (messenger.nameToSocket.get(game.host) == null) {
+        gamesToRemove.add(game.id);
+      } else if (game.started) {
+        game.update();
+      }
+    }
+    // We remove games in a separate for loop to prevent "ConcurrentModificationException"s
+    for (Integer gameID : gamesToRemove) {
+      idToGame.remove(gameID);
+      println(gameID + " removed");
+    }
+  } 
+  catch (Exception e) {
+    // Print the error message but don't terminate server
     e.printStackTrace();
   }
 }
 
-void tryToDraw() {
-  messenger.update();
-
-  List<Message> messages = messenger.readMessages();
-  for (Message message : messages) {
-    handleMessage(message);
-  }
-  
-  List<Integer> gamesToRemove = new ArrayList<Integer>();
-  for (Game game : idToGame.values()) {
-    if (messenger.nameToSocket.get(game.host) == null) {
-      gamesToRemove.add(game.id);
-    } else if (game.started) {
-      game.update();
-    }
-  }
-  for (Integer gameID : gamesToRemove) {
-    idToGame.remove(gameID);
-    println(gameID + " removed");
-  }
-}
-
+// Interprets a message based on the first word, then does something depending on what
+// that first word is (e.g. if the message starts with "host", then create a new game)
 private void handleMessage(Message messageReceived) {
   String[] split = messageReceived.body.split(" ");
   println("Received message from " + messageReceived.playerName + " " + messageReceived.body + millis());
@@ -48,103 +50,38 @@ private void handleMessage(Message messageReceived) {
     return;
   }
   String messageType = split[0];
+  // Ctrl+click on the following handleXYZ() methods to see what they do
   switch (messageType) {
   case "host":
-    int gameID = generateID();
-    messenger.writeMessage(messageReceived.playerName, "host " + gameID);
-    // Create new Game
-    idToGame.put(gameID, new Game(messageReceived.playerName, 10, gameID));
-    println(messageReceived.playerName + " hosted a game with ID " + gameID);
-    break;
+    handleHost(split, messageReceived);
+    return;
   case "join":
-    try {
-      int id = Integer.parseInt(split[1]);
-      if (idToGame.get(id) == null) {
-        messenger.writeMessage(messageReceived.playerName, "invalidID");
-      } else {
-        Game game = idToGame.get(id);
-        for (String player : game.players) {
-          messenger.writeMessage(player, "joining " + messageReceived.playerName);
-        }
-        game.players.add(messageReceived.playerName);
-        game.points.add(0);
-        String playersString = "";
-        for (String player : game.players) {
-          playersString += " " + player;
-        }
-        messenger.writeMessage(messageReceived.playerName, "joinSuccess " + game.category + playersString);
-        println(messageReceived.playerName + " joined game ID=" + id);
-      }
-    } 
-    catch (NumberFormatException e) {
-      System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
-    }
-    break;
+    handleJoin(split, messageReceived);
+    return;
+  case "changeCategory":
+    handleCategory(split, messageReceived);
+    return;
   case "start":
-    try {
-      int id = Integer.parseInt(split[1]);
-      if (idToGame.get(id) == null) {
-        messenger.writeMessage(messageReceived.playerName, "invalidID");
-      } else {
-        Game game = idToGame.get(id);
-        game.startNextPreRound();
-      }
-    }
-    catch (NumberFormatException e) {
-      System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
-    }
-    println(messageReceived.playerName + " has started the game");
-    break;
+    handleStart(split, messageReceived);
+    return;
   case "paint":
-    try {
-      int id = int(split[1]);
-      if (idToGame.get(id) == null) {
-        messenger.writeMessage(messageReceived.playerName, "invalidID");
-        break;
-      }
-      Game game = idToGame.get(id);
-      for (String player : game.players) {
-        if (!player.equals(messageReceived.playerName)) {
-          String m = "paint " + split[2] + " " + split[3] + " " + split[4] + " " + split[5] + " " + split[6] + " " + split[7];
-          messenger.writeMessage(player, m);
-        }
-      }
-      //messenger.writeMessage(messageReceived.playerName, "paintSuccess");
-    }
-    catch (NumberFormatException e) {
-      System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
-    }
-    break;
+    handlePaint(split, messageReceived);
+    return;
   case "guess":
-    int id = int(split[1]);
-    if (idToGame.get(id) == null) {
-      messenger.writeMessage(messageReceived.playerName, "invalidID");
-      break;
-    }
-    Game game = idToGame.get(id);
-    boolean correct = split[2].equalsIgnoreCase(game.currentWord);
-    for (String player : game.players) {
-      messenger.writeMessage(player, "guess " + messageReceived.playerName + " " + split[2] + " " + correct);
-    }
-    if (correct) {
-      int indexOfPlayer = game.players.indexOf(messageReceived.playerName);
-      game.points.set(indexOfPlayer, game.points.get(indexOfPlayer) + 100);
-      game.endRound();
-    }
-    break;
+    handleGuess(split, messageReceived);
+    return;
   case "restart":
     restart();
-    break;
+    return;
   case "quit":
-    messenger.removePlayer(messageReceived.playerName);
-    println("Kicked " + messageReceived.playerName); 
-    break;
+    handleQuit(split, messageReceived);
+    return;
   case "ping":
-    messenger.writeMessage(messageReceived.playerName, "pingResponse");
-    break;
+    handlePing(messageReceived);
+    return;
   default:
     //println("Received message " + messageReceived);
-    break;
+    return;
   }
 }
 
@@ -160,11 +97,10 @@ void restart() {
   println("Closing messenger");
   messenger.close();
   println("Exiting processing program");
-  exit();
-  //println("Discarding changes");
-  //exec("git", "reset", "-hard");
   println("Pulling changes from GitHub");
   exec("git", "pull");
   println("Executing Paint_Server");
+  // If you downloaded processing in a different place, then you have to change this
   exec("C:/processing-3.5.4/processing-java.exe", "--sketch=" + sketchPath(), "--run");
+  exit();
 }
