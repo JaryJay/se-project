@@ -157,9 +157,6 @@ public void guessTextBox_change(GTextField source, GEvent event) { //_CODE_:gues
   println("guessTextBox - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:guessTextBox:812170:
 
-public void guessTextBox_change1(GTextField source, GEvent event) { //_CODE_:TextHere:471031:
-} //_CODE_:TextHere:471031:
-
 
 
 // Create all the GUI controls. 
@@ -194,7 +191,7 @@ public void createGUI(){
   hostGameButton = new GButton(this, 422, 464, 163, 32);
   hostGameButton.setText("Host!");
   hostGameButton.addEventHandler(this, "hostGameButton_click");
-  startGameButton = new GButton(this, 767, 385, 180, 60);
+  startGameButton = new GButton(this, 722, 402, 180, 60);
   startGameButton.setText("Start Game!");
   startGameButton.addEventHandler(this, "startGameButton_click");
   redColourButton = new GButton(this, 12, 29, 49, 30);
@@ -246,13 +243,10 @@ public void createGUI(){
   blackColourButton.setText("Black");
   blackColourButton.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   blackColourButton.addEventHandler(this, "blackButtonClick");
-  guessTextBox = new GTextField(this, 631, 753, 150, 30, G4P.SCROLLBARS_NONE);
+  guessTextBox = new GTextField(this, 834, 557, 150, 30, G4P.SCROLLBARS_NONE);
   guessTextBox.setPromptText("Guess!");
   guessTextBox.setOpaque(true);
   guessTextBox.addEventHandler(this, "guessTextBox_change");
-  TextHere = new GTextField(this, 764, 548, 213, 30, G4P.SCROLLBARS_NONE);
-  TextHere.setOpaque(true);
-  TextHere.addEventHandler(this, "guessTextBox_change1");
 }
 
 // Variable declarations 
@@ -277,4 +271,3 @@ GButton eraserButton;
 GButton clearAllButton; 
 GButton blackColourButton; 
 GTextField guessTextBox; 
-GTextField TextHere; 

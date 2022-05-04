@@ -121,8 +121,7 @@ private void handleMessage(Message messageReceived) {
       break;
     }
     Game game = idToGame.get(id);
-    // if (split[2].equals(game.round.word) ) {...}
-    boolean correct = split[2].equalsIgnoreCase("baguette");
+    boolean correct = split[2].equalsIgnoreCase(game.currentWord);
     for (String player : game.players) {
       messenger.writeMessage(player, "guess " + messageReceived.playerName + " " + split[2] + " " + correct);
     }

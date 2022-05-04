@@ -347,6 +347,7 @@ class RoundState extends State {
         }
         transitionToNextPreRound();
       }
+      break;
     case "startPreRound":
       transitionState(new PreRoundState(split[1]));
       break;
