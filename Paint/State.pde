@@ -304,6 +304,12 @@ class RoundState extends State {
       handleMessage(message);
     }
     chat.display();
+    textAlign(LEFT);
+    textSize(32);
+    fill(240, 205, 29);
+    text("Points: ", 100, 700);
+    fill(29, 134, 240);
+    text(points, 200, 700);
   }
   
   // Handles a message

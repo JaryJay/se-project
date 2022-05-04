@@ -36,6 +36,7 @@ void tryToDraw() {
   }
   for (Integer gameID : gamesToRemove) {
     idToGame.remove(gameID);
+    println(gameID + " removed");
   }
 }
 

@@ -100,8 +100,13 @@ public class ServerMessenger {
       BufferedReader reader = nameToReader.get(name);
       // Read messages until there are none left
       try {
-        while (reader.ready() && (messageBody = reader.readLine()) != null) {
-          messages.add(new Message(name, messageBody));
+        while (reader.ready()) {
+          messageBody = reader.readLine();
+          if(messageBody != null){
+            messages.add(new Message(name, messageBody));
+          }else{
+            println("OHHH NOOOO");
+          }
         }
       }
       catch (IOException e) {
