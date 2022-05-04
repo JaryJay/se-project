@@ -5,9 +5,6 @@ abstract class State {
 
   // The guis owned by this state
   GAbstractControl[] guis;
-  // The most recent time at which the message buffer
-  // was pushed/sent to the server
-  long lastBufferPush = millis();
 
   // Called every frame
   // Since this method is abstract, it must be overridden by
@@ -197,6 +194,9 @@ class LobbyState extends State {
       String joiningPlayer = split[1];
       println(joiningPlayer + " has joined the lobby");
       lobby.playersSoFar.add(joiningPlayer);
+      break;
+    case "changeCategory":
+      lobby.category = split[1];
       break;
     case "startPreRound":
       // You are a guesser

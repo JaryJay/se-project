@@ -158,11 +158,15 @@ public void blackButtonClick(GButton source, GEvent event) { //_CODE_:blackColou
 } //_CODE_:blackColourButton:553256:
 
 public void guessTextBox_change(GTextField source, GEvent event) { //_CODE_:guessTextBox:812170:
-  println("guessTextBox - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:guessTextBox:812170:
 
 public void categoryDropList_click(GDropList source, GEvent event) { //_CODE_:categoryDropList:887373:
-  println(source.getSelectedText());
+  if (state instanceof LobbyState) {
+    String newCategory = categoryDropList.getSelectedText();
+    LobbyState lobbyState = (LobbyState) state;
+    lobbyState.lobby.category = newCategory;
+    messenger.writeMessage("changeCategory " + lobbyState.lobby.id + " " + newCategory);
+  }
 } //_CODE_:categoryDropList:887373:
 
 

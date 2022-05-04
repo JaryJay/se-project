@@ -30,6 +30,7 @@ void handleCategory(String[] split, Message messageReceived) {
   int id = int(split[1]);
   Game game = idToGame.get(id);
   String newCat = split[2];
+  game.category = newCat;
   for (String player : game.players) {
     if (!player.equals(messageReceived.playerName)) {
       messenger.writeMessage(player, "changeCategory " + newCat);

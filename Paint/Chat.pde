@@ -1,5 +1,7 @@
 import java.util.*;
 
+// A smooth, cutting-edge chat displayer imported from one of Jay's
+// previous projects (which is also smooth and cutting-edge)
 class Chat {
   ArrayList<String> messages = new ArrayList<String>();
 
