@@ -50,14 +50,19 @@ public class ServerMessenger {
       Socket newClient = serverSocket.accept();
       println("Client joining");
       BufferedReader reader = new BufferedReader(new InputStreamReader(newClient.getInputStream()));
-      PrintWriter writer = new PrintWriter(newClient.getOutputStream());
+      PrintWriter writer = new PrintWriter(newClient.getOutputStream(), true);
       println("Waiting for client name.");
       String clientName = reader.readLine();
       // Don't allow multiple people with the same name
       if (nameToSocket.get(clientName) != null) {
-        println("Player already exists!");
+        println("Player already exists: " + clientName);
         writer.println("duplicateName");
-        writer.flush();
+        writer.close();
+        reader.close();
+        newClient.close();
+      } else if (clientName.trim().isEmpty()) {
+        println("Invalid name: " + clientName);
+        writer.println("invalidName");
         writer.close();
         reader.close();
         newClient.close();
@@ -123,7 +128,6 @@ public class ServerMessenger {
     PrintWriter writer = nameToWriter.get(playerName);
     try {
       writer.println(message);
-      writer.flush();
       println("Wrote message '" + message + "' to " + playerName);
     } 
     catch (Exception e) {
@@ -134,7 +138,6 @@ public class ServerMessenger {
   void writeMessageToAllPlayers(String message) {
     for (PrintWriter writer : nameToWriter.values()) {
       writer.println(message);
-      writer.flush();
     }
   }
 
