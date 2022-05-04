@@ -145,14 +145,14 @@ class LobbyState extends State {
     this.isHost = isHost;
     if (isHost) {
       // Add # of rounds, and category drop down
-      guis = new GAbstractControl[] {startGameButton};
+      guis = new GAbstractControl[] {startGameButton, categoryDropList};
     } else {
       guis = new GAbstractControl[] {};
     }
-    background(255);
   }
 
   void update() {
+    background(255);
     fill(0, 140, 255);
     textAlign(CENTER);
     textSize(60);
@@ -165,7 +165,9 @@ class LobbyState extends State {
     text("Game ID:", 32, 150);
     text(lobby.id, 314, 150);
     text("Category:", 32, 200);
-    text(lobby.category, 314, 200);
+    if (!isHost) {
+      text(lobby.category, 314, 200);
+    }
     text("Number of rounds:", 32, 250);
     text(lobby.numberRounds, 314, 250);
     text("Players so far", 32, 350);

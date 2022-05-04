@@ -161,6 +161,10 @@ public void guessTextBox_change(GTextField source, GEvent event) { //_CODE_:gues
   println("guessTextBox - GTextField >> GEvent." + event + " @ " + millis());
 } //_CODE_:guessTextBox:812170:
 
+public void categoryDropList_click(GDropList source, GEvent event) { //_CODE_:categoryDropList:887373:
+  println(source.getSelectedText());
+} //_CODE_:categoryDropList:887373:
+
 
 
 // Create all the GUI controls. 
@@ -253,6 +257,9 @@ public void createGUI() {
   brushSizeLabel.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   brushSizeLabel.setText("Brush Size");
   brushSizeLabel.setOpaque(true);
+  categoryDropList = new GDropList(this, 314, 178, 200, 144, 5, 10);
+  categoryDropList.setItems(loadStrings("category.txt"), 0);
+  categoryDropList.addEventHandler(this, "categoryDropList_click");
 }
 
 // Variable declarations 
@@ -278,3 +285,4 @@ GButton clearAllButton;
 GButton blackColourButton; 
 GTextField guessTextBox; 
 GLabel brushSizeLabel; 
+GDropList categoryDropList; 
