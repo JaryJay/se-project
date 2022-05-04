@@ -1,5 +1,6 @@
-Food:cheese,bread,yogurt,baguette
-Animals:dog,cat
-Household Objects:spoon,sofa,piano
-Musical Instruments:saxophone
+Food:cheese,bread,yogurt,baguette,apple,banana,pineapple
+Animals:dog,cat,whale,eagle,bat,bear,lion,bunny,horse,rat,raccoon,ostrich,penguin,tiger
+Household Objects:spoon,sofa,TV
+Musical Instruments:saxophone,piano
 Icons:paramedic,biohazardous
+Math:x^3,y=mx + b,x^2,|x| 
