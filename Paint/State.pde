@@ -122,7 +122,7 @@ class InstructionsState extends State {
     fill(0, 140, 255);
     text( "Instructions!", width/2, 100 );
     fill(0);
-    image(img, 91, 125, img.width/2, img.height/2);
+    image(img, 91, 125, img.width/2.4, img.height/2.4);
   }
 
   void keyPressed() {
@@ -287,7 +287,14 @@ class PreRoundState extends State {
   // You shouldn't be receiving any messages here, but we just print
   // them if you do
   private void handleMessage(String message) {
-    println("Received message " + message);
+    String[] split = message.split(" ");
+    String messageType = split[0];
+    println("In preround state. Received message " + message);
+    switch (messageType) {
+    case "penalty":
+      points -= 10;
+      break;
+    }
   }
 }
 
@@ -398,6 +405,9 @@ class RoundState extends State {
       preRoundState.word = split[1];
       transitionState(preRoundState);
       break;
+    case "penalty":
+      points -= 10;
+      break;
     case "endGame":
       chat.addMessage("Game has ended!");
       int winnerPoints = int(split[2]);
@@ -499,6 +509,7 @@ class EndedGameState extends State {
       messenger.close();
       messenger = null;
       clientName = null;
+      points = 0;
       transitionState(new MainMenuState());
     }
   }

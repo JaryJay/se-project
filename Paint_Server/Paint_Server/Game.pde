@@ -7,7 +7,7 @@ class Game {
   String host;
   List<String> players = new ArrayList<String>();
   List<Integer> points = new ArrayList<Integer>();
-  int nextPainterIndex = 0;
+  int currentPainterIndex = -1;
   String category;
   int roundsLeft;
   // How long a round is, in milliseconds
@@ -29,6 +29,7 @@ class Game {
   void update() {
     // If the current round's time limit is reached, end the round
     if (millis() - preRoundStartTime >= roundLengthInMillis + preRoundLengthInMillis) {
+      messenger.writeMessage(players.get(currentPainterIndex), "penalty");
       endRound();
     }
   }
@@ -80,9 +81,8 @@ class Game {
 
   // Chooses a player to be the next painter
   String choosePainter() {
-    String painter = players.get(nextPainterIndex);
-    nextPainterIndex = (nextPainterIndex + 1) % players.size();
-    return painter;
+    currentPainterIndex = (currentPainterIndex + 1) % players.size();
+    return players.get(currentPainterIndex);
   }
 
   // Starts the next round by sending a message to each player in the game
