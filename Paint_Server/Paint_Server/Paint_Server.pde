@@ -53,7 +53,7 @@ private void handleMessage(Message messageReceived) {
     int gameID = generateID();
     messenger.writeMessage(messageReceived.playerName, "host " + gameID);
     // Create new Game
-    idToGame.put(gameID, new Game(messageReceived.playerName, gameID));
+    idToGame.put(gameID, new Game(messageReceived.playerName, 10, gameID));
     println(messageReceived.playerName + " hosted a game with ID " + gameID);
     break;
   case "join":
