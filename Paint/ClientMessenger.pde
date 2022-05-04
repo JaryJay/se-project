@@ -78,31 +78,32 @@ class ClientMessenger {
 
   // Writes a message to the server.
   private void writeMessage(String message) {
-    messageBuffer += message + "\n";
+    writer.println(message);
+    writer.flush();
     println("Wrote message: " + message);
   }
 
   // Pushes the message buffer if it has been at least 333 milliseconds
   // since the last push
   void pushMessageBufferIfNeeded() {
-    if (millis() - lastBufferPush >= 333) {
-      pushMessageBuffer();
-      lastBufferPush = millis();
-    }
+    //if (millis() - lastBufferPush >= 333) {
+    //  pushMessageBuffer();
+    //  lastBufferPush = millis();
+    //}
   }
 
   // Actually pushes the message buffer. See pushMessageBufferIfNeeded()
   private void pushMessageBuffer() {
-    if (writer != null) {
-      if (messageBuffer.length() > 0) {
-        println("Pushed message buffer");
-        writer.println(messageBuffer.trim());
-        writer.flush();
-        messageBuffer = "";
-      }
-    } else {
-      println("Pretended to write message '" + messageBuffer + "' because the server isn't running.");
-    }
+    //if (writer != null) {
+    //  if (messageBuffer.length() > 0) {
+    //    println("Pushed message buffer");
+    //    writer.println(messageBuffer.trim());
+    //    writer.flush();
+    //    messageBuffer = "";
+    //  }
+    //} else {
+    //  println("Pretended to write message '" + messageBuffer + "' because the server isn't running.");
+    //}
   }
 
   // Ends the client messenger. Call this when the user is exiting the program
