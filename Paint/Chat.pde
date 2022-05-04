@@ -15,6 +15,7 @@ class Chat {
     textAlign(LEFT);
     fill(255);
     strokeWeight(0);
+    stroke(0);
     rect(width-240, height-270, 240, 270, 5);
     fill(0);
     while (messages.size() > 8) {
