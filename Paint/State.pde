@@ -149,8 +149,6 @@ class LobbyState extends State {
     for (String message : messages) {
       handleMessage(message);
     }
-    // Delete me (soon)
-    //messenger.writeMessage("test");
   }
 
   // Called in update(), handles a message from the server
@@ -235,12 +233,12 @@ class PreRoundState extends State {
       text("Try to guess what " + painter + " is painting!", width/2, 300);
     }
     textAlign(LEFT);
-    textSize(32);
+    textSize(20);
     fill(240, 205, 29);
-    text("Points: ", 100, 700);
+    text("Points: ", 10, 570);
     fill(29, 134, 240);
-    text(points, 200, 700);
-
+    text(points, 100, 570);
+    
     chat.display();
     // Transition to round state if 5 seconds have passed
     if (millis() - startTime >= 5000) {
@@ -288,7 +286,7 @@ class RoundState extends State {
     // If client is painting, then show painting tools
     // Otherwise show guessing textbox
     if (painter.equals(clientName)) {
-      guis = new GAbstractControl []{redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, eraserButton, clearAllButton, blackColourButton, brushSizeSlider};
+      guis = new GAbstractControl []{redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, eraserButton, clearAllButton, blackColourButton, brushSizeSlider, brushSizeLabel};
     } else {
       guis = new GAbstractControl []{guessTextBox};
     }
@@ -297,19 +295,25 @@ class RoundState extends State {
   }
 
   void update() {
+    // C:\Tools\processing-3.5.4\processing-java.exe --sketch=C:\Users\Jay\Documents\GitHub\se-project\Paint --run
     // You've seen this enough times to know what this does, right?
     // Handles all messages (if any)
+    if (painter.equals(clientName)) {
+      fill(255);
+      strokeWeight(0);
+      rect(102, 29, 200, 51, 5);
+    }
     List<String> messages = messenger.readMessages();
     for (String message : messages) {
       handleMessage(message);
     }
     chat.display();
     textAlign(LEFT);
-    textSize(32);
+    textSize(20);
     fill(240, 205, 29);
-    text("Points: ", 100, 700);
+    text("Points: ", 10, 570);
     fill(29, 134, 240);
-    text(points, 200, 700);
+    text(points, 100, 570);
   }
   
   // Handles a message
@@ -356,6 +360,9 @@ class RoundState extends State {
       preRoundState.word = split[1];
       transitionState(preRoundState);
       break;
+    case "endGame":
+      chat.addMessage("Game has ended!");
+      
     default:
       //println("Received message " + message);
       break;

@@ -16,6 +16,8 @@ class ClientMessenger {
   // Used to write messages from the server
   private PrintWriter writer;
 
+  int numMessagesSent = 0;
+
   // Each time a message is written, it is first written to this buffer.
   // Then, every once in a while, the entire buffer is sent to the server
   // and the buffer is cleared.
@@ -31,7 +33,7 @@ class ClientMessenger {
       // See https://portforward.com/ for more details
 
       // Connect to the IP of Jay's personal computer at port 45000
-      socket = new Socket("99.250.93.242", 45000);
+      socket = new Socket("172.26.152.227", 45000);
       // Create a BufferedReader around the socket's input stream
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       // Create a PrintWriter around the socket's output stream
@@ -80,7 +82,8 @@ class ClientMessenger {
   private void writeMessage(String message) {
     writer.println(message);
     writer.flush();
-    println("Wrote message: " + message);
+    numMessagesSent++;
+    println("Wrote message #" + numMessagesSent + ": " + message);
   }
 
   // Pushes the message buffer if it has been at least 333 milliseconds

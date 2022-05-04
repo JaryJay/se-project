@@ -67,6 +67,7 @@ private void handleMessage(Message messageReceived) {
           messenger.writeMessage(player, "joining " + messageReceived.playerName);
         }
         game.players.add(messageReceived.playerName);
+        game.points.add(0);
         String playersString = "";
         for (String player : game.players) {
           playersString += " " + player;
@@ -108,7 +109,7 @@ private void handleMessage(Message messageReceived) {
           messenger.writeMessage(player, m);
         }
       }
-      messenger.writeMessage(messageReceived.playerName, "paintSuccess");
+      //messenger.writeMessage(messageReceived.playerName, "paintSuccess");
     }
     catch (NumberFormatException e) {
       System.err.println("Invalid message, expected 2nd word to be a number, actual = " + split[1]);
@@ -126,7 +127,9 @@ private void handleMessage(Message messageReceived) {
       messenger.writeMessage(player, "guess " + messageReceived.playerName + " " + split[2] + " " + correct);
     }
     if (correct) {
-      game.startNextPreRound();
+      int indexOfPlayer = game.players.indexOf(messageReceived.playerName);
+      game.points.set(indexOfPlayer, game.points.get(indexOfPlayer) + 100);
+      game.endRound();
     }
     break;
   case "restart":

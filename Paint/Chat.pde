@@ -13,16 +13,16 @@ class Chat {
   void display() {
     textSize(18);
     textAlign(LEFT);
-    fill(255, 255, 255);
-    strokeWeight(1);
-    rect(width-240, height-240, 240, 240);
+    fill(255);
+    strokeWeight(0);
+    rect(width-240, height-270, 240, 270, 5);
     fill(0);
     while (messages.size() > 8) {
       messages.remove(0);
     }
     for (int i = messages.size() - 1; i >= 0; i--) {
-      text(messages.get(i), width - 240, height - (messages.size() - i) * 30 + offset, 240, height);
+      text(messages.get(i), width - 240, height - (messages.size() - i) * 30 + offset - 30, 240, 1000);
     }
-    offset = max(offset * 0.9, 1);
+    offset = max(offset * 0.6, 1);
   }
 }
