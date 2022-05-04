@@ -183,14 +183,14 @@ class LobbyState extends State {
 
   // You get to draw in the lobby
   void mousePressed() {
-    fill(0, 0, 0, 0.1);
+    stroke(240, 240, 240);
     strokeWeight(40);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 
 
   void mouseDragged() {
-    fill(0, 0, 0, 0.1);
+    stroke(240, 240, 240);
     strokeWeight(40);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }

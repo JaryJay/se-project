@@ -72,15 +72,21 @@ boolean connectToServer(String name) {
   messenger.init();
   // Write the user's name
   println("Sending name");
-  name = name.replaceAll(" ", "_");
+  name = name.trim().replaceAll(" ", "_");
   messenger.writeMessage(name);
   messenger.pushMessageBuffer();
   // Wait for response
   println("Waiting for response");
   String m = messenger.readOneMessage();
   println("Received response " + m);
-  if (!m.equals("success")) {
+  if (m == null) {
+    println("No response from server.");
+    println("Try restarting this computer.");
+    nameTextField.setPromptText("Error: no response");
+    return false;
+  } else if (!m.equals("success")) {
     println("Failed to connect to server because " + m);
+    nameTextField.setPromptText("Error: " + m);
     messenger.close();
     messenger = null;
     return false;
