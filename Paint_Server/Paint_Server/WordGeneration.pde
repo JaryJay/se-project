@@ -10,6 +10,6 @@ void initWordGeneration() {
 }
 
 String generateWordFrom(String category) {
-  List<String> wordsInCategory = categoryToWords.get(category);
+  List<String> wordsInCategory = categoryToWords.get(category.replaceAll("_", " "));
   return wordsInCategory.get(int(random(wordsInCategory.size())));
 }
