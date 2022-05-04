@@ -323,16 +323,16 @@ class RoundState extends State {
 
   void update() {
     chat.display();
-    // Draw the box around the brush size slider
     if (painter.equals(clientName)) {
+      // Draw the box around the brush size slider
       fill(255);
       strokeWeight(0);
       stroke(0);
       rect(102, 29, 200, 51, 5);
+      // Display "Guess:" label beside the text box
+      fill(100, 100, 255);
+      text("Guess: ", width - 210, 585);
     }
-    // Display "Guess:" label beside the text box
-    fill(100, 100, 255);
-    text("Guess: ", width - 210, 585);
     textAlign(LEFT);
     textSize(20);
     fill(240, 205, 29);
