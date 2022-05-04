@@ -52,6 +52,11 @@ void mouseDragged() {
 
 void keyPressed() {
   state.keyPressed();
+  // Override default processing behaviour that terminates
+  // the program when ESC is pressed
+  if (key == ESC) {
+    key = 0;
+  }
 }
 
 // Changes the state to a new one
@@ -86,7 +91,9 @@ boolean connectToServer(String name) {
     return false;
   } else if (!m.equals("success")) {
     println("Failed to connect to server because " + m);
+    nameTextField.setFocus(false);
     nameTextField.setPromptText("Error: " + m);
+    nameTextField.setText("");
     messenger.close();
     messenger = null;
     return false;

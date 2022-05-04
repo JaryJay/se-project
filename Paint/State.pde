@@ -49,6 +49,7 @@ class MainMenuState extends State {
 
   MainMenuState() {
     guis = new GAbstractControl[]{ joinButton, hostButton, instructionsButton };
+    background(255);
   }
 
   void update() {
@@ -69,6 +70,21 @@ class JoinState extends State {
     fill(0, 140, 255);
     text( "Join!", width/2, 100 );
   }
+
+  void keyPressed() {
+    if (key == TAB) {
+      if (nameTextField.hasFocus()) {
+        idTextField.setFocus(true);
+      } else {
+        nameTextField.setFocus(true);
+      }
+    } else if (key == ENTER) {
+      // Pressing enter does the same thing as clicking the button
+      joinGameButton_click(null, null);
+    } else if (key == ESC) {
+      transitionState(new MainMenuState());
+    }
+  }
 }
 
 // The state where the host enters their name
@@ -82,6 +98,17 @@ class HostState extends State {
     background(255);
     fill(0, 140, 255);
     text( "Host!", width/2, 100 );
+  }
+
+  void keyPressed() {
+    if (key == TAB) {
+      nameTextField.setFocus(true);
+    } else if (key == ENTER) {
+      // Pressing enter does the same thing as clicking the button
+      hostGameButton_click(null, null);
+    } else if (key == ESC) {
+      transitionState(new MainMenuState());
+    }
   }
 }
 
@@ -99,6 +126,12 @@ class InstructionsState extends State {
     text( "Instructions!", width/2, 100 );
     fill(0);
     image(img, 91, 125, img.width/2, img.height/2);
+  }
+
+  void keyPressed() {
+    if (key == ESC) {
+      transitionState(new MainMenuState());
+    }
   }
 }
 
@@ -268,6 +301,8 @@ class RoundState extends State {
   int startTime = millis();
   // The current stroke color for the brush
   color strokeColor = color(0, 0, 0);
+  // If the word has been guessed
+  boolean wordHasBeenGuessed = false;
 
   //Show number of rounds, show players, show category 
   RoundState(String painter) {
@@ -278,20 +313,24 @@ class RoundState extends State {
       guis = new GAbstractControl []{redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, eraserButton, clearAllButton, blackColourButton, brushSizeSlider, brushSizeLabel};
     } else {
       guis = new GAbstractControl []{guessTextBox};
+      guessTextBox.setFocus(true);
     }
     // Clean up the paint left over from the PreRoundState 
     background(255);
   }
 
   void update() {
-    // C:\Tools\processing-3.5.4\processing-java.exe --sketch=C:\Users\Jay\Documents\GitHub\se-project\Paint --run
     chat.display();
     // Draw the box around the brush size slider
     if (painter.equals(clientName)) {
       fill(255);
       strokeWeight(0);
+      stroke(0);
       rect(102, 29, 200, 51, 5);
     }
+    // Display "Guess:" label beside the text box
+    fill(100, 100, 255);
+    text("Guess: ", width - 210, 585);
     textAlign(LEFT);
     textSize(20);
     fill(240, 205, 29);
@@ -340,12 +379,19 @@ class RoundState extends State {
           chat.addMessage(player + " is correct!");
         }
         //transitionToNextPreRound();
+        wordHasBeenGuessed = true;
       }
       break;
     case "startPreRound":
+      if (!wordHasBeenGuessed) {
+        chat.addMessage("Time's up!");
+      }
       transitionState(new PreRoundState(split[1]));
       break;
     case "startPreRoundAsPainter":
+      if (!wordHasBeenGuessed) {
+        chat.addMessage("Time's up!");
+      }
       PreRoundState preRoundState = new PreRoundState(clientName);
       preRoundState.word = split[1];
       transitionState(preRoundState);
@@ -359,7 +405,6 @@ class RoundState extends State {
       }
       transitionState(new EndedGameState(winners, winnerPoints));
     default:
-      //println("Received message " + message);
       break;
     }
   }
@@ -368,10 +413,14 @@ class RoundState extends State {
   void keyPressed() {
     if (key == ENTER && guessTextBox.isVisible() && guessTextBox.getText().length() != 0) {
       String guess = guessTextBox.getText();
+      // For some reason, you can only call setText() when the text box isn't focused
       guessTextBox.setFocus(false);
       guessTextBox.setText("");
+      // Refocus
       guessTextBox.setFocus(true);
       messenger.writeMessage("guess " + gameID + " " + guess.replaceAll(" ", "_"));
+    } else if (key == TAB && guessTextBox.isVisible()) {
+      guessTextBox.setFocus(true);
     }
     super.keyPressed();
   }
@@ -398,6 +447,7 @@ class RoundState extends State {
   }
 }
 
+// The state at the end of the game.
 class EndedGameState extends State {
 
   List<String> winners;
@@ -408,15 +458,11 @@ class EndedGameState extends State {
     this.winnerPoints = winnerPoints;
     // Owns no guis
     guis = new GAbstractControl []{};
-    // Clear the RoundState's drawings
-    background(255);
   }
 
   void update() {
-    List<String> messages = messenger.readMessages();
-    for (String message : messages) {
-      handleMessage(message);
-    }
+    // Display some end-of-game stuff
+    background(255);
     textAlign(CENTER);
     textSize(60);
     fill(0, 140, 255);
@@ -433,11 +479,25 @@ class EndedGameState extends State {
     }
 
     chat.display();
+    List<String> messages = messenger.readMessages();
+    for (String message : messages) {
+      handleMessage(message);
+    }
   }
 
   // You shouldn't be receiving any messages here, but we just print
   // them if you do
   private void handleMessage(String message) {
     println("Received message " + message);
+  }
+
+  void keyPressed() {
+    // Effectively restart the program
+    if (key == ESC) {
+      messenger.close();
+      messenger = null;
+      clientName = null;
+      transitionState(new MainMenuState());
+    }
   }
 }
