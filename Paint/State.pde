@@ -506,6 +506,7 @@ class EndedGameState extends State {
   void keyPressed() {
     // Effectively restart the program
     if (key == ESC) {
+      messenger.writeMessage("quit");
       messenger.close();
       messenger = null;
       clientName = null;
