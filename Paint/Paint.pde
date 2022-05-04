@@ -67,7 +67,7 @@ void transitionState(State newState) {
 // Tries to initialize a network connection with the server.
 // Returns true if connected successfully, false otherwise
 boolean connectToServer(String name) {
-  println("Creating messenger"); //<>// //<>//
+  println("Creating messenger"); //<>// //<>// //<>//
   messenger = new ClientMessenger();
   messenger.init();
   // Write the user's name

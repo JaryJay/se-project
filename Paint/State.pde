@@ -345,7 +345,7 @@ class RoundState extends State {
         } else {
           chat.addMessage(player + " is correct!");
         }
-        transitionToNextPreRound();
+        //transitionToNextPreRound();
       }
       break;
     case "startPreRound":

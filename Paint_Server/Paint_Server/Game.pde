@@ -42,9 +42,9 @@ class Game {
     String nextPainter = choosePainter();
     for (String player : players) {
       if (player.equals(nextPainter)) {
-        messenger.writeMessage(player, "roundEnd\n"+"startPreRoundAsPainter " + currentWord);
+        messenger.writeMessage(player, "startPreRoundAsPainter " + currentWord);
       } else {
-        messenger.writeMessage(player, "roundEnd\n"+"startPreRound " + nextPainter);
+        messenger.writeMessage(player, "startPreRound " + nextPainter);
       }
     }
   }
