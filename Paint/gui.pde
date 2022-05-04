@@ -165,7 +165,7 @@ public void categoryDropList_click(GDropList source, GEvent event) { //_CODE_:ca
     String newCategory = categoryDropList.getSelectedText();
     LobbyState lobbyState = (LobbyState) state;
     lobbyState.lobby.category = newCategory;
-    messenger.writeMessage("changeCategory " + lobbyState.lobby.id + " " + newCategory);
+    messenger.writeMessage("changeCategory " + lobbyState.lobby.id + " " + newCategory.replaceAll(" ", "_"));
   }
 } //_CODE_:categoryDropList:887373:
 

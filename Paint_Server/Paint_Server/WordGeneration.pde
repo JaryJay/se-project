@@ -1,7 +1,7 @@
 Map<String, List<String>> categoryToWords = new HashMap<String, List<String>>();
 
 void initWordGeneration() {
-  String[] categoryInfoLines = loadStrings("category.txt");
+  String[] categoryInfoLines = loadStrings("words.txt");
   for (String categoryInfo : categoryInfoLines) {
     String category = categoryInfo.split(":")[0];
     List<String> words = Arrays.asList(categoryInfo.split(":")[1].split(","));

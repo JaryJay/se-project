@@ -196,7 +196,7 @@ class LobbyState extends State {
       lobby.playersSoFar.add(joiningPlayer);
       break;
     case "changeCategory":
-      lobby.category = split[1];
+      lobby.category = split[1].replaceAll("_", " ");
       break;
     case "startPreRound":
       // You are a guesser

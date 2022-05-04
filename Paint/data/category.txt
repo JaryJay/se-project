@@ -2,4 +2,5 @@ Food
 Animals
 Household Objects
 Musical Instruments
-Icons
+Logos
+Math
