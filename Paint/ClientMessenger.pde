@@ -33,7 +33,7 @@ class ClientMessenger {
       // See https://portforward.com/ for more details
 
       // Connect to the IP of Jay's personal computer at port 45000
-      socket = new Socket("172.26.152.227", 45000);
+      socket = new Socket("99.250.93.242", 45000);
       // Create a BufferedReader around the socket's input stream
       reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       // Create a PrintWriter around the socket's output stream

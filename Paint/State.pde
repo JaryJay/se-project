@@ -87,7 +87,7 @@ class HostState extends State {
 
 class InstructionsState extends State {
   PImage img; 
-  
+
   InstructionsState() {
     guis = new GAbstractControl[]{  };
     img = loadImage("Rules.png");
@@ -98,7 +98,7 @@ class InstructionsState extends State {
     fill(0, 140, 255);
     text( "Instructions!", width/2, 100 );
     fill(0);
-    image(img,91,125, img.width/2,img.height/2);
+    image(img, 91, 125, img.width/2, img.height/2);
   }
 }
 
@@ -183,14 +183,14 @@ class LobbyState extends State {
 
   // You get to draw in the lobby
   void mousePressed() {
-    fill(0);
+    fill(0, 0, 0, 0.1);
     strokeWeight(40);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 
 
   void mouseDragged() {
-    fill(0);
+    fill(0, 0, 0, 0.1);
     strokeWeight(40);
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
@@ -217,19 +217,17 @@ class PreRoundState extends State {
   }
 
   void update() {
-    List<String> messages = messenger.readMessages();
-    for (String message : messages) {
-      handleMessage(message);
-    }
     textAlign(CENTER);
     textSize(60);
     // If you are the painter...
     fill(0, 140, 255);
     if (painter.equals(clientName)) {
       text("You are the painter!", width/2, 200);
+      textSize(40);
       text("Your word is " + word + "!", width/2, 300);
     } else {
       text(painter + " is the painter!", width/2, 200);
+      textSize(40);
       text("Try to guess what " + painter + " is painting!", width/2, 300);
     }
     textAlign(LEFT);
@@ -238,32 +236,23 @@ class PreRoundState extends State {
     text("Points: ", 10, 570);
     fill(29, 134, 240);
     text(points, 100, 570);
-    
+
     chat.display();
     // Transition to round state if 5 seconds have passed
     if (millis() - startTime >= 5000) {
       transitionState(new RoundState(painter));
+      return;
+    }
+    List<String> messages = messenger.readMessages();
+    for (String message : messages) {
+      handleMessage(message);
     }
   }
-  
+
   // You shouldn't be receiving any messages here, but we just print
   // them if you do
   private void handleMessage(String message) {
     println("Received message " + message);
-  }
-
-  // You get to draw in the PreRoundState
-  void mousePressed() {
-    fill(0);
-    strokeWeight(40);
-    line(mouseX, mouseY, pmouseX, pmouseY);
-  }
-
-
-  void mouseDragged() {
-    fill(0);
-    strokeWeight(40);
-    line(mouseX, mouseY, pmouseX, pmouseY);
   }
 }
 
@@ -296,26 +285,27 @@ class RoundState extends State {
 
   void update() {
     // C:\Tools\processing-3.5.4\processing-java.exe --sketch=C:\Users\Jay\Documents\GitHub\se-project\Paint --run
-    // You've seen this enough times to know what this does, right?
-    // Handles all messages (if any)
+    chat.display();
+    // Draw the box around the brush size slider
     if (painter.equals(clientName)) {
       fill(255);
       strokeWeight(0);
       rect(102, 29, 200, 51, 5);
     }
-    List<String> messages = messenger.readMessages();
-    for (String message : messages) {
-      handleMessage(message);
-    }
-    chat.display();
     textAlign(LEFT);
     textSize(20);
     fill(240, 205, 29);
     text("Points: ", 10, 570);
     fill(29, 134, 240);
     text(points, 100, 570);
+    // You've seen this enough times to know what this does, right?
+    // Handles all messages (if any)
+    List<String> messages = messenger.readMessages();
+    for (String message : messages) {
+      handleMessage(message);
+    }
   }
-  
+
   // Handles a message
   private void handleMessage(String message) {
     String[] split = message.split(" ");
@@ -362,36 +352,18 @@ class RoundState extends State {
       break;
     case "endGame":
       chat.addMessage("Game has ended!");
-      
+      int winnerPoints = int(split[2]);
+      List<String> winners = new ArrayList<String>();
+      for (int i = 3; i < split.length; i++) {
+        winners.add(split[i]);
+      }
+      transitionState(new EndedGameState(winners, winnerPoints));
     default:
       //println("Received message " + message);
       break;
     }
   }
 
-  // Called when
-  // a) Someone guesses correctly
-  // b) No one guesses correctly and the round reaches its time limit
-  // Next, it checks whether or not you are the painter in this next round
-  void transitionToNextPreRound() {
-    messenger.pushMessageBuffer();
-    String message = messenger.readOneMessage();
-    String[] split = message.split(" ");
-    println("In transitionToNextPreRound(). Received message: " + message);
-    switch(split[0]) {
-    case "startPreRound":
-      transitionState(new PreRoundState(split[1]));
-      break;
-    case "startPreRoundAsPainter":
-      PreRoundState preRoundState = new PreRoundState(clientName);
-      preRoundState.word = split[1];
-      transitionState(preRoundState);
-      break;
-    default:
-      break;
-    }
-  }
-  
   // When you press enter, this method sends your guess from the guessTextBox to the server
   void keyPressed() {
     if (key == ENTER && guessTextBox.isVisible() && guessTextBox.getText().length() != 0) {
@@ -403,7 +375,7 @@ class RoundState extends State {
     }
     super.keyPressed();
   }
-  
+
   void mousePressed() {
     paint();
   }
@@ -411,7 +383,7 @@ class RoundState extends State {
   void mouseDragged() {
     paint();
   }
-  
+
   // If you are the painter, draw a line from your mouse pos to the mouse pos last frame
   // Then, send that info to the server. It will then be sent to all other clients
   void paint() {
@@ -423,5 +395,49 @@ class RoundState extends State {
       // paint <gameID> <x1> <y1> <x2> <y2> <color> <brushSize>
       messenger.writeMessage("paint " + gameID + " " + mouseX + " " + mouseY + " " + pmouseX + " " + pmouseY + " " + strokeColor + " " + brushSize);
     }
+  }
+}
+
+class EndedGameState extends State {
+
+  List<String> winners;
+  int winnerPoints;
+
+  EndedGameState(List<String> winners, int winnerPoints) {
+    this.winners = winners;
+    this.winnerPoints = winnerPoints;
+    // Owns no guis
+    guis = new GAbstractControl []{};
+    // Clear the RoundState's drawings
+    background(255);
+  }
+
+  void update() {
+    List<String> messages = messenger.readMessages();
+    for (String message : messages) {
+      handleMessage(message);
+    }
+    textAlign(CENTER);
+    textSize(60);
+    fill(0, 140, 255);
+    text("The game has ended!", width/2, 200);
+    textAlign(LEFT);
+    textSize(32);
+    text("You finished with " + points + " points!", 100, 500);
+    fill(30, 140, 255);
+    text("The winner(s) finished with " + winnerPoints + " points!", 100, 560); 
+    text("Winner(s):", 230, 300);
+    fill(0, 255, 32);
+    for (int i=0; i < winners.size(); i++) {
+      text(winners.get(i), 400, 300 + i * 35);
+    }
+
+    chat.display();
+  }
+
+  // You shouldn't be receiving any messages here, but we just print
+  // them if you do
+  private void handleMessage(String message) {
+    println("Received message " + message);
   }
 }

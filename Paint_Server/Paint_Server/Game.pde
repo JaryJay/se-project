@@ -32,7 +32,7 @@ class Game {
       endRound();
     }
   }
-  
+
   // Ends one round of the game
   void endRound() {
     if (roundsLeft == 0) {
@@ -45,27 +45,27 @@ class Game {
   // Ends the entire game and removes the game from the idToGame map
   void endGame() {
     println("Game " + id + " ending");
-    
+
     // Find the winner(s)
     String winner = "none";
     int winnerPoints = -99999;
     List<String> tiedWinners = new ArrayList<String>();
-    for(int i=0; i < players.size(); i++){
-       if (points.get(i) > winnerPoints) {
-         winner = players.get(i);
-         winnerPoints = points.get(i);
-         tiedWinners.clear();
-         tiedWinners.add(winner);
-       } else if (points.get(i) == winnerPoints) {
-         tiedWinners.add(players.get(i));
-       }
+    for (int i=0; i < players.size(); i++) {
+      if (points.get(i) > winnerPoints) {
+        winner = players.get(i);
+        winnerPoints = points.get(i);
+        tiedWinners.clear();
+        tiedWinners.add(winner);
+      } else if (points.get(i) == winnerPoints) {
+        tiedWinners.add(players.get(i));
+      }
     }
     // Create the message to be sent to the players
     // If there's only one winner, then the message will look like "endGame winner <numPoints> <winnerName>"
     // If there are multiple winners, the message willl look like "endGame tiedWinners <numPoints> <winner1> <winner2> ..."
     String endGameString = "endGame ";
     if (tiedWinners.size() == 1) {
-      endGameString += "winner " + winnerPoints + " " + winner; 
+      endGameString += "winner " + winnerPoints + " " + winner;
     } else {
       endGameString += "tiedWinners " + winnerPoints;
       for (String tiedWinner : tiedWinners) {
@@ -84,7 +84,7 @@ class Game {
     nextPainterIndex = (nextPainterIndex + 1) % players.size();
     return painter;
   }
-  
+
   // Starts the next round by sending a message to each player in the game
   void startNextPreRound() {
     roundsLeft--;
