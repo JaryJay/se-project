@@ -338,8 +338,14 @@ class RoundState extends State {
         }
         transitionToNextPreRound();
       }
-    case "roundEnd":
-      transitionToNextPreRound();
+    case "startPreRound":
+      transitionState(new PreRoundState(split[1]));
+      break;
+    case "startPreRoundAsPainter":
+      PreRoundState preRoundState = new PreRoundState(clientName);
+      preRoundState.word = split[1];
+      transitionState(preRoundState);
+      break;
     default:
       //println("Received message " + message);
       break;
@@ -354,7 +360,7 @@ class RoundState extends State {
     messenger.pushMessageBuffer();
     String message = messenger.readOneMessage();
     String[] split = message.split(" ");
-    println("Received message: " + message);
+    println("In transitionToNextPreRound(). Received message: " + message);
     switch(split[0]) {
     case "startPreRound":
       transitionState(new PreRoundState(split[1]));
@@ -365,7 +371,6 @@ class RoundState extends State {
       transitionState(preRoundState);
       break;
     default:
-      println("Received message " + message);
       break;
     }
   }
