@@ -98,7 +98,7 @@ class InstructionsState extends State {
     fill(0, 140, 255);
     text( "Instructions!", width/2, 100 );
     fill(0);
-    image(img,249,125, img.width/3,img.height/3);
+    image(img,91,125, img.width/2,img.height/2);
   }
 }
 
