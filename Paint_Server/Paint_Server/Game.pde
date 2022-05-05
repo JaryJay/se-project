@@ -11,7 +11,7 @@ class Game {
   String category;
   int roundsLeft;
   // How long a round is, in milliseconds
-  int roundLengthInMillis = 20000;
+  int roundLengthInMillis = 35000;
   int preRoundLengthInMillis = 5000;
 
   String currentWord;

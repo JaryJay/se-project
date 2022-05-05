@@ -52,6 +52,7 @@ class MainMenuState extends State {
   void update() {
     String title = "Paint!";
     fill(0, 140, 255);
+    textAlign(CENTER);
     textSize(60);
     text( title, width/2, 100 );
   }
