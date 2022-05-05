@@ -141,6 +141,8 @@ class InstructionsState extends State {
 class LobbyState extends State {
   Lobby lobby = new Lobby();
   boolean isHost;
+  // Error message to display if something goes wrong, none by default
+  String errorMessage = "";
 
   //Show number of rounds, show players, show category 
   LobbyState(boolean isHost) {
@@ -154,6 +156,7 @@ class LobbyState extends State {
   }
 
   void update() {
+    // Draw some stuff
     background(255);
     fill(0, 140, 255);
     textAlign(CENTER);
@@ -161,12 +164,15 @@ class LobbyState extends State {
     text( "Lobby!", width/2, 68 );
     textAlign(LEFT);
     textSize(32);
+    
     if (!isHost) {
       text("Waiting for the host\nto start the game...", 500, 385);
     }
+    
     text("Game ID:", 32, 150);
     text(lobby.id, 314, 150);
     text("Category:", 32, 200);
+    // Host sees a drop down, other players see text
     if (!isHost) {
       text(lobby.category, 314, 200);
     }
@@ -182,6 +188,11 @@ class LobbyState extends State {
       text(tel, x, y);
       y+= 50;
     }
+    // Display error message if any
+    textSize(18);
+    fill(255, 0, 0);
+    text(errorMessage, 662, 392);
+    // Handle all messages received from the server
     List<String> messages = messenger.readMessages();
     for (String message : messages) {
       handleMessage(message);
@@ -214,6 +225,9 @@ class LobbyState extends State {
       PreRoundState preRoundState = new PreRoundState(clientName);
       preRoundState.word = split[1];
       transitionState(preRoundState);
+      break;
+    case "notEnoughPlayers":
+      errorMessage = "Not enough players! Invite your friends!";
       break;
     default:
       // println("Received message " + message);

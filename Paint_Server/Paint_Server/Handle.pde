@@ -44,7 +44,11 @@ void handleStart(String[] split, Message messageReceived) {
     messenger.writeMessage(messageReceived.playerName, "invalidID");
   } else {
     Game game = idToGame.get(id);
-    game.startNextPreRound();
+    if (game.players.size() >= 2) {
+      game.startNextPreRound();
+    } else {
+      messenger.writeMessage(messageReceived.playerName, "notEnoughPlayers");
+    }
   }
   println(messageReceived.playerName + " has started the game");
 }
