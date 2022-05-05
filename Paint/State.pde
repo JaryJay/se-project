@@ -338,6 +338,7 @@ class RoundState extends State {
       strokeWeight(0);
       stroke(0);
       rect(102, 29, 200, 51, 5);
+    } else {
       // Display "Guess:" label beside the text box
       fill(100, 100, 255);
       text("Guess: ", width - 210, 585);
