@@ -127,7 +127,7 @@ class InstructionsState extends State {
     textSize(60);
     text( "Instructions!", width/2, 100 );
     fill(0);
-    image(img, 91, 125, img.width/2.4, img.height/2.4);
+    image(img, 150, 100, img.width/2.5, img.height/2.5);
   }
 
   void keyPressed() {
