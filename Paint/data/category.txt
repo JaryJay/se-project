@@ -3,4 +3,4 @@ Animals
 Household Objects
 Musical Instruments
 Logos
-Math
+Math Equations

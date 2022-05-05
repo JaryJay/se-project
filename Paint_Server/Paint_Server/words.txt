@@ -3,4 +3,4 @@ Animals:dog,cat,whale,eagle,bat,bear,lion,bunny,horse,rat,raccoon,ostrich,pengui
 Household Objects:spoon,sofa,TV,ps5,PC,pillow,table,chair,trash,bed,painting,fridge,oven,bookcase,shelf,mirror,stool,coatrack,lamp,kettle,fan,speaker,toaster,dishwasher
 Musical Instruments:saxophone,piano,cello,drum,recorder,ukulele,guitar,clarinet,violin,xylophone,harp,tuba,trumpet,organ,maraca,accordion,harmonica,banjo,chime,flute
 Logos:mcdonald,nike,apple,kfc,spotify,dominos,starbucks,instagram,twitter,gmail,tesla,youtube,xbox,playstation,pepsi,target,snapchat,adidas
-Math:x^3,mx + b,x^2,|x|,logx,constant^x,1/x,tanx,sinx,cosx,x^2+y^2,e^x,lnx,1,undefined
+Math Equations:x^3,mx + b,x^2,|x|,logx,2^x,1/x,tanx,sinx,cosx,x^2+y^2,e^x,lnx,1
