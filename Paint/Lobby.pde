@@ -4,5 +4,4 @@ class Lobby {
   int id; 
   String category = "Food";
   List<String> playersSoFar = new ArrayList<String>();
-  int numberRounds = 10;
 }

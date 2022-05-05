@@ -45,6 +45,8 @@ void handleStart(String[] split, Message messageReceived) {
   } else {
     Game game = idToGame.get(id);
     if (game.players.size() >= 2) {
+      // #Rounds = #players * 5
+      game.roundsLeft = game.players.size() * 5;
       game.startNextPreRound();
     } else {
       messenger.writeMessage(messageReceived.playerName, "notEnoughPlayers");

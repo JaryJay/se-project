@@ -177,7 +177,7 @@ class LobbyState extends State {
       text(lobby.category, 314, 200);
     }
     text("Number of rounds:", 32, 250);
-    text(lobby.numberRounds, 314, 250);
+    text(max(10, lobby.playersSoFar.size() * 5), 314, 250);
     text("Players so far", 32, 350);
     fill(0, 255, 32);
     // Display players in lobby
