@@ -280,7 +280,7 @@ class PreRoundState extends State {
     chat.display();
     // Transition to round state if 5 seconds have passed
     if (millis() - startTime >= 5000) {
-      transitionState(new RoundState(painter));
+      transitionState(new RoundState(painter, word));
       return;
     }
     List<String> messages = messenger.readMessages();
@@ -317,17 +317,18 @@ class RoundState extends State {
   boolean wordHasBeenGuessed = false;
 
   //Show number of rounds, show players, show category 
-  RoundState(String painter) {
+  RoundState(String painter, String word) {
     this.painter = painter;
     // If client is painting, then show painting tools
     // Otherwise show guessing textbox
     if (painter.equals(clientName)) {
       guis = new GAbstractControl []{redColourButton, blueColourButton, greenColourButton, yellowColourButton, orangeColourButton, purpleColourButton, cyanColourButton, eraserButton, clearAllButton, blackColourButton, brushSizeSlider, brushSizeLabel};
+      chat.addMessage("Your word is " + word);
     } else {
       guis = new GAbstractControl []{guessTextBox};
       guessTextBox.setFocus(true);
     }
-    // Clean up the paint left over from the PreRoundState 
+    // Clean up the screen left over from the PreRoundState 
     background(255);
   }
 
