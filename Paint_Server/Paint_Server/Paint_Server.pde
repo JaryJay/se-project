@@ -44,7 +44,7 @@ void draw() {
 // that first word is (e.g. if the message starts with "host", then create a new game)
 private void handleMessage(Message messageReceived) {
   String[] split = messageReceived.body.split(" ");
-  println("Received message from " + messageReceived.playerName + " " + messageReceived.body + millis());
+  println("Received message from " + messageReceived.playerName + " " + messageReceived.body);
   if (split.length == 0) {
     messenger.writeMessage(messageReceived.playerName, "Error: server received an empty message");
     return;
