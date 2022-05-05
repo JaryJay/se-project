@@ -313,8 +313,6 @@ class RoundState extends State {
   int startTime = millis();
   // The current stroke color for the brush
   color strokeColor = color(0, 0, 0);
-  // If the word has been guessed
-  boolean wordHasBeenGuessed = false;
 
   //Show number of rounds, show players, show category 
   RoundState(String painter, String word) {
@@ -394,27 +392,28 @@ class RoundState extends State {
         } else {
           chat.addMessage(player + " is correct!");
         }
-        //transitionToNextPreRound();
-        wordHasBeenGuessed = true;
+      }
+      break;
+    case "revealWord":
+      // Painter failed to paint well
+
+      if (painter.equals(clientName)) {
+        // -10 points!!!!!
+        points -= 10;
+        chat.addMessage("Time's up! -10 points :(");
+      } else {
+        // Reveal word to guesser
+        chat.addMessage("Time's up!");
+        chat.addMessage("The word was " + split[1]);
       }
       break;
     case "startPreRound":
-      if (!wordHasBeenGuessed) {
-        chat.addMessage("Time's up!");
-      }
       transitionState(new PreRoundState(split[1]));
       break;
     case "startPreRoundAsPainter":
-      if (!wordHasBeenGuessed) {
-        chat.addMessage("Time's up!");
-      }
       PreRoundState preRoundState = new PreRoundState(clientName);
       preRoundState.word = split[1];
       transitionState(preRoundState);
-      break;
-    case "penalty":
-      points -= 10;
-      chat.addMessage("-10 points :(");
       break;
     case "endGame":
       chat.addMessage("Game has ended!");
@@ -527,6 +526,7 @@ class EndedGameState extends State {
       messenger = null;
       clientName = null;
       points = 0;
+      categoryDropList.setSelected(0);
       transitionState(new MainMenuState());
     }
   }

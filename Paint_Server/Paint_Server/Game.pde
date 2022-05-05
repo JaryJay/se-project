@@ -29,7 +29,11 @@ class Game {
   void update() {
     // If the current round's time limit is reached, end the round
     if (millis() - preRoundStartTime >= roundLengthInMillis + preRoundLengthInMillis) {
-      messenger.writeMessage(players.get(currentPainterIndex), "penalty");
+      // Reveal what the word was
+      for (String player : players) {
+        messenger.writeMessage(player, "revealWord " + currentWord);
+      }
+      // Penalize painter for drawing badly
       points.set(currentPainterIndex, points.get(currentPainterIndex) - 10);
       endRound();
     }
