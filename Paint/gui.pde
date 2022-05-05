@@ -151,6 +151,7 @@ public void eraserButtonClick(GButton source, GEvent event) { //_CODE_:eraserBut
 
 public void clearButtonClick(GButton source, GEvent event) { //_CODE_:clearAllButton:474814:
   background(255, 255, 255);
+  messenger.writeMessage("clearScreen " + gameID);
 } //_CODE_:clearAllButton:474814:
 
 public void blackButtonClick(GButton source, GEvent event) { //_CODE_:blackColourButton:553256:

@@ -376,6 +376,9 @@ class RoundState extends State {
       line(x1, y1, x2, y2);
       println("Received message " + message + c);
       break;
+    case "clearScreen":
+      background(255);
+      return;
     case "guess":
       // Store a guess that another player has made
       String player = split[1];

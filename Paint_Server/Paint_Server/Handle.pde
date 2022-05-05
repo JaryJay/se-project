@@ -64,6 +64,20 @@ void handlePaint(String[] split, Message messageReceived) {
   }
 }
 
+void handleClearScreen(String[] split, Message messageReceived) {
+  int id = int(split[1]);
+  if (idToGame.get(id) == null) {
+    messenger.writeMessage(messageReceived.playerName, "invalidID");
+    return;
+  }
+  Game game = idToGame.get(id);
+  for (String player : game.players) {
+    if (!player.equals(messageReceived.playerName)) {
+      messenger.writeMessage(player, "clearScreen");
+    }
+  }
+}
+
 void handleGuess(String[] split, Message messageReceived) {
   int id = int(split[1]);
   if (idToGame.get(id) == null) {

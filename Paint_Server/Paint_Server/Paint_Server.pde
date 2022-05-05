@@ -1,4 +1,4 @@
-ServerMessenger messenger = new ServerMessenger();
+ServerMessenger messenger = new ServerMessenger(); //<>//
 Map<Integer, Game> idToGame = new HashMap<Integer, Game>();
 
 void setup() {
@@ -66,6 +66,9 @@ private void handleMessage(Message messageReceived) {
     return;
   case "paint":
     handlePaint(split, messageReceived);
+    return;
+  case "clearScreen":
+    handleClearScreen(split, messageReceived);
     return;
   case "guess":
     handleGuess(split, messageReceived);
